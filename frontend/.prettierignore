@@ -1,0 +1,10 @@
+**/node_modules
+**/dist
+**/package.json
+**/package-lock.json
+**/.eslintrc.js
+**/.eslintrc.cjs
+**/tsconfig.json
+**/build
+**/src/common
+**/src/utils/regularExpression.ts
