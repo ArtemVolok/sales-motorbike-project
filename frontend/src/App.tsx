@@ -4,7 +4,7 @@ import viteLogo from './assets/vite.svg';
 import './App.css';
 
 function App() {
-  const [count, setCount] = useState(0);
+  const [count, setCount] = useState<number>(0);
 
   const addNewUser = async () => {
     const response = await fetch('http://localhost:5000/profileUser/create', {

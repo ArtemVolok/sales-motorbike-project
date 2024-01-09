@@ -1,5 +1,7 @@
 {
   "singleQuote": true,
   "trailingComma": "all",
-  "endOfLine": "crlf"
+  "endOfLine": "crlf",
+  "semi": true,
+  "jsxSingleQuote": false
 }
