@@ -1,11 +1,17 @@
 import { defineConfig } from 'vite';
 import dns from 'dns';
-import eslint from 'vite-plugin-eslint';
+import react from '@vitejs/plugin-react';
+import checker from 'vite-plugin-checker';
 
 dns.setDefaultResultOrder('verbatim');
 
 export default defineConfig({
-  plugins: [eslint()],
+  plugins: [
+    react(),
+    checker({
+      typescript: true,
+    }),
+  ],
   server: {
     host: 'localhost',
     port: 3000,
