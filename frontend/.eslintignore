@@ -1,0 +1,8 @@
+# Ignore built files except build/index.js
+
+build/_
+!build/index.js
+src/common/_
+prepare.js
+./node-modules/\*
+src/utils/regularExpression.ts
