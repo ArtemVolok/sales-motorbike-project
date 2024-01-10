@@ -1,0 +1,140 @@
+body {
+  background-color: #333333;
+  color: white;
+  font-weight: 100;
+  display: flex;
+  justify-content: center;
+}
+
+.container {
+  margin: 10px 20px;
+  font-family: 'Ubuntu', cursive;
+  max-width: 800px;
+}
+
+h2,
+h3,
+.infoBlock {
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+  border-bottom: 2px solid grey;
+}
+
+h2 {
+  font-size: 24px;
+}
+
+form {
+  div {
+    margin-bottom: 10px;
+    border-bottom: 2px solid grey;
+
+    h4 {
+      margin-bottom: 14px;
+      font-weight: 400;
+      font-size: 18px;
+    }
+
+    div {
+      display: flex;
+      justify-content: space-around;
+      border-bottom: none;
+
+      label {
+        display: block;
+        position: relative;
+        padding-left: 35px;
+        margin-bottom: 12px;
+        cursor: pointer;
+        font-size: 22px;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        font-size: 16px;
+
+        input {
+          position: absolute;
+          opacity: 0;
+          cursor: pointer;
+        }
+
+        .checkMark {
+          position: absolute;
+          top: 2px;
+          left: 5px;
+          height: 20px;
+          width: 20px;
+          background-color: #eee;
+          border-radius: 50%;
+        }
+      }
+      label input:checked ~ .checkMark {
+        background-color: red;
+      }
+
+      .checkMark:after {
+        content: '';
+        position: absolute;
+        display: none;
+      }
+
+      label input:checked ~ .checkMark:after {
+        display: block;
+      }
+
+      label .checkMark:after {
+        top: 5px;
+        left: 5px;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: white;
+      }
+
+      .ageSection__input {
+        width: 240px;
+        height: 36px;
+        color: black;
+        font-size: 20px;
+        border-radius: 10px;
+        border: 2px solid grey;
+        padding: 0 10px;
+        margin-bottom: 6px;
+      }
+    }
+  }
+
+  .submitSector {
+    border: none;
+    display: flex;
+    justify-content: space-evenly;
+    padding-top: 10px;
+
+    &__link {
+      outline: none;
+      text-decoration: none;
+      color: white;
+      width: 200px;
+      height: 36px;
+      text-transform: uppercase;
+      transform: skew(-10deg);
+      text-align: center;
+      border: 2px white solid;
+      padding-top: 4px;
+    }
+
+    &__submit {
+      width: 200px;
+      height: 36px;
+      text-transform: uppercase;
+      transform: skew(-10deg);
+      border: none;
+      color: white;
+      background-color: red;
+      font-size: 20px;
+      font-family: 'Ubuntu', cursive;
+      cursor: pointer;
+    }
+  }
+}

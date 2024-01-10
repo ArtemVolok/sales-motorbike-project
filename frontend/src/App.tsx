@@ -2,6 +2,8 @@ import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { FeedBackUrl, DashboardUrl } from './UrlsConfig';
 
+import './assets/scss/index.scss';
+
 const Dashboard = React.lazy(() => import('./pages/Dashboard'));
 const Feedback = React.lazy(() => import('./pages/Feedback'));
 
