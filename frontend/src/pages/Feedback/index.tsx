@@ -15,10 +15,12 @@ const Feedback = () => {
   };
 
   return (
-    <>
-      <div className="container">
-        <h2>Поділіться вашим враженням! Ваш відгук важливий для нас.</h2>
-        <h3>
+    <div className="wrapper">
+      <div className="container feedbackPage">
+        <h2 className="feedbackPage__h2">
+          Поділіться вашим враженням! Ваш відгук важливий для нас.
+        </h2>
+        <h3 className="feedbackPage__h3">
           Ми запрошуємо вас взяти участь у опитуванні щодо якості дизайну сайту.
           Ми цінуємо ваш час і зусилля, витрачені на надання нам вашої думки.
         </h3>
@@ -121,7 +123,7 @@ const Feedback = () => {
           </div>
         </form>
       </div>
-    </>
+    </div>
   );
 };
 

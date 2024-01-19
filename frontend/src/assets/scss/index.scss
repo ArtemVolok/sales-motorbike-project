@@ -1,9 +1,68 @@
+@import 'base/variables';
+@import 'base/reset';
+
 * {
+  scrollbar-color: $grey-600 rgba($white, 0);
+  scrollbar-width: thin;
+}
+
+html {
+  height: 100%;
+  min-width: $base-min-width;
+  min-height: 320px;
+}
+
+html,
+body {
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
-
-  li {
-    list-style-type: none;
-  }
 }
+
+// body {
+//   width: 100%;
+
+//   //decide why need overflow in root style
+//   // overflow-x: auto;
+//   // overflow-y: hidden;
+
+//   background-color: $grey-100;
+//   // zoom: 85%;
+
+//   // @media (min-width: 1600px) {
+//   //   zoom: 100%;
+//   // }
+// }
+
+.container {
+  padding-left: 10px;
+  padding-right: 10px;
+  margin: 0 auto;
+}
+
+// ::-webkit-scrollbar-corner {
+//   background-color: $grey-200;
+// }
+// ::-webkit-scrollbar {
+//   width: 8px;
+//   background-color: $grey-200;
+// }
+// ::-webkit-scrollbar:horizontal {
+//   height: 8px;
+// }
+// ::-webkit-scrollbar-track {
+//   border: none;
+//   // border-radius: 4px;
+//   box-shadow: none;
+// }
+// ::-webkit-scrollbar-thumb {
+//   background-color: $grey-300;
+//   background-clip: content-box;
+//   border: 1px solid transparent;
+//   // border-radius: 4px;
+// }
+// ::-webkit-scrollbar-thumb:hover {
+//   background-color: $grey-300;
+// }
+// ::-webkit-scrollbar-thumb:active {
+//   background-color: $grey-300;
+// }
