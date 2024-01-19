@@ -1,0 +1,74 @@
+@import '../../assets/scss/base/variables';
+
+.headerWrapper {
+  width: 100%;
+  font-family: 'Ubuntu', cursive;
+  font-weight: 400;
+  background: rgb(0, 0, 0);
+  background: linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 1) 0%,
+    rgba(34, 34, 34, 1) 50%,
+    rgba(44, 44, 44, 1) 100%
+  );
+  display: flex;
+  justify-content: center;
+}
+
+.header {
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  padding: 16px 10px;
+  // width: 800px;
+  width: 100%;
+
+  a {
+    color: $white;
+  }
+
+  @media (min-width: $pc-screen) {
+    height: 60px;
+  }
+
+  &__logo {
+    display: block;
+    font-size: 20px;
+    font-weight: 400;
+    text-transform: uppercase;
+    cursor: pointer;
+
+    a {
+      color: red;
+    }
+
+    @media (min-width: $pc-screen) {
+      font-size: 24px;
+    }
+  }
+
+  &__info {
+    margin-top: 2px;
+
+    ul {
+      display: flex;
+      justify-content: space-between;
+
+      li {
+        padding: 0 10px;
+        font-size: 16px;
+      }
+    }
+  }
+
+  &__profile {
+    margin-top: 2px;
+    cursor: pointer;
+
+    svg {
+      width: 28px;
+      height: 28px;
+      fill: $white;
+    }
+  }
+}

@@ -1,32 +1,40 @@
-body {
-  background-color: #333333;
-  color: white;
-  font-weight: 100;
-  display: flex;
-  justify-content: center;
+@import '../../assets/scss/base/variables';
+
+.wrapper {
+  width: 100%;
+  height: 100%;
+  background-color: $background-color;
+  color: $white;
+  font-weight: 400;
+  font-family: 'ubuntu', $font-type-cursive;
+  background: rgb(0, 0, 0);
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 1) 0%,
+    rgba(45, 45, 45, 1) 60%,
+    rgba(68, 67, 67, 1) 100%
+  );
 }
 
-.container {
-  margin: 10px 20px;
-  font-family: 'Ubuntu', cursive;
+.feedbackPage {
+  padding-top: 14px;
   max-width: 800px;
 }
 
-h2,
-h3,
+.feedbackPage__h2,
+.feedbackPage__h3,
 .infoBlock {
   padding-bottom: 10px;
   margin-bottom: 10px;
   border-bottom: 2px solid grey;
 }
 
-h2 {
+.feedbackPage__h2 {
   font-size: 24px;
 }
 
 form {
   div {
-    margin-bottom: 10px;
     border-bottom: 2px solid grey;
 
     h4 {
@@ -43,7 +51,6 @@ form {
       label {
         display: block;
         position: relative;
-        padding-left: 35px;
         margin-bottom: 12px;
         cursor: pointer;
         font-size: 22px;
@@ -53,22 +60,29 @@ form {
         user-select: none;
         font-size: 16px;
 
+        p {
+          margin: 0;
+          padding: 0;
+        }
+
         input {
           position: absolute;
-          opacity: 0;
+          // opacity: 0;
           cursor: pointer;
+          display: none;
         }
 
         .checkMark {
           position: absolute;
-          top: 2px;
-          left: 5px;
+          top: 3px;
+          left: -26px;
           height: 20px;
           width: 20px;
           background-color: #eee;
           border-radius: 50%;
         }
       }
+
       label input:checked ~ .checkMark {
         background-color: red;
       }
@@ -100,7 +114,7 @@ form {
         border-radius: 10px;
         border: 2px solid grey;
         padding: 0 10px;
-        margin-bottom: 6px;
+        margin-bottom: 12px;
       }
     }
   }
@@ -109,7 +123,7 @@ form {
     border: none;
     display: flex;
     justify-content: space-evenly;
-    padding-top: 10px;
+    padding: 20px 0;
 
     &__link {
       outline: none;
