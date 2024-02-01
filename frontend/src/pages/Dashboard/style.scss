@@ -1,0 +1,235 @@
+@import '../../assets/scss/base/variables';
+
+.main_block {
+  // height: 1530px;
+  /* background-color: blue; */
+  font-family: 'Ubuntu', cursive;
+}
+
+.main_logo {
+  background-image: url('../../assets/img/header_enduro4.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  position: relative;
+  height: 460px;
+}
+
+.main_logo-title {
+  display: block;
+  position: absolute;
+  top: 24%;
+  right: 8%;
+  width: 316px;
+
+  @media (max-width: $pc-screen) {
+    position: relative;
+    right: 0%;
+    margin: 0 auto;
+  }
+}
+
+.main_logo-text {
+  display: block;
+  color: white;
+  font-size: 40px;
+  font-weight: 700;
+  text-transform: uppercase;
+
+  @media (max-width: $pc-screen) {
+    text-align: center;
+  }
+}
+
+.main_logo-button {
+  width: 160px;
+  height: 40px;
+  margin-top: 10px;
+  padding-top: 10px;
+  text-align: center;
+  font-weight: 700;
+  color: white;
+  background-color: rgb(158, 3, 3);
+  position: relative;
+  transform: skew(-10deg);
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.main_logo-title > div {
+  @media (max-width: $pc-screen) {
+    margin-left: 68px;
+  }
+}
+
+.main_about {
+  margin-top: 18px;
+}
+
+.main_ul {
+  display: flex;
+  justify-content: space-between;
+  list-style: none;
+  margin: 0 24px;
+
+  @media (max-width: 720px) {
+    display: block;
+    // background-color: red;
+    display: flex;
+    flex-wrap: wrap;
+  }
+}
+
+.main_ul > li {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+
+  @media (max-width: 720px) {
+    display: flex;
+    width: 50%;
+    justify-content: left;
+  }
+}
+
+.main_ul > li > svg {
+  min-width: 40px;
+  min-height: 40px;
+  margin: 0 18px;
+  fill: red;
+
+  @media (max-width: 720px) {
+    min-width: 24px;
+    min-height: 24px;
+  }
+}
+
+.main_ul > li > h3 {
+  font-weight: 400;
+  font-size: 16px;
+}
+
+.main_sails-top {
+  display: flex;
+  justify-content: space-between;
+  margin: 28px 38px;
+}
+
+.main_sails-top > h2 {
+  text-transform: uppercase;
+  font-size: 24px;
+  color: rgb(158, 3, 3);
+  font-weight: 700;
+}
+
+.main_sails-top > h4 {
+  color: rgb(158, 3, 3);
+  font-weight: 700;
+}
+
+.main_cards > ul {
+  display: flex;
+  justify-content: space-between;
+  list-style: none;
+  margin: 38px 38px;
+}
+
+.main-cards-el {
+  width: 240px;
+  height: 440px;
+}
+
+.main-cards-el > img {
+  width: 220px;
+  height: 200px;
+}
+
+.main-cards-el > p {
+  color: rgb(51, 51, 51);
+  margin-top: 10px;
+}
+
+.main-cards-el > h3 {
+  margin-top: 10px;
+}
+
+.main-cards-el > h4 {
+  color: rgb(158, 3, 3);
+  margin-top: 10px;
+}
+
+.main-cards-el > div {
+  transform: skew(-10deg);
+  text-transform: uppercase;
+  background-color: rgb(158, 3, 3);
+  color: white;
+  font-weight: 700;
+  height: 28px;
+  width: 80px;
+  margin-top: 10px;
+  padding: 4px 6px;
+}
+
+.main-cards-el > .buy {
+  cursor: pointer;
+}
+
+.main_about2 {
+  background-image: url(../../assets/img/main_enduro31.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  min-height: 460px;
+  padding-bottom: 24px;
+}
+
+.main_about2-left {
+  width: 55%;
+
+  @media (max-width: 720px) {
+    width: 100%;
+  }
+}
+
+.main_about2 > .main_about2-left > h3 {
+  color: rgb(158, 3, 3);
+  font-size: 50px;
+  padding: 26px 0 12px 24px;
+  display: block;
+}
+
+.main_about2 > .main_about2-left > p {
+  color: white;
+  margin-top: 12px;
+  padding-left: 24px;
+
+  @media (max-width: 720px) {
+    padding: 10px 20px;
+  }
+}
+
+.main_extras {
+  /* width: 900px; */
+  margin: 44px 24px;
+  padding-bottom: 70px;
+}
+
+.main_extras > ul {
+  /* width: 120px;
+  height: 120px; */
+  display: flex;
+  justify-content: space-between;
+  list-style: none;
+  /* background-color: red; */
+  /* padding-left: 52px; */
+  padding: 0 24px;
+}
+
+.main_extras > ul > li {
+  cursor: pointer;
+}
+
+.main_extras > ul > li > img {
+  width: 180px;
+  height: 180px;
+}
