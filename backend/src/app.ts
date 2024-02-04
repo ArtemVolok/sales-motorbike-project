@@ -1,4 +1,4 @@
-import express from 'express';
+import express, { Request, Response } from 'express';
 import morgan from 'morgan';
 import helmet from 'helmet';
 import cors from 'cors';
@@ -8,6 +8,7 @@ import * as middlewares from './middlewares';
 import api from './api';
 import MessageResponse from './interfaces/MessageResponse';
 import { ProfileUserModel } from './schema/profileUser';
+import { IMotorcycleCard, MotorcycleCardModel } from './schema/motorcycleCard';
 
 require('dotenv').config();
 
@@ -15,7 +16,19 @@ const app = express();
 
 app.use(morgan('dev'));
 app.use(helmet());
-app.use(cors());
+app.use(
+  cors({
+    // origin: '*',
+    origin: [
+      'http://127.0.0.1:5000',
+      'http://127.0.0.1:3000',
+      'http://localhost:5000',
+      'http://localhost:3000',
+    ],
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
+    credentials: true,
+  }),
+);
 app.use(express.json());
 
 async function main() {
@@ -50,6 +63,35 @@ app.get<any>('/profileUser/allUsers', async (_, res) => {
 app.get<{}, MessageResponse>('/', (req, res) => {
   res.json({
     message: '🦄🌈✨👋🌎🌍🌏✨🌈🦄',
+  });
+});
+
+////////****MOTORCYCLE*****////////
+
+app.post(
+  '/motorcycleCards/create',
+  async (req: Request<any, any, IMotorcycleCard>, res: Response) => {
+    if (
+      !req.body.name ||
+      !req.body.price ||
+      !req.body.description ||
+      !req.body.vendorCode
+    ) {
+      return res.status(400).json({
+        errorCode: 400,
+        errorMessage: 'Incorrect field or some fields are empty',
+      });
+    }
+
+    const createMotorcycle = await MotorcycleCardModel.create(req.body);
+    res.json(createMotorcycle);
+  },
+);
+
+app.get<any>('/motorcycleCards/allMotorcycle', async (_, res) => {
+  const getAllMotorcycle = await MotorcycleCardModel.find({});
+  res.json({
+    message: getAllMotorcycle,
   });
 });
 
