@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import useWindowWidth from '../../hooks/windowWidth';
 
 import bike1 from '../../assets/img/bike1.jpg';
@@ -9,6 +10,7 @@ import pump from '../../assets/img/pump.jpg';
 import circle from '../../assets/img/circle3.jpg';
 
 import './style.scss';
+import { CatalogMotorcyclesUrl } from '../../UrlsConfig';
 
 const Dashboard = () => {
   const windowWidth = useWindowWidth();
@@ -18,7 +20,9 @@ const Dashboard = () => {
       <div className="main_logo">
         <div className="main_logo-title">
           <h1 className="main_logo-text">Підкори світ мотокросу</h1>
-          <div className="main_logo-button">Каталог</div>
+          <Link to={CatalogMotorcyclesUrl} className="main_logo-button">
+            Каталог
+          </Link>
         </div>
       </div>
       <div className="main_about">

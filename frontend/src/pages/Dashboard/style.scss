@@ -42,6 +42,7 @@
 }
 
 .main_logo-button {
+  display: block;
   width: 160px;
   height: 40px;
   margin-top: 10px;
@@ -54,6 +55,10 @@
   transform: skew(-10deg);
   text-transform: uppercase;
   cursor: pointer;
+
+  @media (max-width: $pc-screen) {
+    margin: 20px auto;
+  }
 }
 
 .main_logo-title > div {
