@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useHttp } from '../../hooks/http.hook';
+import { API_V1_URL } from '../../constants';
 
 export interface IMotorcycleCard {
   name: string;
@@ -23,7 +24,7 @@ const CatalogMotorcycles = () => {
     const getAllMotorcycles = async () => {
       try {
         const response = await request(
-          'http://localhost:5000/motorcycleCards/allMotorcycle',
+          `${API_V1_URL}/motorcycleCards/allMotorcycle`,
           'GET',
         );
 
@@ -46,6 +47,8 @@ const CatalogMotorcycles = () => {
 
   useEffect(() => {
     console.log('allMotorcycles', allMotorcycles);
+
+    console.log('API_V1_URL', JSON.stringify(API_V1_URL));
   }, [allMotorcycles]);
 
   return (
@@ -59,6 +62,7 @@ const CatalogMotorcycles = () => {
         </>
       ) : (
         <>
+          <p>{API_V1_URL}</p>
           {allMotorcycles.length ? (
             <>
               {allMotorcycles.map((el: IMotorcycleCard, index) => {
