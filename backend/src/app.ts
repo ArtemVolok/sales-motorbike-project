@@ -16,19 +16,35 @@ const app = express();
 
 app.use(morgan('dev'));
 app.use(helmet());
-app.use(
-  cors({
-    // origin: '*',
-    origin: [
-      'http://127.0.0.1:5000',
-      'http://127.0.0.1:3000',
-      'http://localhost:5000',
-      'http://localhost:3000',
-    ],
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
-    credentials: true,
-  }),
-);
+
+const allowedOrigins = [
+  'http://127.0.0.1:5000',
+  'http://127.0.0.1:3000',
+  'http://localhost:5000',
+  'http://localhost:3000',
+  'https://sales-motorbike.vercel.app',
+];
+
+const corsOptions = {
+  origin: function (
+    origin: string | undefined,
+    callback: (err: Error | null, allow?: boolean) => void,
+  ) {
+    console.log('origin', origin);
+    console.log('callback', callback);
+    if (!origin || allowedOrigins.includes(origin)) {
+      console.log('inside !origin');
+      callback(null, true);
+    } else {
+      console.log('inside origin');
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  credentials: true,
+  optionsSuccessStatus: 204,
+};
+app.use(cors(corsOptions));
 app.use(express.json());
 
 async function main() {
