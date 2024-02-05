@@ -37,6 +37,7 @@ export const useHttp = () => {
           body: innerBody,
           headers,
           credentials,
+          mode: 'cors',
         });
 
         const data = await response.json();
