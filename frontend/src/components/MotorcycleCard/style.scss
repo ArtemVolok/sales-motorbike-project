@@ -1,0 +1,119 @@
+@import '../../assets/scss/base/variables';
+
+.cardItem {
+  padding: 12px;
+  padding-bottom: 10px;
+  width: 350px;
+  border: 2px $grey-600 solid;
+  position: relative;
+
+  &__photo {
+    margin: 16px auto;
+    display: block;
+    width: 220px;
+    height: 260px;
+  }
+
+  &__vendorCode {
+    text-align: left;
+    color: $grey-600;
+    margin: 10px 0;
+  }
+
+  &__name {
+    text-align: left;
+    font-size: 20px;
+    color: $black;
+    margin: 10px 0;
+  }
+
+  &__price {
+    color: $red-extra;
+    font-size: 22px;
+    margin: 10px 0;
+  }
+
+  &__buyBlock {
+    display: flex;
+    justify-content: center;
+    margin: 0 auto;
+  }
+}
+
+.cardItemHover {
+  display: none;
+  position: absolute;
+  left: -1px;
+  padding: 0;
+  border: 2px $red-extra solid;
+  width: 350px;
+  background-color: $white;
+  z-index: 2;
+
+  &__colorBlock {
+    margin-bottom: 20px;
+
+    &-title {
+      text-align: center;
+      font-size: 18px;
+      margin: 10px 0;
+    }
+
+    &-colors {
+      display: flex;
+      justify-content: center;
+
+      .cardItemHover__colorBlock-externalColor {
+        padding: 5px;
+        width: 41px;
+        height: 41px;
+        border: 2px $black solid;
+        margin: 10px;
+        border-radius: 4px;
+      }
+
+      .cardItemHover__colorBlock-color {
+        width: 28px;
+        height: 28px;
+        border-radius: 4px;
+      }
+    }
+  }
+
+  &__describeList {
+    display: flex;
+    justify-content: center;
+    background-color: $grey-200;
+    padding: 30px 0;
+
+    &-title,
+    &-value {
+      font-size: 18px;
+      margin: 10px 8px;
+    }
+
+    &-title {
+      text-align: right;
+      color: $grey-700;
+    }
+
+    &-value {
+      text-align: left;
+    }
+  }
+}
+
+.cardItem:hover {
+  border: 2px $red-extra solid;
+  border-bottom: none;
+  margin-bottom: 1px;
+}
+
+.cardItemHover:hover {
+  border-top: none;
+}
+
+.cardItem:hover .cardItemHover {
+  display: block;
+  border-top: none;
+}
