@@ -2,6 +2,7 @@ import classNames from 'classnames';
 import './style.scss';
 
 import BuyButton from '../BuyButton';
+import bike1 from '../../assets/img/bike1.png';
 
 export interface IMotorcycleData {
   name: string;
@@ -37,12 +38,7 @@ const MotorcycleCard = ({
   return (
     <>
       <div className="cardItem">
-        {/* TODO: solve problem with photo dot bike */}
-        <img
-          className="cardItem__photo"
-          src="../../assets/img/bike1.png"
-          alt="bike1"
-        />
+        <img className="cardItem__photo" src={bike1} alt="bike1" />
         <p className="cardItem__vendorCode">Артикул: {vendorCode}</p>
         <h3 className="cardItem__name">Мотоцикл: {name}</h3>
         <h2 className="cardItem__price">{price} грн</h2>
