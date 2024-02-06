@@ -7,7 +7,10 @@ $grey-100: #f7f8f9;
 $grey-200: #edeef0;
 $grey-300: #d7d7d7;
 $grey-600: #808080;
+$grey-700: #616161;
 $red-extra: #ff0000;
+$yellow: #ffff00;
+$green: #008000;
 
 //Body
 $base-min-width: 320px;
@@ -26,3 +29,17 @@ $font-type-cursive: cursive;
 //Screen size
 $mobile-screen: 300px;
 $pc-screen: 720px;
+
+//Background for block
+.red-background {
+  background-color: $red-extra;
+}
+.yellow-background {
+  background-color: $yellow;
+}
+.green-background {
+  background-color: $green;
+}
+.black-background {
+  background-color: $black;
+}

@@ -1,6 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useHttp } from '../../hooks/http.hook';
 import { API_V1_URL } from '../../constants';
+import MotorcycleCard, {
+  IMotorcycleData,
+} from '../../components/MotorcycleCard';
 
 export interface IMotorcycleCard {
   name: string;
@@ -14,9 +17,49 @@ export interface IError {
   message: string;
 }
 
+const motorcycleData: IMotorcycleData[] = [
+  {
+    name: 'LONCIN LX200GY-3 PRUSS',
+    price: 61760,
+    vendorCode: 'MOT-225',
+    availableColor: ['red', 'black', 'yellow', 'green'],
+    cubicCapacity: 150,
+    maxSpeed: 115,
+    numberOfGears: 5,
+    brakes: 'Дискові/Барабанні',
+    fuelInjection: 'Карбюратор',
+    cooling: 'Повітряне',
+  },
+  {
+    name: 'LONCIN LX200GY-3 PRUSS',
+    price: 61760,
+    vendorCode: 'MOT-225',
+    availableColor: ['red', 'black', 'yellow', 'green'],
+    cubicCapacity: 150,
+    maxSpeed: 115,
+    numberOfGears: 5,
+    brakes: 'Дискові/Барабанні',
+    fuelInjection: 'Карбюратор',
+    cooling: 'Повітряне',
+  },
+  {
+    name: 'LONCIN LX200GY-3 PRUSS',
+    price: 61760,
+    vendorCode: 'MOT-225',
+    availableColor: ['red', 'black', 'yellow', 'green'],
+    cubicCapacity: 150,
+    maxSpeed: 115,
+    numberOfGears: 5,
+    brakes: 'Дискові/Барабанні',
+    fuelInjection: 'Карбюратор',
+    cooling: 'Повітряне',
+  },
+];
+
 const CatalogMotorcycles = () => {
   const [allMotorcycles, setAllMotorcycles] = useState<IMotorcycleCard[]>([]);
   const [errorResponse, setErrorResponse] = useState<IError | null>(null);
+  console.log('errorResponse', errorResponse);
 
   const { request } = useHttp();
 
@@ -53,9 +96,17 @@ const CatalogMotorcycles = () => {
 
   return (
     <>
-      <p>CatalogMotorcycles</p>
+      <div>
+        {motorcycleData.map((el: IMotorcycleData) => {
+          return (
+            <>
+              <MotorcycleCard motorcycleData={el} />
+            </>
+          );
+        })}
+      </div>
 
-      {errorResponse?.errorCode ? (
+      {/* {errorResponse?.errorCode ? (
         <>
           <p>Oops, look like you have a problem:</p>
           {errorResponse.message}
@@ -82,7 +133,7 @@ const CatalogMotorcycles = () => {
             </>
           )}
         </>
-      )}
+      )} */}
     </>
   );
 };
