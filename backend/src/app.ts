@@ -3,12 +3,15 @@ import morgan from 'morgan';
 import helmet from 'helmet';
 import cors from 'cors';
 import mongoose from 'mongoose';
+import 'dotenv/config';
 
 import * as middlewares from './middlewares';
 import api from './api';
 import MessageResponse from './interfaces/MessageResponse';
 import { ProfileUserModel } from './schema/profileUser';
 import { IMotorcycleCard, MotorcycleCardModel } from './schema/motorcycleCard';
+
+const mongodbConnectUrl: string | undefined = process.env.MONGODB_CONNECT_URL;
 
 require('dotenv').config();
 
@@ -30,13 +33,9 @@ const corsOptions = {
     origin: string | undefined,
     callback: (err: Error | null, allow?: boolean) => void,
   ) {
-    console.log('origin', origin);
-    console.log('callback', callback);
     if (!origin || allowedOrigins.includes(origin)) {
-      console.log('inside !origin');
       callback(null, true);
     } else {
-      console.log('inside origin');
       callback(new Error('Not allowed by CORS'));
     }
   },
@@ -48,11 +47,21 @@ app.use(cors(corsOptions));
 app.use(express.json());
 
 async function main() {
+  if (!mongodbConnectUrl) {
+    console.log('wrong database url!');
+    return;
+  }
+
   await mongoose
-    .connect(
-      'mongodb+srv://artemvolok:HYmR9qkjCSf7uw1C@cluster0.7myo4hg.mongodb.net/',
-    )
-    .then(() => console.log('connection to database success!'));
+    .connect(mongodbConnectUrl)
+    .then(() => {
+      console.log('connection to database success!');
+      const port = process.env.PORT || 5000;
+      app.listen(port, () => {
+        console.log(`Listening: http://localhost:${port}`);
+      });
+    })
+    .catch(() => console.log('failed to database connect!'));
 }
 main();
 
