@@ -3,12 +3,18 @@ import morgan from 'morgan';
 import helmet from 'helmet';
 import cors from 'cors';
 import mongoose from 'mongoose';
+import 'dotenv/config';
 
 import * as middlewares from './middlewares';
 import api from './api';
 import MessageResponse from './interfaces/MessageResponse';
 import { ProfileUserModel } from './schema/profileUser';
 import { IMotorcycleCard, MotorcycleCardModel } from './schema/motorcycleCard';
+
+const databasePassword: string | undefined =
+  process.env.REACT_APP_DATABASE_PASSWORD;
+
+const databaseLogin: string | undefined = process.env.REACT_APP_DATABASE_LOGIN;
 
 require('dotenv').config();
 
@@ -50,7 +56,7 @@ app.use(express.json());
 async function main() {
   await mongoose
     .connect(
-      'mongodb+srv://artemvolok:HYmR9qkjCSf7uw1C@cluster0.7myo4hg.mongodb.net/',
+      `mongodb+srv://${databaseLogin}:${databasePassword}@cluster0.7myo4hg.mongodb.net/`,
     )
     .then(() => console.log('connection to database success!'));
 }
