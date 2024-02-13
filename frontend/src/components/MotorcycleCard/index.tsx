@@ -34,7 +34,6 @@ const MotorcycleCard = ({
     numberOfGears,
     price,
   } = motorcycleData;
-  console.log('name', name);
   return (
     <>
       <div className="cardItem">
@@ -42,8 +41,9 @@ const MotorcycleCard = ({
         <p className="cardItem__vendorCode">Артикул: {vendorCode}</p>
         <h3 className="cardItem__name">Мотоцикл: {name}</h3>
         <h2 className="cardItem__price">{price} грн</h2>
+        {/* TODO: fix onClick in button */}
         <div className="cardItem__buyBlock">
-          <BuyButton path={''} />
+          <BuyButton title="Купити" />
         </div>
         <div className="cardItemHover">
           <div className="cardItemHover__colorBlock">
