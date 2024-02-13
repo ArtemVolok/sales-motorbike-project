@@ -1,6 +1,11 @@
 import { Link } from 'react-router-dom';
 import './style.scss';
-import { DashboardUrl, AboutUsUrl, ContactsUrl } from '../../UrlsConfig';
+import {
+  DashboardUrl,
+  AboutUsUrl,
+  ContactsUrl,
+  CreateMotorcycleCartUrl,
+} from '../../UrlsConfig';
 
 const Header = () => {
   return (
@@ -17,6 +22,9 @@ const Header = () => {
             </li>
             <li>
               <Link to={ContactsUrl}>Контакти</Link>
+            </li>
+            <li>
+              <Link to={CreateMotorcycleCartUrl}>Створити</Link>
             </li>
           </ul>
         </div>
