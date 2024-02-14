@@ -3,6 +3,7 @@ export enum ETypeInput {
   NUMBER = 'number',
   SELECT = 'select',
   CHECKBOX = 'checkbox',
+  PASSWORD = 'password',
 }
 
 export enum ETypeMotorcycle {
@@ -93,7 +94,7 @@ export interface IListItem {
 }
 
 export interface IListInput extends IListItem {
-  type: ETypeInput.NUMBER | ETypeInput.STRING;
+  type: ETypeInput.NUMBER | ETypeInput.STRING | ETypeInput.PASSWORD;
 }
 
 export interface IListSelect extends IListItem {
@@ -164,7 +165,7 @@ export const listInputs: (IListInput | IListSelect | IListCheckbox)[] = [
   {
     registerName: 'password',
     label: 'Пароль:',
-    type: ETypeInput.STRING,
+    type: ETypeInput.PASSWORD,
   },
   {
     registerName: 'name',
