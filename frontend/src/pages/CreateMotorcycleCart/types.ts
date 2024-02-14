@@ -84,6 +84,7 @@ export interface INewMotorcycleCard {
   fuelTank: number | null;
   weight: number | null;
   horsePower: number | null;
+  password: string;
 }
 
 export interface IListItem {
@@ -121,6 +122,7 @@ export const defaultValueMotorcycleCard: INewMotorcycleCard = {
   fuelInjection: EFuelInjection.CARBURETOR,
   typeCooling: ETypeCooling.AIR,
   availableColors: [],
+  password: '',
 };
 
 export const typeMotorcycle: ITypeMotorcycle[] = [
@@ -159,6 +161,11 @@ export const typeCooling: ITypeCooling[] = [
 // ];
 
 export const listInputs: (IListInput | IListSelect | IListCheckbox)[] = [
+  {
+    registerName: 'password',
+    label: 'Пароль:',
+    type: ETypeInput.STRING,
+  },
   {
     registerName: 'name',
     label: 'Назва мотоциклу:',
