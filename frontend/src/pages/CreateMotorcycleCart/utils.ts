@@ -85,5 +85,6 @@ export const createMotorcycleCartSchema = yup
       .of(yup.string().required('This field is required!'))
       .min(1, 'Select min 1 color')
       .required('This field is required!'),
+    password: yup.string().required('This field is required!'),
   })
   .required();
