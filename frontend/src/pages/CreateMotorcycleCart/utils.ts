@@ -31,10 +31,10 @@ const transformNumeric = (value: any, originalValue: any) => {
 //TODO:
 // необходимо для того, чтобы каждый раз заново дергать yup чтобы
 // получать уникальные значения, проблема гипотететическая
-const funcNumericValidator = () => {
+const funcNumericValidator = (message: string) => {
   return yup
     .number()
-    .required('This field is required!')
+    .required(message)
     .typeError('This field should be a number!')
     .nullable()
     .transform(transformNumeric);
@@ -55,7 +55,7 @@ export const createMotorcycleCartSchema = yup
   .object()
   .shape({
     name: yup.string().required('This field is required!'),
-    price: funcNumericValidator(),
+    price: funcNumericValidator('This field is required!'),
     vendorCode: yup.string().required('This field is required!'),
     typeMotorcycle: yup
       .mixed<ETypeMotorcycle>()
@@ -86,5 +86,6 @@ export const createMotorcycleCartSchema = yup
       .min(1, 'Select min 1 color')
       .required('This field is required!'),
     password: yup.string().required('This field is required!'),
+    uploadImage: funcNumericValidator('You need to provide a file!'),
   })
   .required();

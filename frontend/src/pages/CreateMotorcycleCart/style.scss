@@ -62,7 +62,7 @@
         display: flex;
         justify-content: space-around;
         height: 28px;
-        margin-bottom: 22px;
+        margin-bottom: 30px;
 
         .checkboxBlock {
           width: 45px;
@@ -119,6 +119,127 @@
           background-color: black;
         }
       }
+    }
+  }
+
+  &__dnd {
+    display: block;
+
+    &-title {
+      font-size: 18px;
+      margin-bottom: 8px;
+    }
+
+    &-paragraph {
+      color: $grey-600;
+      margin-bottom: 8px;
+    }
+
+    &-inputDnd {
+      display: block;
+      padding: 10px;
+      cursor: pointer;
+      margin-bottom: 10px;
+    }
+
+    .fake-input {
+      opacity: 0;
+      z-index: -1;
+      display: none;
+    }
+
+    &-preview {
+      margin: 18px 0 14px;
+      display: flex;
+      flex-wrap: nowrap;
+      justify-content: space-between;
+      max-height: 260px;
+
+      .preview-img {
+        width: 50%;
+      }
+
+      .preview-info {
+        width: 50%;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: right;
+
+        &-button {
+          width: 120px;
+          height: 40px;
+          border: 2px $grey-600 solid;
+          background-color: $grey-200;
+          transform: skew(-10deg);
+          cursor: pointer;
+        }
+
+        &-button:hover {
+          background-color: $grey-300;
+        }
+      }
+      .preview-info > p {
+        display: block;
+        width: 100%;
+        margin: 10px 0;
+        text-align: right;
+      }
+    }
+  }
+
+  .release {
+    border: 3px solid $grey-400;
+    background-image: url('../../assets/img/pattern.png');
+    min-height: 154px;
+  }
+
+  .attach {
+    border: 3px dashed $grey-400;
+    background-image: url('../../assets/img/pattern.png');
+  }
+
+  .dnd-inner {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    padding-top: 10px;
+    // font-family: 'Ubuntu', cursive;
+
+    .dnd-uploadSvg {
+      width: 40px;
+      height: 40px;
+      fill: $deep-blue;
+      display: block;
+      margin: 10px auto;
+    }
+
+    .inner-title {
+      font-size: 14px;
+      color: $black;
+      text-align: center;
+    }
+
+    .inner-paragraph {
+      font-size: 14px;
+      color: $grey-600;
+      text-align: center;
+    }
+
+    .paragraph-release {
+      display: block;
+      font-size: 18px;
+      font-weight: 700;
+      height: 94px;
+      padding-top: 20px;
+      // margin: 35px 0;
+    }
+
+    .dnd-input {
+      width: 100%;
+      margin: 0 auto;
+      opacity: 0;
+      z-index: -1;
     }
   }
 

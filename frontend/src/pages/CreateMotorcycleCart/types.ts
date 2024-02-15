@@ -85,6 +85,7 @@ export interface INewMotorcycleCard {
   weight: number | null;
   horsePower: number | null;
   password: string;
+  uploadImage: number | null;
 }
 
 export interface IListItem {
@@ -107,22 +108,23 @@ export interface IListCheckbox extends IListItem {
 }
 
 export const defaultValueMotorcycleCard: INewMotorcycleCard = {
-  name: '',
-  price: null,
-  vendorCode: '',
-  cubicCapacity: null,
-  maxSpeed: null,
-  numberOfGears: null,
-  fuelConsumption: null,
-  fuelTank: null,
-  weight: null,
-  horsePower: null,
+  name: 'aa',
+  price: 11,
+  vendorCode: 'aa11',
+  cubicCapacity: 1,
+  maxSpeed: 1,
+  numberOfGears: 1,
+  fuelConsumption: 1,
+  fuelTank: 1,
+  weight: 1,
+  horsePower: 1,
   typeMotorcycle: ETypeMotorcycle.MOTORCYCLE,
   typeBrakes: ETypeBrakes.DISC,
   fuelInjection: EFuelInjection.CARBURETOR,
   typeCooling: ETypeCooling.AIR,
-  availableColors: [],
-  password: '',
+  availableColors: ['red', 'blue'],
+  password: 'aa11',
+  uploadImage: null,
 };
 
 export const typeMotorcycle: ITypeMotorcycle[] = [
