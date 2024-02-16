@@ -69,6 +69,7 @@ export interface ITypeCooling {
 }
 
 export interface INewMotorcycleCard {
+  uploadImage: File | null;
   name: string;
   price: number | null;
   typeMotorcycle: ETypeMotorcycle;
@@ -85,7 +86,6 @@ export interface INewMotorcycleCard {
   weight: number | null;
   horsePower: number | null;
   password: string;
-  uploadImage: number | null;
 }
 
 export interface IListItem {
@@ -108,6 +108,8 @@ export interface IListCheckbox extends IListItem {
 }
 
 export const defaultValueMotorcycleCard: INewMotorcycleCard = {
+  uploadImage: null,
+
   name: '',
   price: null,
   vendorCode: '',
@@ -124,7 +126,6 @@ export const defaultValueMotorcycleCard: INewMotorcycleCard = {
   typeCooling: ETypeCooling.AIR,
   availableColors: [],
   password: '',
-  uploadImage: null,
 };
 
 export const typeMotorcycle: ITypeMotorcycle[] = [

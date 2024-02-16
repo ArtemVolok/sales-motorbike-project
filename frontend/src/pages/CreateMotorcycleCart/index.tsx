@@ -65,16 +65,13 @@ const CreateMotorcycleCartPage = () => {
   };
 
   const handleFiles = (file: File | null) => {
-    if (!file) return;
-
-    if (file.type !== 'image/png') {
-      setError('uploadImage', {
-        message: 'File should be a photo png type',
+    if (file?.type !== 'image/png') {
+      return setError('uploadImage', {
+        message: 'File should be a photo png type!',
       });
-    } else {
-      setUploadPhoto(file);
-      setValue('uploadImage', 1);
     }
+    setUploadPhoto(file);
+    setValue('uploadImage', file);
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -261,11 +258,6 @@ const CreateMotorcycleCartPage = () => {
                         />
                       </div>
                     </label>
-                    <input
-                      type="number"
-                      className="fake-input"
-                      id="fake-input"
-                    />
                     {errors.uploadImage && (
                       <p className="form__error">
                         {errors.uploadImage.message}
