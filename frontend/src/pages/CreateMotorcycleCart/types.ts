@@ -70,6 +70,7 @@ export interface ITypeCooling {
 }
 
 export interface INewMotorcycleCard {
+  uploadImage: File | null;
   name: string;
   price: number | null;
   typeMotorcycle: ETypeMotorcycle;
@@ -108,6 +109,8 @@ export interface IListCheckbox extends IListItem {
 }
 
 export const defaultValueMotorcycleCard: INewMotorcycleCard = {
+  uploadImage: null,
+
   name: '',
   price: null,
   vendorCode: '',

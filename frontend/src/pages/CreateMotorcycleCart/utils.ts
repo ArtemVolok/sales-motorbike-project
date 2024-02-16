@@ -6,21 +6,6 @@ import {
   ETypeMotorcycle,
 } from './types';
 
-//TODO: save for future generations
-// .transform((_, val) => {
-//   console.log('value', val);
-//   console.log('isNaN', isNaN(val));
-//   if (!isNaN(val) && val !== null && val !== '') {
-//     // console.log('val', typeof val);
-//     console.log('inside');
-
-//     return +val;
-//   } else {
-//     console.log('vlad');
-//     return undefined;
-//   }
-// })
-
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const transformNumeric = (value: any, originalValue: any) => {
   return !isNaN(originalValue) && originalValue !== null && originalValue !== ''
@@ -28,22 +13,15 @@ const transformNumeric = (value: any, originalValue: any) => {
     : undefined;
 };
 
-//TODO:
-// необходимо для того, чтобы каждый раз заново дергать yup чтобы
-// получать уникальные значения, проблема гипотететическая
-const funcNumericValidator = () => {
+const funcNumericValidator = (message: string) => {
   return yup
     .number()
-    .required('This field is required!')
+    .required(message)
     .typeError('This field should be a number!')
     .nullable()
     .transform(transformNumeric);
 };
 
-//TODO:
-// константа создает одну ссылку на данные с yup (валидатор),
-// которыей может возвращать одто и тоже значения для разныъ инпутом
-// и они будут валидироватся одновременно
 const numericValidator = yup
   .number()
   .required('This field is required!')
@@ -54,8 +32,18 @@ const numericValidator = yup
 export const createMotorcycleCartSchema = yup
   .object()
   .shape({
+    uploadImage: yup
+      .mixed<File>()
+      .required('File required')
+      .nullable()
+      .test(
+        'required',
+        'You need to provide a file!',
+        (value) => value !== null,
+      ),
+
     name: yup.string().required('This field is required!'),
-    price: funcNumericValidator(),
+    price: funcNumericValidator('This field is required!'),
     vendorCode: yup.string().required('This field is required!'),
     typeMotorcycle: yup
       .mixed<ETypeMotorcycle>()

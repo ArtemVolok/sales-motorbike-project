@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { yupResolver } from '@hookform/resolvers/yup';
@@ -11,15 +12,22 @@ import {
 import { createMotorcycleCartSchema } from './utils';
 import { DashboardUrl } from '../../UrlsConfig';
 import XMark from '../../assets/xmark-solid.svg?react';
+import DownloadFile from '../../assets/download-solid.svg?react';
 
 import './style.scss';
 
 const CreateMotorcycleCartPage = () => {
   const navigate = useNavigate();
+  const [useDrag, setUseDrag] = useState<boolean>(false);
+  const [uploadPhoto, setUploadPhoto] = useState<File | null>(null);
+  const [preview, setPreview] = useState<string>('');
+
   const {
     handleSubmit,
     register,
     formState: { errors },
+    setError,
+    setValue,
   } = useForm<INewMotorcycleCard>({
     mode: 'onChange',
     defaultValues: defaultValueMotorcycleCard,
@@ -31,6 +39,64 @@ const CreateMotorcycleCartPage = () => {
   ) => {
     console.log('data', data);
   };
+
+  const dragStartHandler = (e: React.DragEvent<HTMLLabelElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    setUseDrag(true);
+  };
+
+  const dragLeaveHandler = (e: React.DragEvent<HTMLLabelElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    setUseDrag(false);
+  };
+
+  const onDropHandler = (e: React.DragEvent<HTMLLabelElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    const photo = [...e.dataTransfer.files];
+    handleFiles(photo[0]);
+
+    setUseDrag(false);
+  };
+
+  const handleFiles = (file: File | null) => {
+    if (file?.type !== 'image/png') {
+      return setError('uploadImage', {
+        message: 'File should be a photo png type!',
+      });
+    }
+    setUploadPhoto(file);
+    setValue('uploadImage', file);
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files;
+
+    handleFiles(file ? file[0] : null);
+  };
+
+  const removeUploadPhoto = () => {
+    setPreview('');
+    setUploadPhoto(null);
+    setValue('uploadImage', null);
+  };
+
+  useEffect(() => {
+    if (!uploadPhoto) {
+      setPreview('');
+      return;
+    }
+
+    const objectUrl = URL.createObjectURL(uploadPhoto);
+    setPreview(objectUrl);
+
+    return () => URL.revokeObjectURL(objectUrl);
+  }, [uploadPhoto]);
 
   return (
     <div className="wrapper">
@@ -141,6 +207,90 @@ const CreateMotorcycleCartPage = () => {
                   </div>
                 );
               })}
+              <div className="createCard__dnd">
+                <h2 className="createCard__dnd-title">Загрузка фото</h2>
+                {!preview && (
+                  <>
+                    <p className="createCard__dnd-paragraph">
+                      Прикріпіть фото мотоциклу нижче
+                    </p>
+                    <label
+                      className={classNames(
+                        `createCard__dnd-inputDnd ${
+                          useDrag ? 'release' : 'attach'
+                        }`,
+                      )}
+                      onDragStart={(e) => {
+                        dragStartHandler(e);
+                      }}
+                      onDragLeave={(e) => {
+                        dragLeaveHandler(e);
+                      }}
+                      onDragOver={(e) => {
+                        dragStartHandler(e);
+                      }}
+                      onDrop={(e) => onDropHandler(e)}
+                    >
+                      <div className="dnd-inner">
+                        {useDrag ? (
+                          <p className="paragraph-release">
+                            Відпустіть зображення для загрузки
+                          </p>
+                        ) : (
+                          <div>
+                            <div className="dnd-uploadSvg">
+                              <DownloadFile />
+                            </div>
+                            <h3 className="inner-title">
+                              Перетащіть зображення для загрузки
+                            </h3>
+                            <p className="inner-paragraph">
+                              або просто натисніть на це поле
+                            </p>
+                          </div>
+                        )}
+                        <input
+                          type="file"
+                          className="dnd-input"
+                          accept="image/*"
+                          onChange={handleInputChange}
+                          id="uploadFile"
+                        />
+                      </div>
+                    </label>
+                    {errors.uploadImage && (
+                      <p className="form__error">
+                        {errors.uploadImage.message}
+                      </p>
+                    )}
+                  </>
+                )}
+
+                {preview && (
+                  <div className="createCard__dnd-preview">
+                    <img
+                      src={preview}
+                      alt="Your upload photo"
+                      className="preview-img"
+                    />
+                    <div className="preview-info">
+                      <p>Назва фото: {uploadPhoto?.name || 'Назва відсутня'}</p>
+                      <p>Тип фото: {uploadPhoto?.type || 'Тип відсутній'}</p>
+                      <p>
+                        Розмір фото: {uploadPhoto?.size || 'Розмір відсутній'}{' '}
+                        байт
+                      </p>
+                      <button
+                        className="preview-info-button"
+                        onClick={removeUploadPhoto}
+                      >
+                        Видалити фото
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </div>
+
               <div className="createCard__buttonBlock">
                 <button type="button" className="buttonBlock-cancel">
                   Вийти

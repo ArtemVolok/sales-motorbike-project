@@ -14,6 +14,9 @@ $yellow: #ffff00;
 $green: #008000;
 $orange: #c26e00;
 $blue: #0003ad;
+$blue-100: #a8a9ff;
+$blue-300: #3d40eb;
+$deep-blue: #1e3050;
 
 //Body
 $base-min-width: 320px;
@@ -50,7 +53,7 @@ $pc-screen: 720px;
   background-color: $orange;
 }
 .blue-background {
-  background-color: $blue;
+  background-color: $blue-300;
 }
 .yellow-background {
   background-color: $yellow;
