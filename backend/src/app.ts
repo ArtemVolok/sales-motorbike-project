@@ -1,15 +1,23 @@
 import express, { Request, Response } from 'express';
+import { validationResult } from 'express-validator';
 import morgan from 'morgan';
 import helmet from 'helmet';
 import cors from 'cors';
 import mongoose from 'mongoose';
 import 'dotenv/config';
+import multer from 'multer';
+import path from 'path';
 
-import * as middlewares from './middlewares';
-import api from './api';
-import MessageResponse from './interfaces/MessageResponse';
+console.log('multer', multer);
+
+import * as middlewares from './middleware/middlewares';
 import { ProfileUserModel } from './schema/profileUser';
-import { IMotorcycleCard, MotorcycleCardModel } from './schema/motorcycleCard';
+import { createMotorcycleCardSchema } from './schema/MotorcycleCard/utils';
+import { IMotorcycleCard } from './schema/MotorcycleCard/types';
+import upload from './middleware/multerMiddleware';
+import MessageResponse from './interfaces/MessageResponse';
+import api from './api';
+import { MotorcycleCardModel } from './schema/motorcycleCard';
 
 const mongodbConnectUrl: string | undefined = process.env.MONGODB_CONNECT_URL;
 
@@ -17,6 +25,7 @@ require('dotenv').config();
 
 const app = express();
 
+app.use('images', express.static(path.join(__dirname, './images')));
 app.use(morgan('dev'));
 app.use(helmet());
 
@@ -95,21 +104,75 @@ app.get<{}, MessageResponse>('/', (req, res) => {
 
 app.post(
   '/motorcycleCards/create',
+  upload.single('uploadImage'),
+  createMotorcycleCardSchema,
   async (req: Request<any, any, IMotorcycleCard>, res: Response) => {
-    if (
-      !req.body.name ||
-      !req.body.price ||
-      !req.body.description ||
-      !req.body.vendorCode
-    ) {
+    if (!req.file)
       return res.status(400).json({
         errorCode: 400,
-        errorMessage: 'Incorrect field or some fields are empty',
+        errorMessage: 'FormData is empty!',
       });
+
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
     }
 
-    const createMotorcycle = await MotorcycleCardModel.create(req.body);
-    res.json(createMotorcycle);
+    const {
+      name,
+      price,
+      typeMotorcycle,
+      typeBrakes,
+      fuelInjection,
+      typeCooling,
+      vendorCode,
+      availableColors,
+      cubicCapacity,
+      maxSpeed,
+      numberOfGears,
+      fuelConsumption,
+      fuelTank,
+      weight,
+      horsePower,
+      password,
+    } = req.body;
+
+    const { filename, size, path: filePath, originalname } = req.file;
+
+    const preparedData = {
+      name,
+      price,
+      typeMotorcycle,
+      typeBrakes,
+      fuelInjection,
+      typeCooling,
+      vendorCode,
+      availableColors,
+      cubicCapacity,
+      maxSpeed,
+      numberOfGears,
+      fuelConsumption,
+      fuelTank,
+      weight,
+      horsePower,
+      password,
+      uploadImage: { filename, size, path: filePath, originalname },
+    };
+    const createMotorcycle = await MotorcycleCardModel.create(preparedData);
+    return res.status(201).json(createMotorcycle);
+
+    // if (!req.file) {
+    //   res.status(400).send('No file uploaded.');
+    //   return;
+    // }
+    // if (errors.isEmpty()) {
+    //   const createMotorcycle = await MotorcycleCardModel.create(req.body);
+    //   return res.status(201).json(createMotorcycle);
+    // }
+
+    // const createMotorcycle = await MotorcycleCardModel.create(req.body);
+    // res.json(createMotorcycle);
   },
 );
 
