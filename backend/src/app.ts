@@ -4,12 +4,20 @@ import helmet from 'helmet';
 import cors from 'cors';
 import mongoose from 'mongoose';
 import 'dotenv/config';
+import multer from 'multer';
 
-import * as middlewares from './middlewares';
+console.log('multer', multer);
+
+import * as middlewares from './middleware/middlewares';
 import api from './api';
 import MessageResponse from './interfaces/MessageResponse';
 import { ProfileUserModel } from './schema/profileUser';
-import { IMotorcycleCard, MotorcycleCardModel } from './schema/motorcycleCard';
+import { MotorcycleCardModel } from './schema/MotorcycleCard';
+import { IMotorcycleCard } from './schema/MotorcycleCard/types';
+import { createMotorcycleCardSchema } from './schema/MotorcycleCard/utils';
+import { validationResult } from 'express-validator';
+import upload from './middleware/multerMiddleware';
+import path from 'path';
 
 const mongodbConnectUrl: string | undefined = process.env.MONGODB_CONNECT_URL;
 
@@ -17,6 +25,7 @@ require('dotenv').config();
 
 const app = express();
 
+app.use('images', express.static(path.join(__dirname, '../src/images')));
 app.use(morgan('dev'));
 app.use(helmet());
 
@@ -95,21 +104,32 @@ app.get<{}, MessageResponse>('/', (req, res) => {
 
 app.post(
   '/motorcycleCards/create',
+  createMotorcycleCardSchema,
+  upload.single('imageMotorcycle'),
   async (req: Request<any, any, IMotorcycleCard>, res: Response) => {
-    if (
-      !req.body.name ||
-      !req.body.price ||
-      !req.body.description ||
-      !req.body.vendorCode
-    ) {
-      return res.status(400).json({
-        errorCode: 400,
-        errorMessage: 'Incorrect field or some fields are empty',
-      });
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
     }
 
-    const createMotorcycle = await MotorcycleCardModel.create(req.body);
-    res.json(createMotorcycle);
+    if (!req.file) {
+      res.status(400).send('No file uploaded.');
+      return;
+    }
+    res.status(201).json('all is good');
+    // if (errors.isEmpty()) {
+    //   const createMotorcycle = await MotorcycleCardModel.create(req.body);
+    //   return res.status(201).json(createMotorcycle);
+    // }
+
+    // return res.status(400).json({
+    //   errorCode: 400,
+    //   errorMessage: 'Incorrect field or some fields are empty',
+    // });
+
+    // const createMotorcycle = await MotorcycleCardModel.create(req.body);
+    // res.json(createMotorcycle);
   },
 );
 
