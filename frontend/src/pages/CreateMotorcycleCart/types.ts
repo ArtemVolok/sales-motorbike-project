@@ -29,15 +29,6 @@ export enum EFuelInjection {
   CARBURETOR = 'carburetor',
 }
 
-// export enum EAvailableColor {
-//   RED = 'red',
-//   BLUE = 'blue',
-//   ORANGE = 'orange',
-//   GREEN = 'green',
-//   BLACK = 'black',
-//   WHITE = 'white',
-// }
-
 //TODO:
 export const listColors = [
   'red',
@@ -111,22 +102,22 @@ export interface IListCheckbox extends IListItem {
 export const defaultValueMotorcycleCard: INewMotorcycleCard = {
   uploadImage: null,
 
-  name: '',
-  price: null,
-  vendorCode: '',
-  cubicCapacity: null,
-  maxSpeed: null,
-  numberOfGears: null,
-  fuelConsumption: null,
-  fuelTank: null,
-  weight: null,
-  horsePower: null,
+  name: 'qwerty',
+  price: 1,
+  vendorCode: '111qwerty',
+  cubicCapacity: 1,
+  maxSpeed: 1,
+  numberOfGears: 1,
+  fuelConsumption: 1,
+  fuelTank: 1,
+  weight: 1,
+  horsePower: 1,
   typeMotorcycle: ETypeMotorcycle.MOTORCYCLE,
   typeBrakes: ETypeBrakes.DISC,
   fuelInjection: EFuelInjection.CARBURETOR,
   typeCooling: ETypeCooling.AIR,
-  availableColors: [],
-  password: '',
+  availableColors: ['red'],
+  password: 'qwerty111',
 };
 
 export const typeMotorcycle: ITypeMotorcycle[] = [
@@ -154,15 +145,6 @@ export const typeCooling: ITypeCooling[] = [
   { type: ETypeCooling.AIR, name: 'Повітряна' },
   { type: ETypeCooling.LIQUID, name: 'Рідка' },
 ];
-
-// export const availableColors = [
-//   EAvailableColor.BLACK,
-//   EAvailableColor.BLUE,
-//   EAvailableColor.GREEN,
-//   EAvailableColor.ORANGE,
-//   EAvailableColor.RED,
-//   EAvailableColor.WHITE,
-// ];
 
 export const listInputs: (IListInput | IListSelect | IListCheckbox)[] = [
   {

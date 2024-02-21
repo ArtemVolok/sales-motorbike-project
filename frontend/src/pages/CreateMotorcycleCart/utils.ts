@@ -19,6 +19,7 @@ const funcNumericValidator = (message: string) => {
     .required(message)
     .typeError('This field should be a number!')
     .nullable()
+    .positive('Only positive number!')
     .transform(transformNumeric);
 };
 
@@ -27,6 +28,7 @@ const numericValidator = yup
   .required('This field is required!')
   .typeError('This field should be a number!')
   .nullable()
+  .positive('Only positive number!')
   .transform(transformNumeric);
 
 export const createMotorcycleCartSchema = yup
@@ -42,13 +44,13 @@ export const createMotorcycleCartSchema = yup
         (value) => value !== null,
       ),
 
-    name: yup.string().required('This field is required!'),
+    name: yup.string().required('This field is required!').max(255),
     price: funcNumericValidator('This field is required!'),
-    vendorCode: yup.string().required('This field is required!'),
+    vendorCode: yup.string().required('This field is required!').max(255),
     typeMotorcycle: yup
       .mixed<ETypeMotorcycle>()
       .oneOf(Object.values(ETypeMotorcycle))
-      .required(),
+      .required('This field is required!'),
     typeBrakes: yup
       .mixed<ETypeBrakes>()
       .oneOf(Object.values(ETypeBrakes))

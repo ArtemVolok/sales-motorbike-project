@@ -5,7 +5,7 @@ export interface IUseHttp<TResponse> {
     url: string,
     method: string,
     body?: Record<string, string | number | string[] | number[] | null>,
-    headers?: Record<string, string>,
+    contentType?: Record<string, string>,
     credentials?: RequestCredentials,
   ): Promise<TResponse>;
 }
@@ -15,18 +15,19 @@ export const useHttp = () => {
     async (
       url: string,
       method: string,
-      body?: Record<string, string | number | string[] | number[] | null>,
-      headers = {},
+      body?:
+        | Record<string, string | number | string[] | number[] | null>
+        | FormData,
+      contentType: string = 'application/json',
       credentials?: RequestCredentials,
     ) => {
       try {
         console.log('inside useHttp');
+        console.log('body before', body);
         const innerBody = body ? JSON.stringify(body) : null;
+        console.log('innerBody', innerBody);
 
-        headers = {
-          'Content-Type': 'application/json',
-          // Authorization: `Bearer ${storage}`,
-        };
+        console.log('headers', contentType);
 
         if (!credentials) {
           credentials = 'include';
@@ -35,7 +36,7 @@ export const useHttp = () => {
         const response = await fetch(url, {
           method,
           body: innerBody,
-          headers,
+          // headers,
           credentials,
           mode: 'cors',
         });

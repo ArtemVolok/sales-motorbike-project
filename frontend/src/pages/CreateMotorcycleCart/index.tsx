@@ -3,21 +3,45 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { yupResolver } from '@hookform/resolvers/yup';
 import classNames from 'classnames';
+import { useMutation } from 'react-query';
+import { createMotorcycleCartSchema } from './utils';
+import { DashboardUrl } from '../../UrlsConfig';
+import XMark from '../../assets/xmark-solid.svg?react';
+import DownloadFile from '../../assets/download-solid.svg?react';
+import { API_V1_URL } from '../../constants';
 import {
   ETypeInput,
   INewMotorcycleCard,
   defaultValueMotorcycleCard,
   listInputs,
 } from './types';
-import { createMotorcycleCartSchema } from './utils';
-import { DashboardUrl } from '../../UrlsConfig';
-import XMark from '../../assets/xmark-solid.svg?react';
-import DownloadFile from '../../assets/download-solid.svg?react';
-
 import './style.scss';
+
+const uploadMotorcycleCardData = async (data: FormData) => {
+  console.log('data in request', data);
+  const response = await fetch(`${API_V1_URL}/motorcycleCards/create`, {
+    method: 'POST',
+    body: data,
+  });
+  const jsonResponse = await response.json();
+  return jsonResponse;
+};
 
 const CreateMotorcycleCartPage = () => {
   const navigate = useNavigate();
+
+  const { mutate, data } = useMutation({
+    mutationFn: (data: FormData) => uploadMotorcycleCardData(data),
+    onSuccess: (response) => {
+      console.log('success response', response);
+    },
+    onError: (response) => {
+      console.log('error response', response);
+    },
+  });
+
+  console.log('mutation.data', data);
+
   const [useDrag, setUseDrag] = useState<boolean>(false);
   const [uploadPhoto, setUploadPhoto] = useState<File | null>(null);
   const [preview, setPreview] = useState<string>('');
@@ -34,10 +58,18 @@ const CreateMotorcycleCartPage = () => {
     resolver: yupResolver(createMotorcycleCartSchema),
   });
 
-  const onSubmit: SubmitHandler<INewMotorcycleCard> = (
+  const onSubmit: SubmitHandler<INewMotorcycleCard> = async (
     data: INewMotorcycleCard,
   ) => {
     console.log('data', data);
+
+    const formData = new FormData();
+
+    Object.entries(data).forEach(([key, value]) => {
+      formData.append(key, value);
+    });
+
+    mutate(formData);
   };
 
   const dragStartHandler = (e: React.DragEvent<HTMLLabelElement>) => {
@@ -197,6 +229,7 @@ const CreateMotorcycleCartPage = () => {
                           el.registerName as keyof INewMotorcycleCard,
                         )}
                         type={el.type}
+                        step="0.01"
                       />
                       {errors[errorName] && (
                         <p className="form__error">

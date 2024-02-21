@@ -7,7 +7,7 @@ import helmet from 'helmet';
 import cors from 'cors';
 import mongoose from 'mongoose';
 import 'dotenv/config';
-import path from 'path';
+import multer from 'multer';
 
 console.log('multer', multer);
 
