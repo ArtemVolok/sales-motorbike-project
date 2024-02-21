@@ -36,7 +36,12 @@ const MotorcycleCardItem = new mongoose.Schema({
     enum: Object.values(ETypeCooling),
   },
   availableColors: [String],
-  uploadImage: File,
+  uploadImage: {
+    path: { type: String, required: true },
+    filename: { type: String, required: true },
+    originalname: { type: String, required: true },
+    size: { type: Number, required: true },
+  },
 });
 
 export const MotorcycleCardModel = mongoose.model(

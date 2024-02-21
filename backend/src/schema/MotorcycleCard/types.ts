@@ -49,7 +49,12 @@ export interface ITypeCooling {
 }
 
 export interface IMotorcycleCard {
-  uploadImage: File;
+  uploadImage: {
+    path: string;
+    filename: number;
+    originalname: string;
+    size: number;
+  };
   name: string;
   price: number;
   typeMotorcycle: string;
