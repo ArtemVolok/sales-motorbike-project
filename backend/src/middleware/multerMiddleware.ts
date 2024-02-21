@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
 import multer, { StorageEngine } from 'multer';
 import { Request } from 'express';
 

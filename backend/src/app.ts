@@ -1,18 +1,19 @@
+/* eslint-disable import/no-extraneous-dependencies */
 import express, { Request, Response } from 'express';
 import { validationResult } from 'express-validator';
+import multer from 'multer';
 import morgan from 'morgan';
 import helmet from 'helmet';
 import cors from 'cors';
 import mongoose from 'mongoose';
 import 'dotenv/config';
-import multer from 'multer';
 import path from 'path';
 
 console.log('multer', multer);
 
 import * as middlewares from './middleware/middlewares';
 import { ProfileUserModel } from './schema/profileUser';
-import { createMotorcycleCardSchema } from './schema/MotorcycleCard/utils';
+import { motorcycleCardValidation } from './schema/MotorcycleCard/utils';
 import { IMotorcycleCard } from './schema/MotorcycleCard/types';
 import upload from './middleware/multerMiddleware';
 import MessageResponse from './interfaces/MessageResponse';
@@ -105,7 +106,7 @@ app.get<{}, MessageResponse>('/', (req, res) => {
 app.post(
   '/motorcycleCards/create',
   upload.single('uploadImage'),
-  createMotorcycleCardSchema,
+  motorcycleCardValidation,
   async (req: Request<any, any, IMotorcycleCard>, res: Response) => {
     if (!req.file)
       return res.status(400).json({

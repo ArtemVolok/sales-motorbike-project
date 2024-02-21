@@ -1,6 +1,7 @@
+// eslint-disable-next-line import/no-extraneous-dependencies
 import { body } from 'express-validator';
 
-export const createMotorcycleCardSchema = [
+export const motorcycleCardValidation = [
   body('name', 'Field name cannot be empty').not().isEmpty(),
   body('price', 'Field price cannot be empty').not().isEmpty(),
   body('vendorCode', 'Field vendorCode cannot be empty').not().isEmpty(),
