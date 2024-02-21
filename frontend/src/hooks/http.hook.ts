@@ -29,11 +29,6 @@ export const useHttp = () => {
 
         console.log('headers', contentType);
 
-        // const headers = {
-        //   'Content-Type': contentType ? contentType : 'application/json',
-        //   // Authorization: `Bearer ${storage}`,
-        // };
-
         if (!credentials) {
           credentials = 'include';
         }

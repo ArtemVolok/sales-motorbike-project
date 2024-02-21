@@ -28,15 +28,6 @@ export enum EFuelInjection {
   CARBURETOR = 'carburetor',
 }
 
-// export enum EAvailableColor {
-//   RED = 'red',
-//   BLUE = 'blue',
-//   ORANGE = 'orange',
-//   GREEN = 'green',
-//   BLACK = 'black',
-//   WHITE = 'white',
-// }
-
 //TODO:
 export const listColors = [
   'red',
@@ -153,15 +144,6 @@ export const typeCooling: ITypeCooling[] = [
   { type: ETypeCooling.AIR, name: 'Повітряна' },
   { type: ETypeCooling.LIQUID, name: 'Рідка' },
 ];
-
-// export const availableColors = [
-//   EAvailableColor.BLACK,
-//   EAvailableColor.BLUE,
-//   EAvailableColor.GREEN,
-//   EAvailableColor.ORANGE,
-//   EAvailableColor.RED,
-//   EAvailableColor.WHITE,
-// ];
 
 export const listInputs: (IListInput | IListSelect | IListCheckbox)[] = [
   {

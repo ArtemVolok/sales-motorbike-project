@@ -17,16 +17,11 @@ import {
 } from './types';
 import './style.scss';
 
-const fetchUploadFormData = async (data: INewMotorcycleCard) => {
-  const formData = new FormData();
-
-  Object.entries(data).forEach(([key, value]) => {
-    formData.append(key, value);
-  });
-
+const uploadMotorcycleCardData = async (data: FormData) => {
+  console.log('data in request', data);
   const response = await fetch(`${API_V1_URL}/motorcycleCards/create`, {
     method: 'POST',
-    body: formData,
+    body: data,
   });
   const jsonResponse = await response.json();
   return jsonResponse;
@@ -36,7 +31,7 @@ const CreateMotorcycleCartPage = () => {
   const navigate = useNavigate();
 
   const { mutate, data } = useMutation({
-    mutationFn: (data: INewMotorcycleCard) => fetchUploadFormData(data),
+    mutationFn: (data: FormData) => uploadMotorcycleCardData(data),
     onSuccess: (response) => {
       console.log('success response', response);
     },
@@ -67,7 +62,14 @@ const CreateMotorcycleCartPage = () => {
     data: INewMotorcycleCard,
   ) => {
     console.log('data', data);
-    mutate(data);
+
+    const formData = new FormData();
+
+    Object.entries(data).forEach(([key, value]) => {
+      formData.append(key, value);
+    });
+
+    mutate(formData);
   };
 
   const dragStartHandler = (e: React.DragEvent<HTMLLabelElement>) => {
