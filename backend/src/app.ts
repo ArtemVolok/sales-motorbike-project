@@ -7,7 +7,7 @@ import helmet from 'helmet';
 import cors from 'cors';
 import mongoose from 'mongoose';
 import 'dotenv/config';
-import multer from 'multer';
+import path from 'path';
 
 console.log('multer', multer);
 
@@ -18,7 +18,7 @@ import { IMotorcycleCard } from './schema/MotorcycleCard/types';
 import upload from './middleware/multerMiddleware';
 import MessageResponse from './interfaces/MessageResponse';
 import api from './api';
-import { MotorcycleCardModel } from './schema/motorcycleCard';
+import { MotorcycleCardModel } from './schema/MotorcycleCard';
 
 const mongodbConnectUrl: string | undefined = process.env.MONGODB_CONNECT_URL;
 
