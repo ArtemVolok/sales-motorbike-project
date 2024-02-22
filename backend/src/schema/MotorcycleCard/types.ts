@@ -51,7 +51,7 @@ export interface ITypeCooling {
 export interface IMotorcycleCard {
   uploadImage: {
     path: string;
-    filename: number;
+    filename: string;
     originalname: string;
     size: number;
   };

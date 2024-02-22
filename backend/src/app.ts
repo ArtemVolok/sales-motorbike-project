@@ -26,9 +26,11 @@ require('dotenv').config();
 
 const app = express();
 
-app.use('images', express.static(path.join(__dirname, './images')));
+app.use('/images', express.static(path.join(__dirname, '/images')));
 app.use(morgan('dev'));
 app.use(helmet());
+
+console.log('path', path.join(__dirname, '/images'));
 
 const allowedOrigins = [
   'http://127.0.0.1:5000',
@@ -160,28 +162,24 @@ app.post(
       password,
       uploadImage: { filename, size, path: filePath, originalname },
     };
+
     const createMotorcycle = await MotorcycleCardModel.create(preparedData);
     return res.status(201).json(createMotorcycle);
-
-    // if (!req.file) {
-    //   res.status(400).send('No file uploaded.');
-    //   return;
-    // }
-    // if (errors.isEmpty()) {
-    //   const createMotorcycle = await MotorcycleCardModel.create(req.body);
-    //   return res.status(201).json(createMotorcycle);
-    // }
-
-    // const createMotorcycle = await MotorcycleCardModel.create(req.body);
-    // res.json(createMotorcycle);
   },
 );
 
-app.get<any>('/motorcycleCards/allMotorcycle', async (_, res) => {
-  const getAllMotorcycle = await MotorcycleCardModel.find({});
-  res.json({
-    message: getAllMotorcycle,
+app.get<any>('/motorcycleCards/allMotorcycle', async (_, res: Response) => {
+  const allMotorcycle = await MotorcycleCardModel.find({});
+  console.log('allMotorcycle', allMotorcycle);
+
+  res.status(201).json({
+    response: allMotorcycle,
   });
+
+  // res.status(400).json({
+  //   errorCode: 400,
+  //   errorMessage: 'Test error from back',
+  // });
 });
 
 app.use('/api/v1', api);
