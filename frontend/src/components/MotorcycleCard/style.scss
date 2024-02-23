@@ -1,17 +1,26 @@
 @import '../../assets/scss/base/variables';
 
 .cardItem {
+  display: block;
   padding: 12px;
   padding-bottom: 10px;
   width: 350px;
   border: 2px $grey-600 solid;
   position: relative;
+  margin: 20px 0;
 
-  &__photo {
+  &__photo,
+  &__missingPhoto {
     margin: 16px auto;
     display: block;
     width: 220px;
     height: 260px;
+  }
+
+  &__missingPhoto {
+    display: flex;
+    text-align: center;
+    align-items: center;
   }
 
   &__vendorCode {

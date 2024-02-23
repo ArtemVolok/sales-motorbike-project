@@ -1,45 +1,48 @@
 import classNames from 'classnames';
-import './style.scss';
-
+import { IMotorcycleCard } from '../../pages/CatalogMotorcycles/types';
 import BuyButton from '../BuyButton';
-import bike1 from '../../assets/img/bike1.png';
+import { API_V1_URL } from '../../constants';
 
-export interface IMotorcycleData {
-  name: string;
-  price: number;
-  vendorCode: string;
-  availableColor: string[];
-  cubicCapacity: number;
-  maxSpeed: number;
-  numberOfGears: number;
-  brakes: string;
-  fuelInjection: string;
-  cooling: string;
-}
+import './style.scss';
 
 const MotorcycleCard = ({
   motorcycleData,
 }: {
-  motorcycleData: IMotorcycleData;
+  motorcycleData: IMotorcycleCard;
 }) => {
   const {
     name,
     vendorCode,
-    availableColor,
-    brakes,
-    cooling,
+    availableColors,
+    typeBrakes,
     cubicCapacity,
     fuelInjection,
     maxSpeed,
     numberOfGears,
     price,
+    typeCooling,
+    typeMotorcycle,
+    uploadImage,
   } = motorcycleData;
+
   return (
     <>
       <div className="cardItem">
-        <img className="cardItem__photo" src={bike1} alt="bike1" />
+        {!!uploadImage && uploadImage.filename ? (
+          <img
+            className="cardItem__photo"
+            src={`${API_V1_URL}/images/${uploadImage.filename}`}
+            alt="bike1"
+          />
+        ) : (
+          <div className="cardItem__missingPhoto">
+            <p> Фото тимчасово недоступне</p>
+          </div>
+        )}
         <p className="cardItem__vendorCode">Артикул: {vendorCode}</p>
-        <h3 className="cardItem__name">Мотоцикл: {name}</h3>
+        <h3 className="cardItem__name">
+          {typeMotorcycle}: {name}
+        </h3>
         <h2 className="cardItem__price">{price} грн</h2>
         {/* TODO: fix onClick in button */}
         <div className="cardItem__buyBlock">
@@ -49,7 +52,7 @@ const MotorcycleCard = ({
           <div className="cardItemHover__colorBlock">
             <p className="cardItemHover__colorBlock-title">Наявні кольори:</p>
             <div className="cardItemHover__colorBlock-colors">
-              {availableColor.map((el: string, index: number) => {
+              {availableColors.map((el: string, index: number) => {
                 return (
                   <div
                     key={index}
@@ -82,9 +85,9 @@ const MotorcycleCard = ({
                 <li>{cubicCapacity} [см³]</li>
                 <li>{maxSpeed} [км/г.]</li>
                 <li>{numberOfGears}</li>
-                <li>{brakes}</li>
+                <li>{typeBrakes}</li>
                 <li>{fuelInjection}</li>
-                <li>{cooling}</li>
+                <li>{typeCooling}</li>
               </ul>
             </div>
           </div>

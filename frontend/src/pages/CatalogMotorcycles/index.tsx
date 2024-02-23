@@ -1,35 +1,39 @@
 import { useQuery } from 'react-query';
 
 import { API_V1_URL } from '../../constants';
-import { motorcycleData } from './types';
-import MotorcycleCard, {
-  IMotorcycleData,
-} from '../../components/MotorcycleCard';
+import { IMotorcycleCard } from './types';
+import MotorcycleCard from '../../components/MotorcycleCard';
+
+import './style.scss';
 
 const getCatalogMotorcycle = async () => {
   const response = await fetch(`${API_V1_URL}/motorcycleCards/allMotorcycle`, {
     method: 'GET',
   });
   const formattedResponse = await response.json();
+  console.log('formattedResponse', formattedResponse);
   return formattedResponse;
 };
 
 const CatalogMotorcycles = () => {
   const { data } = useQuery('catalogMotorcycle', {
     queryFn: getCatalogMotorcycle,
-    onSuccess: (response) => {
-      console.log('response success', response);
-    },
-    onError: (response) => {
-      console.log('response error', response);
-    },
+    refetchOnWindowFocus: false,
   });
-
-  console.log('data useQuery', data);
 
   return (
     <>
-      <div>
+      <div className="catalogMotorcycles__list">
+        {!!data && !!data.response && (
+          <>
+            {data.response.map((el: IMotorcycleCard) => {
+              return <MotorcycleCard motorcycleData={el} key={el._id} />;
+            })}
+          </>
+        )}
+      </div>
+
+      {/* <div>
         {motorcycleData.map((el: IMotorcycleData, index: number) => {
           return (
             <div key={index}>
@@ -37,22 +41,34 @@ const CatalogMotorcycles = () => {
             </div>
           );
         })}
-      </div>
+      </div> */}
 
-      {/* {errorResponse?.errorCode ? (
+      {/* {data.errorCode !== undefined && (
+        <>
+          {data.errorMessage}
+        </>
+      )}
+
+      {data.length ? (
+        <h3>Looks like all is good</h3>
+      ) : (
+        <h3>Looks like you have not a motorcycle yet</h3>
+      )} */}
+
+      {/* {data.errorCode ? (
         <>
           <p>Oops, look like you have a problem:</p>
-          {errorResponse.message}
+          {data.errorMessage}
         </>
       ) : (
         <>
-          <p>{API_V1_URL}</p>
-          {allMotorcycles.length ? (
+          <h3>Looks like all is good</h3>
+          {data.length ? (
             <>
-              {allMotorcycles.map((el: IMotorcycleCard, index) => {
+              {data.map((el: IMotorcycleCard, index: number) => {
                 return (
                   <div key={index}>
-                    {el.description}
+                    {el.maxSpeed}
                     {el.name}
                     {el.price}
                     {el.vendorCode}
