@@ -1,6 +1,7 @@
-// eslint-disable-next-line import/no-extraneous-dependencies
+/* eslint-disable import/no-extraneous-dependencies */
 import multer, { StorageEngine } from 'multer';
 import { Request } from 'express';
+import { v4 as uuidv4 } from 'uuid';
 
 const storage: StorageEngine = multer.diskStorage({
   destination(req: Request, file: Express.Multer.File, cb) {
@@ -8,10 +9,7 @@ const storage: StorageEngine = multer.diskStorage({
   },
 
   filename(req: Request, file: Express.Multer.File, cb) {
-    cb(
-      null,
-      new Date().toISOString().replace(/:/g, '-') + '-' + file.originalname,
-    );
+    cb(null, uuidv4() + file.originalname.slice(-4));
   },
 });
 

@@ -122,44 +122,10 @@ app.post(
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const {
-      name,
-      price,
-      typeMotorcycle,
-      typeBrakes,
-      fuelInjection,
-      typeCooling,
-      vendorCode,
-      availableColors,
-      cubicCapacity,
-      maxSpeed,
-      numberOfGears,
-      fuelConsumption,
-      fuelTank,
-      weight,
-      horsePower,
-      password,
-    } = req.body;
-
     const { filename, size, path: filePath, originalname } = req.file;
 
     const preparedData = {
-      name,
-      price,
-      typeMotorcycle,
-      typeBrakes,
-      fuelInjection,
-      typeCooling,
-      vendorCode,
-      availableColors,
-      cubicCapacity,
-      maxSpeed,
-      numberOfGears,
-      fuelConsumption,
-      fuelTank,
-      weight,
-      horsePower,
-      password,
+      ...req.body,
       uploadImage: { filename, size, path: filePath, originalname },
     };
 
@@ -172,7 +138,7 @@ app.get<any>('/motorcycleCards/allMotorcycle', async (_, res: Response) => {
   const allMotorcycle = await MotorcycleCardModel.find({});
   console.log('allMotorcycle', allMotorcycle);
 
-  res.status(201).json({
+  res.status(200).json({
     response: allMotorcycle,
   });
 
