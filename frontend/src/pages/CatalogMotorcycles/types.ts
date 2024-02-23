@@ -8,6 +8,8 @@ export interface IMotorcycleCard
     originalname: string;
     size: number;
   };
+  __v: number;
+  _id: string;
 }
 
 export interface IError {

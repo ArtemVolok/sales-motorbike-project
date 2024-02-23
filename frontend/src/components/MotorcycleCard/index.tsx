@@ -28,7 +28,7 @@ const MotorcycleCard = ({
   return (
     <>
       <div className="cardItem">
-        {uploadImage !== undefined && uploadImage.filename ? (
+        {!!uploadImage && uploadImage.filename ? (
           <img
             className="cardItem__photo"
             src={`${API_V1_URL}/images/${uploadImage.filename}`}

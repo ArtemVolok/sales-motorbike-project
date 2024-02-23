@@ -11,6 +11,7 @@ const getCatalogMotorcycle = async () => {
     method: 'GET',
   });
   const formattedResponse = await response.json();
+  console.log('formattedResponse', formattedResponse);
   return formattedResponse;
 };
 
@@ -23,10 +24,10 @@ const CatalogMotorcycles = () => {
   return (
     <>
       <div className="catalogMotorcycles__list">
-        {data && data.response.length && (
+        {data && !!data.response && (
           <>
-            {data.response.map((el: IMotorcycleCard, index: number) => {
-              return <MotorcycleCard motorcycleData={el} key={index} />;
+            {data.response.map((el: IMotorcycleCard) => {
+              return <MotorcycleCard motorcycleData={el} key={el._id} />;
             })}
           </>
         )}
