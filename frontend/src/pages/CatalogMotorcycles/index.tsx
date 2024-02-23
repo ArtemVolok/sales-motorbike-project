@@ -24,7 +24,7 @@ const CatalogMotorcycles = () => {
   return (
     <>
       <div className="catalogMotorcycles__list">
-        {data && !!data.response && (
+        {!!data && !!data.response && (
           <>
             {data.response.map((el: IMotorcycleCard) => {
               return <MotorcycleCard motorcycleData={el} key={el._id} />;
