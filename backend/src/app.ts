@@ -104,7 +104,7 @@ app.get<{}, MessageResponse>('/', (req, res) => {
 ////////****MOTORCYCLE*****////////
 
 app.post(
-  '/motorcycleCards/create',
+  '/motorcycleCards',
   upload.single('uploadImage'),
   motorcycleCardValidation,
   async (req: Request<any, any, IMotorcycleCard>, res: Response) => {
@@ -132,18 +132,12 @@ app.post(
   },
 );
 
-app.get<any>('/motorcycleCards/allMotorcycle', async (_, res: Response) => {
+app.get<any>('/motorcycleCards', async (_, res: Response) => {
   const allMotorcycle = await MotorcycleCardModel.find({});
-  // console.log('allMotorcycle', allMotorcycle);
 
   res.status(200).json({
     response: allMotorcycle,
   });
-
-  // res.status(400).json({
-  //   errorCode: 400,
-  //   errorMessage: 'Test error from back',
-  // });
 });
 
 interface IRemove {
@@ -151,22 +145,14 @@ interface IRemove {
 }
 
 app.delete(
-  '/motorcycleCards/remove/:id',
+  '/motorcycleCards/:id',
   async (req: Request<any, any, IRemove>, res: Response) => {
     console.log('inside delete /motorcycleCards');
 
     const idMotorcycleCard = req.params.id;
-    const preparedID = idMotorcycleCard.substring(1);
 
-    if (!idMotorcycleCard) {
-      return res.status(400).json({
-        errorCode: 400,
-        errorMessage: 'ID is empty!',
-      });
-    }
-
-    await MotorcycleCardModel.findByIdAndDelete(preparedID);
-    res.status(200).json({ message: 'Motorcycle card successful delete' });
+    await MotorcycleCardModel.findByIdAndDelete(idMotorcycleCard);
+    res.status(200).json({ message: 'Motorcycle card successful deleted!' });
   },
 );
 
