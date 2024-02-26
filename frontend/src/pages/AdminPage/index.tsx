@@ -9,16 +9,6 @@ import { IError, IMotorcycleCard } from '../CatalogMotorcycles/types';
 import './style.scss';
 
 const AdminPage = () => {
-  const { data, isLoading, error, isError } = useQuery<
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    any,
-    AxiosError<IError> | null
-  >('allMotorcycle', {
-    queryFn: getAllMotorcycle,
-
-    refetchOnWindowFocus: false,
-  });
-
   const {
     mutate,
     data: removeData,
@@ -29,6 +19,16 @@ const AdminPage = () => {
     string
   >({
     mutationFn: removeMotorcycleCard,
+  });
+
+  const { data, isLoading, error, isError } = useQuery<
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    any,
+    AxiosError<IError> | null
+  >(['allMotorcycle', removeData], {
+    queryFn: getAllMotorcycle,
+
+    refetchOnWindowFocus: false,
   });
 
   const handleDeleteMotorcycleCard = (_id: string) => {
