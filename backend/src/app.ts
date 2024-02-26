@@ -30,8 +30,6 @@ app.use('/images', express.static(path.join(__dirname, '/images')));
 app.use(morgan('dev'));
 app.use(helmet());
 
-console.log('path', path.join(__dirname, '/images'));
-
 const allowedOrigins = [
   'http://127.0.0.1:5000',
   'http://127.0.0.1:3000',
@@ -136,7 +134,7 @@ app.post(
 
 app.get<any>('/motorcycleCards/allMotorcycle', async (_, res: Response) => {
   const allMotorcycle = await MotorcycleCardModel.find({});
-  console.log('allMotorcycle', allMotorcycle);
+  // console.log('allMotorcycle', allMotorcycle);
 
   res.status(200).json({
     response: allMotorcycle,
@@ -147,6 +145,30 @@ app.get<any>('/motorcycleCards/allMotorcycle', async (_, res: Response) => {
   //   errorMessage: 'Test error from back',
   // });
 });
+
+interface IRemove {
+  id: string;
+}
+
+app.delete(
+  '/motorcycleCards/remove/:id',
+  async (req: Request<any, any, IRemove>, res: Response) => {
+    console.log('inside delete /motorcycleCards');
+
+    const idMotorcycleCard = req.params.id;
+    const preparedID = idMotorcycleCard.substring(1);
+
+    if (!idMotorcycleCard) {
+      return res.status(400).json({
+        errorCode: 400,
+        errorMessage: 'ID is empty!',
+      });
+    }
+
+    await MotorcycleCardModel.findByIdAndDelete(preparedID);
+    res.status(200).json({ message: 'Motorcycle card successful delete' });
+  },
+);
 
 app.use('/api/v1', api);
 
