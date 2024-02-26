@@ -19,7 +19,7 @@ import './style.scss';
 
 const uploadMotorcycleCardData = async (data: FormData) => {
   console.log('data in request', data);
-  const response = await fetch(`${API_V1_URL}/motorcycleCards/create`, {
+  const response = await fetch(`${API_V1_URL}/motorcycleCards`, {
     method: 'POST',
     body: data,
   });

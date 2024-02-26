@@ -1,14 +1,9 @@
-import { IError } from '../../pages/CatalogMotorcycles/types';
-
 export interface IMotorcycleCardAdmin {
   _id: string;
   name: string;
   vendorCode: string;
   price: number;
-  refetch: () => void;
-  setDeleteMotorcycleResponse: (
-    data: ISuccessDeleteMotorcycleResponse | IError,
-  ) => void;
+  handleDeleteMotorcycleCard: (_id: string) => void;
 }
 
 export interface ISuccessDeleteMotorcycleResponse {

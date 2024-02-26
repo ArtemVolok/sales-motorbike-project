@@ -7,7 +7,7 @@ import MotorcycleCard from '../../components/MotorcycleCard';
 import './style.scss';
 
 const getCatalogMotorcycle = async () => {
-  const response = await fetch(`${API_V1_URL}/motorcycleCards/allMotorcycle`, {
+  const response = await fetch(`${API_V1_URL}/motorcycleCards`, {
     method: 'GET',
   });
   const formattedResponse = await response.json();
