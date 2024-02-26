@@ -4,3 +4,4 @@ export const AboutUsUrl = 'about-us';
 export const ContactsUrl = 'contacts';
 export const CatalogMotorcyclesUrl = 'catalogMotorcycles';
 export const CreateMotorcycleCartUrl = 'create-motorcycle';
+export const AdminPageUrl = 'admin-page';

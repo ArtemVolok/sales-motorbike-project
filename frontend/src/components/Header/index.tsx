@@ -6,6 +6,7 @@ import {
   ContactsUrl,
   CreateMotorcycleCartUrl,
   FeedBackUrl,
+  AdminPageUrl,
 } from '../../UrlsConfig';
 
 const Header = () => {
@@ -29,6 +30,9 @@ const Header = () => {
             </li>
             <li>
               <Link to={FeedBackUrl}>Фідбек</Link>
+            </li>
+            <li>
+              <Link to={AdminPageUrl}>Адмінка</Link>
             </li>
           </ul>
         </div>

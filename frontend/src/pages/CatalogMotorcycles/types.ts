@@ -14,5 +14,5 @@ export interface IMotorcycleCard
 
 export interface IError {
   errorCode: number;
-  message: string;
+  errorMessage: string;
 }
