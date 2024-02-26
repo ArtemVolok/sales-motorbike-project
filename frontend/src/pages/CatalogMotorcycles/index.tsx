@@ -5,14 +5,12 @@ import { IMotorcycleCard } from './types';
 import MotorcycleCard from '../../components/MotorcycleCard';
 
 import './style.scss';
+import axios from 'axios';
 
 const getCatalogMotorcycle = async () => {
-  const response = await fetch(`${API_V1_URL}/motorcycleCards/allMotorcycle`, {
-    method: 'GET',
-  });
-  const formattedResponse = await response.json();
-  console.log('formattedResponse', formattedResponse);
-  return formattedResponse;
+  const response = await axios.get(`${API_V1_URL}/motorcycleCards`);
+
+  return response.data;
 };
 
 const CatalogMotorcycles = () => {

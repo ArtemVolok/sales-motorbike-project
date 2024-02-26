@@ -30,8 +30,6 @@ app.use('/images', express.static(path.join(__dirname, '/images')));
 app.use(morgan('dev'));
 app.use(helmet());
 
-console.log('path', path.join(__dirname, '/images'));
-
 const allowedOrigins = [
   'http://127.0.0.1:5000',
   'http://127.0.0.1:3000',
@@ -106,7 +104,7 @@ app.get<{}, MessageResponse>('/', (req, res) => {
 ////////****MOTORCYCLE*****////////
 
 app.post(
-  '/motorcycleCards/create',
+  '/motorcycleCards',
   upload.single('uploadImage'),
   motorcycleCardValidation,
   async (req: Request<any, any, IMotorcycleCard>, res: Response) => {
@@ -134,19 +132,29 @@ app.post(
   },
 );
 
-app.get<any>('/motorcycleCards/allMotorcycle', async (_, res: Response) => {
+app.get<any>('/motorcycleCards', async (_, res: Response) => {
   const allMotorcycle = await MotorcycleCardModel.find({});
-  console.log('allMotorcycle', allMotorcycle);
 
   res.status(200).json({
     response: allMotorcycle,
   });
-
-  // res.status(400).json({
-  //   errorCode: 400,
-  //   errorMessage: 'Test error from back',
-  // });
 });
+
+interface IRemove {
+  id: string;
+}
+
+app.delete(
+  '/motorcycleCards/:id',
+  async (req: Request<any, any, IRemove>, res: Response) => {
+    console.log('inside delete /motorcycleCards');
+
+    const idMotorcycleCard = req.params.id;
+
+    await MotorcycleCardModel.findByIdAndDelete(idMotorcycleCard);
+    res.status(200).json({ message: 'Motorcycle card successful deleted!' });
+  },
+);
 
 app.use('/api/v1', api);
 

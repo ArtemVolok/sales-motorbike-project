@@ -1,0 +1,44 @@
+@import '../../assets/scss/base/variables';
+
+.adminMotorcycleCard {
+  display: flex;
+  justify-content: space-between;
+  margin: 20px auto;
+
+  &__th {
+    display: block;
+    width: 180px;
+    font-size: 18px;
+    font-weight: 400;
+
+    &-id {
+      width: 250px;
+      font-weight: 400;
+    }
+  }
+}
+
+.optionBlock {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: center;
+  width: 180px;
+
+  &__edit,
+  &__remove {
+    display: block;
+    fill: $grey-600;
+    cursor: pointer;
+    width: 26px;
+    height: 26px;
+    margin: 0 10px;
+  }
+
+  &__remove:hover {
+    fill: red;
+  }
+
+  &__edit:hover {
+    fill: rgb(143, 180, 201);
+  }
+}
