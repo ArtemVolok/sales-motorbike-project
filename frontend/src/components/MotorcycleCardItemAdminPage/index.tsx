@@ -11,7 +11,7 @@ const MotorcycleCardItemAdminPage = ({
   handleDeleteMotorcycleCard,
 }: IMotorcycleCardAdmin) => {
   return (
-    <div className="adminMotorcycleCard">
+    <tr className="adminMotorcycleCard">
       <th className="adminMotorcycleCard__th-id">{_id || 'Дані відсутні'}</th>
       <th className="adminMotorcycleCard__th">{name || 'Дані відсутні'}</th>
       <th className="adminMotorcycleCard__th">
@@ -25,7 +25,7 @@ const MotorcycleCardItemAdminPage = ({
           className="optionBlock__remove"
         />
       </th>
-    </div>
+    </tr>
   );
 };
 

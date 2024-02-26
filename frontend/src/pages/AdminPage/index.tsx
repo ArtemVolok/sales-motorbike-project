@@ -49,21 +49,21 @@ const AdminPage = () => {
   return (
     <div className="wrapper">
       {isError && error?.response?.data.errorCode}
+      {!!removeError && removeError.response?.data && (
+        <div className="adminPage__table-errorRemove">
+          <p>{removeError.response.data.errorMessage}</p>
+        </div>
+      )}
+      {!!removeData && (
+        <div className="adminPage__table-successRemove">
+          <p>{removeData.data.message}</p>
+        </div>
+      )}
 
       {isLoading ? (
         <p>Loading...</p>
       ) : (
         <table className="adminPage__table">
-          {!!removeError && removeError.response?.data && (
-            <p className="adminPage__table-errorRemove">
-              {removeError.response.data.errorMessage}
-            </p>
-          )}
-          {!!removeData && (
-            <p className="adminPage__table-successRemove">
-              {removeData.data.message}
-            </p>
-          )}
           {/* {!!deleteMotorcycleResponse &&
           'errorCode' in deleteMotorcycleResponse && (
             <p>{deleteMotorcycleResponse.errorMessage}</p>
@@ -72,15 +72,16 @@ const AdminPage = () => {
           'message' in deleteMotorcycleResponse && (
             <p>{deleteMotorcycleResponse.message}</p>
           )} */}
-
-          <tr className="adminPage__table-header">
-            <th className="headerParagraph__id">ID</th>
-            <th className="headerParagraph">Name</th>
-            <th className="headerParagraph">VendorCode</th>
-            <th className="headerParagraph">Price</th>
-            <th className="headerParagraph">Options</th>
-          </tr>
-          <tr>
+          <thead>
+            <tr className="adminPage__table-header">
+              <th className="headerParagraph__id">ID</th>
+              <th className="headerParagraph">Name</th>
+              <th className="headerParagraph">VendorCode</th>
+              <th className="headerParagraph">Price</th>
+              <th className="headerParagraph">Options</th>
+            </tr>
+          </thead>
+          <tbody>
             {!!data &&
               data.response &&
               data.response.map((el: IMotorcycleCard) => {
@@ -97,7 +98,7 @@ const AdminPage = () => {
                   <MotorcycleCardItemAdminPage {...preparedData} key={_id} />
                 );
               })}
-          </tr>
+          </tbody>
         </table>
       )}
     </div>

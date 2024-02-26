@@ -9,5 +9,6 @@ export const getAllMotorcycle = async () => {
 
 export const removeMotorcycleCard = async (id: string) => {
   const response = await axios.delete(`${API_V1_URL}/motorcycleCards/${id}`);
+
   return response;
 };
