@@ -15,21 +15,21 @@ const AdminPage = () => {
     error: removeError,
   } = useMutation<
     AxiosResponse<ISuccessDeleteMotorcycleResponse>,
-    AxiosError<IError> | null,
+    AxiosError<IError>,
     string
   >({
     mutationFn: removeMotorcycleCard,
   });
 
   const { data, isLoading, error, isError } = useQuery<
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    any,
+    { response: IMotorcycleCard[] },
     AxiosError<IError> | null
   >(['allMotorcycle', removeData], {
     queryFn: getAllMotorcycle,
-
     refetchOnWindowFocus: false,
   });
+
+  console.log('data', data);
 
   const handleDeleteMotorcycleCard = (_id: string) => {
     mutate(_id);
@@ -43,8 +43,8 @@ const AdminPage = () => {
   //   console.log('deleteMotorcycleResponse', deleteMotorcycleResponse);
   // }, [data, isLoading, isError, error, deleteMotorcycleResponse]);
 
-  console.log('removeData', removeData);
-  console.log('removeError', removeError);
+  // console.log('removeData', removeData);
+  // console.log('removeError', removeError);
 
   return (
     <div className="wrapper">
@@ -64,14 +64,6 @@ const AdminPage = () => {
         <p>Loading...</p>
       ) : (
         <table className="adminPage__table">
-          {/* {!!deleteMotorcycleResponse &&
-          'errorCode' in deleteMotorcycleResponse && (
-            <p>{deleteMotorcycleResponse.errorMessage}</p>
-          )}
-        {!!deleteMotorcycleResponse &&
-          'message' in deleteMotorcycleResponse && (
-            <p>{deleteMotorcycleResponse.message}</p>
-          )} */}
           <thead>
             <tr className="adminPage__table-header">
               <th className="headerParagraph__id">ID</th>
@@ -83,7 +75,7 @@ const AdminPage = () => {
           </thead>
           <tbody>
             {!!data &&
-              data.response &&
+              !!data.response &&
               data.response.map((el: IMotorcycleCard) => {
                 const { _id, price, name, vendorCode } = el;
                 const preparedData = {

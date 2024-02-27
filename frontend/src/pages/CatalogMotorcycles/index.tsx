@@ -1,17 +1,10 @@
 import { useQuery } from 'react-query';
 
-import { API_V1_URL } from '../../constants';
 import { IMotorcycleCard } from './types';
 import MotorcycleCard from '../../components/MotorcycleCard';
+import { getCatalogMotorcycle } from './utils';
 
 import './style.scss';
-import axios from 'axios';
-
-const getCatalogMotorcycle = async () => {
-  const response = await axios.get(`${API_V1_URL}/motorcycleCards`);
-
-  return response.data;
-};
 
 const CatalogMotorcycles = () => {
   const { data } = useQuery('catalogMotorcycle', {
@@ -30,57 +23,6 @@ const CatalogMotorcycles = () => {
           </>
         )}
       </div>
-
-      {/* <div>
-        {motorcycleData.map((el: IMotorcycleData, index: number) => {
-          return (
-            <div key={index}>
-              <MotorcycleCard motorcycleData={el} />
-            </div>
-          );
-        })}
-      </div> */}
-
-      {/* {data.errorCode !== undefined && (
-        <>
-          {data.errorMessage}
-        </>
-      )}
-
-      {data.length ? (
-        <h3>Looks like all is good</h3>
-      ) : (
-        <h3>Looks like you have not a motorcycle yet</h3>
-      )} */}
-
-      {/* {data.errorCode ? (
-        <>
-          <p>Oops, look like you have a problem:</p>
-          {data.errorMessage}
-        </>
-      ) : (
-        <>
-          <h3>Looks like all is good</h3>
-          {data.length ? (
-            <>
-              {data.map((el: IMotorcycleCard, index: number) => {
-                return (
-                  <div key={index}>
-                    {el.maxSpeed}
-                    {el.name}
-                    {el.price}
-                    {el.vendorCode}
-                  </div>
-                );
-              })}
-            </>
-          ) : (
-            <>
-              <h3>Looks like you have not a motorcycle yet</h3>
-            </>
-          )}
-        </>
-      )} */}
     </>
   );
 };

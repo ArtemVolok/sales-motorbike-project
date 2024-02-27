@@ -1,46 +1,53 @@
 import { useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
-import { yupResolver } from '@hookform/resolvers/yup';
+import { useNavigate, useParams } from 'react-router-dom';
+// import { yupResolver } from '@hookform/resolvers/yup';
 import classNames from 'classnames';
-import { useMutation } from 'react-query';
-import { createMotorcycleCartSchema } from './utils';
+import { useMutation, useQuery } from 'react-query';
+import { AxiosError, AxiosResponse } from 'axios';
+
+import {
+  // createMotorcycleCartSchema,
+  getMotorcycleCardById,
+  // updateMotorcycleSchema,
+  uploadMotorcycleCardData,
+} from './utils';
 import { DashboardUrl } from '../../UrlsConfig';
 import XMark from '../../assets/xmark-solid.svg?react';
 import DownloadFile from '../../assets/download-solid.svg?react';
-import { API_V1_URL } from '../../constants';
 import {
   ETypeInput,
   INewMotorcycleCard,
   defaultValueMotorcycleCard,
   listInputs,
 } from './types';
+import { IError, IMotorcycleCard } from '../CatalogMotorcycles/types';
+
 import './style.scss';
 
-const uploadMotorcycleCardData = async (data: FormData) => {
-  console.log('data in request', data);
-  const response = await fetch(`${API_V1_URL}/motorcycleCards`, {
-    method: 'POST',
-    body: data,
-  });
-  const jsonResponse = await response.json();
-  return jsonResponse;
-};
-
+//TODO: change d on t
 const CreateMotorcycleCartPage = () => {
   const navigate = useNavigate();
+  const { id: idFromUrl } = useParams();
+  console.log('idFromUrl', idFromUrl);
 
   const { mutate, data } = useMutation({
     mutationFn: (data: FormData) => uploadMotorcycleCardData(data),
-    onSuccess: (response) => {
-      console.log('success response', response);
-    },
-    onError: (response) => {
-      console.log('error response', response);
-    },
   });
 
   console.log('mutation.data', data);
+
+  const { data: motorcycleCardData, isLoading } = useQuery<
+    AxiosResponse<{ response: IMotorcycleCard }> | undefined,
+    AxiosError<IError>
+  >(['motorcycleCard', idFromUrl], {
+    queryFn: () =>
+      idFromUrl ? getMotorcycleCardById(idFromUrl) : Promise.resolve(undefined),
+    enabled: !!idFromUrl,
+    refetchOnMount: false,
+  });
+
+  console.log('motorcycleCardData', motorcycleCardData?.data.response);
 
   const [useDrag, setUseDrag] = useState<boolean>(false);
   const [uploadPhoto, setUploadPhoto] = useState<File | null>(null);
@@ -52,10 +59,17 @@ const CreateMotorcycleCartPage = () => {
     formState: { errors },
     setError,
     setValue,
-  } = useForm<INewMotorcycleCard>({
+  } = useForm<INewMotorcycleCard | IMotorcycleCard>({
     mode: 'onChange',
-    defaultValues: defaultValueMotorcycleCard,
-    resolver: yupResolver(createMotorcycleCartSchema),
+    // defaultValues: idFromUrl
+    //   ? motorcycleCardData?.data.response
+    //   : defaultValueMotorcycleCard,
+    defaultValues: idFromUrl
+      ? motorcycleCardData?.data.response
+      : defaultValueMotorcycleCard,
+    // resolver: yupResolver(
+    //   idFromUrl ? updateMotorcycleSchema : createMotorcycleCartSchema,
+    // ),
   });
 
   const onSubmit: SubmitHandler<INewMotorcycleCard> = async (
