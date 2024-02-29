@@ -3,7 +3,6 @@ import { useQuery } from 'react-query';
 import { AxiosError, AxiosResponse } from 'axios';
 import Zoom from 'react-img-zoom';
 
-import { getMotorcycleCard } from './utils';
 import { IError, IMotorcycleCard } from '../CatalogMotorcycles/types';
 import { API_V1_URL } from '../../constants';
 
@@ -13,36 +12,44 @@ import Advantages from './components/Advantages';
 import Guarantee from './components/Guarantee';
 import Description from './components/Description';
 import Characteristics from './components/Characteristics';
+import { getMotorcycleCard } from '../../components/Requests';
 
 import './style.scss';
 
+const infoSiteTabs: ITab[] = [
+  {
+    title: 'Переваги',
+    component: <Advantages />,
+  },
+  { title: 'Гарантія і документація', component: <Guarantee /> },
+];
+
 const MotorcycleInfo = () => {
   const { id } = useParams();
-  const { data } = useQuery<
+  const { data, isLoading } = useQuery<
     AxiosResponse<{ response: IMotorcycleCard }> | undefined,
     AxiosError<IError>
   >(['motorcycleCard', id], {
-    queryFn: () => (id ? getMotorcycleCard(id) : Promise.resolve(undefined)),
-    enabled: !!id,
+    queryFn: () => getMotorcycleCard(id!),
   });
-  const { data: responseData } = { ...data };
-
-  const infoSiteTabs: ITab[] = [
-    {
-      title: 'Переваги',
-      component: <Advantages />,
-    },
-    { title: 'Гарантія і документація', component: <Guarantee /> },
-  ];
+  const { response } = { ...data?.data };
 
   const allInformationTabs: ITab[] = [
     {
       title: 'Опис',
-      component: <Description data={responseData?.response} />,
+      component: isLoading ? (
+        <div>Loading...</div>
+      ) : (
+        <Description data={response!} />
+      ),
     },
     {
       title: 'Характеристики',
-      component: <Characteristics data={responseData?.response} />,
+      component: isLoading ? (
+        <div>Loading...</div>
+      ) : (
+        <Characteristics data={response!} />
+      ),
     },
   ];
 
@@ -51,10 +58,10 @@ const MotorcycleInfo = () => {
       <div className="motorcycleInfo">
         <div className="motorcycle__shortInfo">
           <div className="motorcycle__shortInfo-imgBlock">
-            {!!responseData && responseData.response.uploadImage && (
+            {!!response && response.uploadImage && (
               <div className="motorcyclePhoto">
                 <Zoom
-                  img={`${API_V1_URL}/images/${responseData.response.uploadImage.filename}`}
+                  img={`${API_V1_URL}/images/${response.uploadImage.filename}`}
                   zoomScale={2}
                   width={600}
                   height={450}
@@ -65,14 +72,12 @@ const MotorcycleInfo = () => {
           </div>
           <div className="motorcycle__shortInfo-desc">
             <div className="desc__priceBlock">
-              <h3 className="desc__priceBlock-name">
-                {responseData?.response.name}
-              </h3>
+              <h3 className="desc__priceBlock-name">{response?.name}</h3>
               <div className="desc__priceBlock-vendorCode">
-                Артикул: {responseData?.response.vendorCode}
+                Артикул: {response?.vendorCode}
               </div>
               <div className="desc__priceBlock-price">
-                {responseData?.response.price} грн.
+                {response?.price} грн.
               </div>
               <div className="desc__priceBlock-buttonBlock">
                 <div className="buttonBlock-buy">Купити</div>

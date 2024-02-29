@@ -1,10 +1,14 @@
+import classNames from 'classnames';
 import { IMotorcycleCard } from '../../../CatalogMotorcycles/types';
 import { generalInfoTable } from './utils';
 
 import './style.scss';
-import classNames from 'classnames';
 
-const Description = ({ data }: { data?: IMotorcycleCard }) => {
+interface IDescription {
+  data: IMotorcycleCard;
+}
+
+const Description = ({ data }: IDescription) => {
   const { cubicCapacity, horsePower, name, fuelInjection, fuelTank } = {
     ...data,
   };

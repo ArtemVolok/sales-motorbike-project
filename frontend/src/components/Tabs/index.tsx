@@ -4,8 +4,11 @@ import { ITab } from './types';
 import './style.scss';
 import classNames from 'classnames';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const Tabs = ({ tabs }: { tabs: ITab[] }) => {
+interface ITabs {
+  tabs: ITab[];
+}
+
+const Tabs = ({ tabs }: ITabs) => {
   const [toggleTab, setToggleTab] = useState(0);
 
   return (

@@ -15,7 +15,11 @@ interface ICharacteristicsTables {
   tableInfo: IGeneralInfoTable[];
 }
 
-const Characteristics = ({ data }: { data?: IMotorcycleCard }) => {
+interface ICharacteristics {
+  data: IMotorcycleCard;
+}
+
+const Characteristics = ({ data }: ICharacteristics) => {
   const {
     horsePower,
     cubicCapacity,
@@ -95,10 +99,7 @@ const Characteristics = ({ data }: { data?: IMotorcycleCard }) => {
                       )}
                       key={el.title}
                     >
-                      <td className="tableTab-cellTitle">
-                        <div className="titleSvgEmpty">{el.icon}</div>
-                        {el.title}
-                      </td>
+                      <td className="tableTab-titleCell">{el.title}</td>
                       <td className="tableTab-cellValue">{el.value}</td>
                     </tr>
                   );
