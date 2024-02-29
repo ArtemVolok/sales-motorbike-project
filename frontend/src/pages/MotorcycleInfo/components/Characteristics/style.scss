@@ -1,0 +1,30 @@
+@import '../../../../assets/scss/base/variables';
+
+.characteristics {
+  margin-top: 14px;
+  border-top: 2px $grey-300 solid;
+  .tableTitle {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: last baseline;
+    margin-top: 20px;
+
+    .tableTitle__img {
+      width: 52px;
+      height: 52px;
+      margin: 0 16px;
+    }
+
+    .tableTitle__title {
+      font-size: 26px;
+      text-transform: uppercase;
+      margin-top: 6px;
+    }
+  }
+}
+
+.titleSvgEmpty {
+  height: 36px;
+  padding: 4px;
+  margin-left: 10px;
+}

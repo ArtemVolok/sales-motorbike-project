@@ -1,0 +1,99 @@
+@import '../../assets/scss/base/variables';
+
+.motorcycleInfo {
+  padding: 12px 20px;
+
+  .motorcycle__shortInfo {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    margin-bottom: 24px;
+
+    &-imgBlock {
+      width: 50%;
+
+      .motorcyclePhoto {
+        display: flex;
+        justify-content: center;
+      }
+    }
+
+    &-desc {
+      width: 50%;
+
+      .desc__priceBlock {
+        border: 2px $grey-300 solid;
+        border-radius: 4px;
+        padding: 20px 16px;
+        margin-bottom: 16px;
+
+        &-name {
+          font-size: 26px;
+          margin-bottom: 14px;
+        }
+
+        &-vendorCode {
+          min-height: 40px;
+          background-color: $grey-200;
+          border-radius: 4px;
+          font-size: 18px;
+          padding: 10px;
+          margin: 20px 0;
+        }
+
+        &-price {
+          color: $deep-orange;
+          font-weight: 700;
+          font-size: 28px;
+          margin: 20px 0;
+        }
+
+        &-buttonBlock {
+          display: flex;
+          justify-content: space-around;
+          flex-wrap: nowrap;
+          margin: 20px 0;
+
+          .buttonBlock-buy,
+          .buttonBlock-quickOrder {
+            min-width: 200px;
+            transform: skew(-10deg);
+            text-transform: uppercase;
+            font-family: 'Ubuntu', cursive;
+            color: white;
+            font-weight: 700;
+            font-size: 24px;
+            letter-spacing: 3px;
+            height: 44px;
+            width: 150px;
+            margin: 10px 4px 0 10px;
+            padding: 4px 40px;
+            cursor: pointer;
+            border: none;
+          }
+
+          .buttonBlock-buy {
+            background-color: rgb(173, 3, 3);
+          }
+
+          .buttonBlock-buy:hover {
+            background-color: rgb(141, 4, 4);
+          }
+
+          .buttonBlock-quickOrder {
+            width: 300px;
+            border: 3px $deep-orange solid;
+            color: $black;
+            font-size: 18px;
+            font-weight: 400;
+            padding: 6px 15px;
+          }
+
+          .buttonBlock-quickOrder:hover {
+            background-color: $grey-100;
+          }
+        }
+      }
+    }
+  }
+}
