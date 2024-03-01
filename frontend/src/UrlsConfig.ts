@@ -7,5 +7,5 @@ export const CreateMotorcycleCartUrl = 'create-motorcycle';
 export const AdminPageUrl = 'admin-page';
 export const MotorcycleInfoUrl = 'motorcycle';
 export const MotorcycleInfoIdUrl = 'motorcycle/:id';
-export const RegistrationUrl = 'registration';
+export const RegistrationUrl = '/registration';
 export const LoginUrl = '/login';
