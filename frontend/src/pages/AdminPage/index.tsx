@@ -3,8 +3,8 @@ import { useMutation, useQuery } from 'react-query';
 
 import MotorcycleCardItemAdminPage from '../../components/MotorcycleCardItemAdminPage';
 import { ISuccessDeleteMotorcycleResponse } from '../../components/MotorcycleCardItemAdminPage/types';
-import { getAllMotorcycle, removeMotorcycleCard } from './utils';
 import { IError, IMotorcycleCard } from '../CatalogMotorcycles/types';
+import { getAllMotorcycle, removeMotorcycleCard } from '../../Requests';
 
 import './style.scss';
 

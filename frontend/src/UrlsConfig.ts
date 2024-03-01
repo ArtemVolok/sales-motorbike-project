@@ -5,3 +5,5 @@ export const ContactsUrl = 'contacts';
 export const CatalogMotorcyclesUrl = 'catalog-motorcycles';
 export const CreateMotorcycleCartUrl = 'create-motorcycle';
 export const AdminPageUrl = 'admin-page';
+export const MotorcycleInfoUrl = 'motorcycle';
+export const MotorcycleInfoIdUrl = 'motorcycle/:id';

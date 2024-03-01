@@ -1,17 +1,10 @@
 import { useQuery } from 'react-query';
 
-import { API_V1_URL } from '../../constants';
 import { IMotorcycleCard } from './types';
 import MotorcycleCard from '../../components/MotorcycleCard';
+import { getCatalogMotorcycle } from '../../Requests';
 
 import './style.scss';
-import axios from 'axios';
-
-const getCatalogMotorcycle = async () => {
-  const response = await axios.get(`${API_V1_URL}/motorcycleCards`);
-
-  return response.data;
-};
 
 const CatalogMotorcycles = () => {
   const { data } = useQuery('catalogMotorcycle', {

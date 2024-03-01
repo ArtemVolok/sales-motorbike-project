@@ -1,0 +1,47 @@
+@import '../../assets/scss/base/variables';
+
+.tabs {
+  display: block;
+  width: 100%;
+  border: 2px $grey-300 solid;
+  border-radius: 4px;
+  padding: 22px 26px;
+
+  &__titleBlock {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: left;
+    margin-bottom: 12px;
+
+    &-title {
+      display: block;
+      margin: 0 16px 16px 0;
+      min-width: 60px;
+      height: 30px;
+      cursor: pointer;
+
+      .titleText,
+      .titleTextActive {
+        color: $grey-700;
+        text-align: center;
+        font-weight: 600;
+        font-size: 22px;
+        padding-bottom: 8px;
+        width: 100%;
+      }
+
+      .titleTextActive {
+        border-bottom: 4px $deep-orange solid;
+        color: $deep-orange;
+      }
+
+      .titleText:hover {
+        color: $deep-orange;
+      }
+    }
+  }
+}
+
+.orange {
+  color: $deep-orange;
+}

@@ -8,6 +8,7 @@ import {
   CatalogMotorcyclesUrl,
   CreateMotorcycleCartUrl,
   AdminPageUrl,
+  MotorcycleInfoIdUrl,
 } from './UrlsConfig';
 
 import './assets/scss/index.scss';
@@ -24,6 +25,7 @@ const CreateMotorcycleCartPage = React.lazy(
   () => import('./pages/CreateMotorcycleCart'),
 );
 const AdminPage = React.lazy(() => import('./pages/AdminPage'));
+const MotorcyclePage = React.lazy(() => import('./pages/MotorcycleInfo'));
 
 //TODO: change routing, need add opportunity pass promise to footer
 
@@ -86,6 +88,14 @@ function App() {
             element={
               <React.Suspense fallback={null}>
                 <AdminPage />
+              </React.Suspense>
+            }
+          />
+          <Route
+            path={MotorcycleInfoIdUrl}
+            element={
+              <React.Suspense fallback={null}>
+                <MotorcyclePage />
               </React.Suspense>
             }
           />

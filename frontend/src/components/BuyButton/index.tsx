@@ -1,20 +1,14 @@
-// import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import './style.scss';
 
-// { path }: { path?: string }
-
-const BuyButton = ({ title }: { title: string }) => {
-  // const navigate = useNavigate();
-
-  // const navigateTo = () => {
-  //   if (path) {
-  //     navigate(path);
-  //   }
-  // };
+const BuyButton = ({ title, path }: { title: string; path: string }) => {
+  const navigate = useNavigate();
 
   return (
     <>
-      <button className="buyButton">{title}</button>
+      <button className="buyButton" onClick={() => navigate(path)}>
+        {title}
+      </button>
     </>
   );
 };

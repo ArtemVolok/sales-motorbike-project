@@ -140,19 +140,25 @@ app.get<any>('/motorcycleCards', async (_, res: Response) => {
   });
 });
 
-interface IRemove {
-  id: string;
-}
-
 app.delete(
   '/motorcycleCards/:id',
-  async (req: Request<any, any, IRemove>, res: Response) => {
+  async (req: Request<any, any, { id: string }>, res: Response) => {
     console.log('inside delete /motorcycleCards');
 
     const idMotorcycleCard = req.params.id;
 
     await MotorcycleCardModel.findByIdAndDelete(idMotorcycleCard);
     res.status(200).json({ message: 'Motorcycle card successful deleted!' });
+  },
+);
+
+app.get(
+  '/motorcycleCard/:id',
+  async (req: Request<any, any, { id: string }>, res: Response) => {
+    const idMotorcycleCard = req.params.id;
+
+    const motorcycleCard = await MotorcycleCardModel.findById(idMotorcycleCard);
+    res.status(200).json({ response: motorcycleCard });
   },
 );
 
