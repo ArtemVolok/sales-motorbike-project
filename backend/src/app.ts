@@ -101,7 +101,6 @@ app.post(
     }
 
     const isPasswordMatch = await bcrypt.compare(password, user.password);
-
     if (!isPasswordMatch) {
       return res
         .status(401)
