@@ -12,7 +12,7 @@ import Advantages from './components/Advantages';
 import Guarantee from './components/Guarantee';
 import Description from './components/Description';
 import Characteristics from './components/Characteristics';
-import { getMotorcycleCard } from '../../components/Requests';
+import { getMotorcycleCard } from '../../Requests';
 
 import './style.scss';
 
@@ -32,24 +32,25 @@ const MotorcycleInfo = () => {
   >(['motorcycleCard', id], {
     queryFn: () => getMotorcycleCard(id!),
   });
-  const { response } = { ...data?.data };
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (!data) {
+    return <div>Info about not found</div>;
+  }
+
+  const { response } = { ...data.data };
 
   const allInformationTabs: ITab[] = [
     {
       title: 'Опис',
-      component: isLoading ? (
-        <div>Loading...</div>
-      ) : (
-        <Description data={response!} />
-      ),
+      component: <Description data={response} />,
     },
     {
       title: 'Характеристики',
-      component: isLoading ? (
-        <div>Loading...</div>
-      ) : (
-        <Characteristics data={response!} />
-      ),
+      component: <Characteristics data={response} />,
     },
   ];
 

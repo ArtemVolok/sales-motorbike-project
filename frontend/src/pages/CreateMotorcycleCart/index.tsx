@@ -6,7 +6,7 @@ import classNames from 'classnames';
 import { useMutation } from 'react-query';
 import { createMotorcycleCartSchema } from './utils';
 import { DashboardUrl } from '../../UrlsConfig';
-import { uploadMotorcycleCardData } from '../../components/Requests';
+import { uploadMotorcycleCardData } from '../../Requests';
 import XMark from '../../assets/xmark-solid.svg?react';
 import DownloadFile from '../../assets/download-solid.svg?react';
 import {

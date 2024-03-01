@@ -4,10 +4,7 @@ import { useMutation, useQuery } from 'react-query';
 import MotorcycleCardItemAdminPage from '../../components/MotorcycleCardItemAdminPage';
 import { ISuccessDeleteMotorcycleResponse } from '../../components/MotorcycleCardItemAdminPage/types';
 import { IError, IMotorcycleCard } from '../CatalogMotorcycles/types';
-import {
-  getAllMotorcycle,
-  removeMotorcycleCard,
-} from '../../components/Requests';
+import { getAllMotorcycle, removeMotorcycleCard } from '../../Requests';
 
 import './style.scss';
 

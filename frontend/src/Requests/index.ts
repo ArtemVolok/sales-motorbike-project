@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { API_V1_URL } from '../../constants';
+import { API_V1_URL } from '../constants';
 
 export const getAllMotorcycle = async () => {
   const response = await axios.get(`${API_V1_URL}/motorcycleCards`);
