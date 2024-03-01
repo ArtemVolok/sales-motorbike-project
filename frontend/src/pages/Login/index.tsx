@@ -8,11 +8,11 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import Eye from '../../assets/eye-solid.svg?react';
 import EyeSlash from '../../assets/eye-slash-solid.svg?react';
 
+import { RegistrationUrl } from '../../UrlsConfig';
 import { IError } from '../CatalogMotorcycles/types';
 import { loginSchema } from './utils';
 import { ILoginForm } from './types';
 import { loginRequest } from '../../Requests';
-import { RegistrationUrl } from '../../UrlsConfig';
 
 import '../Registration/style.scss';
 import './style.scss';
