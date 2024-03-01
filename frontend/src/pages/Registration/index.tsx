@@ -82,44 +82,39 @@ const Registration = () => {
               );
             }
 
-            if (
-              el.registerName === 'confPassword' ||
-              el.registerName === 'password'
-            ) {
-              return (
-                <label
-                  htmlFor={el.registerName}
-                  key={el.registerName}
-                  className="form__label"
-                >
-                  <p className="form__label-paragraph">{el.label}</p>
-                  <div className="passwordInput">
-                    <input
-                      {...register(el.registerName as keyof IRegistrationForm)}
-                      type={showPassword ? 'text' : 'password'}
-                      id={el.registerName}
-                      className="form__label-input"
+            return (
+              <label
+                htmlFor={el.registerName}
+                key={el.registerName}
+                className="form__label"
+              >
+                <p className="form__label-paragraph">{el.label}</p>
+                <div className="passwordInput">
+                  <input
+                    {...register(el.registerName as keyof IRegistrationForm)}
+                    type={showPassword ? 'text' : 'password'}
+                    id={el.registerName}
+                    className="form__label-input"
+                  />
+                  {showPassword ? (
+                    <Eye
+                      className="inputEye"
+                      onClick={() => setShowPassword(!showPassword)}
                     />
-                    {showPassword ? (
-                      <Eye
-                        className="inputEye"
-                        onClick={() => setShowPassword(!showPassword)}
-                      />
-                    ) : (
-                      <EyeSlash
-                        className="inputEye"
-                        onClick={() => setShowPassword(!showPassword)}
-                      />
-                    )}
-                  </div>
-                  {errors[errorName] && (
-                    <p className="form__label-error">
-                      {errors[errorName]?.message}
-                    </p>
+                  ) : (
+                    <EyeSlash
+                      className="inputEye"
+                      onClick={() => setShowPassword(!showPassword)}
+                    />
                   )}
-                </label>
-              );
-            }
+                </div>
+                {errors[errorName] && (
+                  <p className="form__label-error">
+                    {errors[errorName]?.message}
+                  </p>
+                )}
+              </label>
+            );
           })}
           <button
             type="submit"
