@@ -12,13 +12,15 @@ import path from 'path';
 console.log('multer', multer);
 
 import * as middlewares from './middleware/middlewares';
-import { ProfileUserModel } from './schema/profileUser';
+import { ProfileUserModel } from './schema/ProfileUser/profileUser';
 import { motorcycleCardValidation } from './schema/MotorcycleCard/utils';
 import { IMotorcycleCard } from './schema/MotorcycleCard/types';
 import upload from './middleware/multerMiddleware';
 import MessageResponse from './interfaces/MessageResponse';
 import api from './api';
 import { MotorcycleCardModel } from './schema/MotorcycleCard';
+import { profileUserValidation } from './schema/ProfileUser/utils';
+import { IRegistrationForm } from './schema/ProfileUser/types';
 
 const mongodbConnectUrl: string | undefined = process.env.MONGODB_CONNECT_URL;
 
@@ -75,16 +77,31 @@ async function main() {
 }
 main();
 
-app.post<{}, MessageResponse>('/profileUser/create', async (req, res) => {
-  console.log('data from front: ', req.body);
-  if (req.body) {
-    const addUser = await ProfileUserModel.create(req.body);
-    console.log('addUSer', addUser);
+app.post<{}, MessageResponse>(
+  '/profileUser',
+  profileUserValidation,
+  async (req: Request<any, any, IRegistrationForm>, res: Response) => {
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
+    const { email } = req.body;
+    const existingUser = await ProfileUserModel.findOne({ email });
+
+    if (existingUser) {
+      return res
+        .status(400)
+        .json({ errorMessage: 'User already exists', errorCode: 400 });
+    }
+
+    const createUserProfile = await ProfileUserModel.create(req.body);
     res.json({
-      message: req.body,
+      message: createUserProfile._id,
     });
-  }
-});
+  },
+);
 
 app.get<any>('/profileUser/allUsers', async (_, res) => {
   console.log('inside allUsers');
@@ -143,8 +160,6 @@ app.get<any>('/motorcycleCards', async (_, res: Response) => {
 app.delete(
   '/motorcycleCards/:id',
   async (req: Request<any, any, { id: string }>, res: Response) => {
-    console.log('inside delete /motorcycleCards');
-
     const idMotorcycleCard = req.params.id;
 
     await MotorcycleCardModel.findByIdAndDelete(idMotorcycleCard);
