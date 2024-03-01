@@ -7,6 +7,7 @@ import {
   CreateMotorcycleCartUrl,
   FeedBackUrl,
   AdminPageUrl,
+  RegistrationUrl,
 } from '../../UrlsConfig';
 
 const Header = () => {
@@ -33,6 +34,9 @@ const Header = () => {
             </li>
             <li>
               <Link to={AdminPageUrl}>Адмінка</Link>
+            </li>
+            <li>
+              <Link to={RegistrationUrl}>Реєстрація</Link>
             </li>
           </ul>
         </div>

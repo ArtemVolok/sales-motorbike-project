@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { API_V1_URL } from '../constants';
+import { ICreateUserProfileData } from '../pages/Registration/types';
 
 export const getAllMotorcycle = async () => {
   const response = await axios.get(`${API_V1_URL}/motorcycleCards`);
@@ -26,11 +27,16 @@ export const getMotorcycleCard = async (id: string) => {
 };
 
 export const uploadMotorcycleCardData = async (data: FormData) => {
-  console.log('data in request', data);
   const response = await fetch(`${API_V1_URL}/motorcycleCards`, {
     method: 'POST',
     body: data,
   });
   const jsonResponse = await response.json();
   return jsonResponse;
+};
+
+export const createUserProfile = async (data: ICreateUserProfileData) => {
+  const response = await axios.post(`${API_V1_URL}/profileUser`, data);
+
+  return response;
 };

@@ -1,0 +1,121 @@
+@import '../../assets/scss/base/variables';
+
+.registrationWrapper {
+  background: url('../../assets/img/pattern.png');
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+  padding: 24px 0;
+}
+
+.registration {
+  background-color: $white;
+  border: 2px $grey-400 solid;
+  border-radius: 8px;
+  width: 600px;
+  padding: 14px;
+
+  &__title {
+    font-size: 22px;
+    margin-bottom: 10px;
+  }
+
+  &__form {
+    margin-bottom: 24px;
+  }
+
+  .form__label {
+    color: $grey-800;
+    font-weight: 400;
+    font-size: 14px;
+    display: block;
+    margin: 14px 0;
+
+    &-paragraph {
+      margin-left: 10px;
+    }
+
+    &-input {
+      width: 100%;
+      height: 50px;
+      border-radius: 8px;
+      display: block;
+      border: 2px $grey-400 solid;
+      margin-top: 8px;
+      font-size: 20px;
+      padding: 0 10px;
+    }
+
+    &-error {
+      color: $red-extra;
+      font-weight: 400;
+      margin-top: 4px;
+      margin-left: 10px;
+    }
+
+    .passwordInput {
+      display: flex;
+      justify-content: center;
+      position: relative;
+
+      .inputEye {
+        width: 34px;
+        height: 34px;
+        position: absolute;
+        right: 14px;
+        top: 15px;
+        fill: $grey-400;
+        cursor: pointer;
+      }
+    }
+  }
+
+  &__submitButton {
+    background-color: $green-300;
+    width: 100%;
+    height: 46px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    color: $white;
+    font-size: 20px;
+    letter-spacing: 2px;
+    transition: background-color 0.3s ease;
+    margin-top: 14px;
+  }
+
+  &__submitButton:hover {
+    background-color: $green-200;
+  }
+
+  &__link {
+    width: 220px;
+    margin: 14px auto 0;
+    display: block;
+    height: 46px;
+    border-top: 2px $grey-300 solid;
+    color: $grey-600;
+    text-align: center;
+    padding-top: 10px;
+    font-size: 20px;
+  }
+
+  .successRegistration,
+  .errorRegistration {
+    margin-top: 10px;
+    margin-bottom: -8px;
+    font-size: 18px;
+    text-align: center;
+  }
+
+  .errorRegistration {
+    color: $red-extra;
+  }
+
+  .successRegistration {
+    color: $green-300;
+  }
+}
