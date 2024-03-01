@@ -96,16 +96,16 @@ app.post(
 
     if (!user) {
       return res
-        .status(400)
-        .json({ errorMessage: 'Invalid email or password', errorCode: 400 });
+        .status(401)
+        .json({ errorMessage: 'Invalid email or password', errorCode: 401 });
     }
 
     const isPasswordMatch = await bcrypt.compare(password, user.password);
 
     if (!isPasswordMatch) {
       return res
-        .status(400)
-        .json({ errorMessage: 'Invalid email or password', errorCode: 400 });
+        .status(401)
+        .json({ errorMessage: 'Invalid email or password', errorCode: 401 });
     }
 
     res.json({ message: 'Login successful' });
@@ -127,8 +127,8 @@ app.post<{}, MessageResponse>(
 
     if (existingUser) {
       return res
-        .status(400)
-        .json({ errorMessage: 'User already exists', errorCode: 400 });
+        .status(409)
+        .json({ errorMessage: 'User already exists', errorCode: 409 });
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);
