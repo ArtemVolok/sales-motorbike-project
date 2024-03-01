@@ -8,6 +8,7 @@ import cors from 'cors';
 import mongoose from 'mongoose';
 import 'dotenv/config';
 import path from 'path';
+import bcrypt from 'bcrypt';
 
 console.log('multer', multer);
 
@@ -87,7 +88,7 @@ app.post<{}, MessageResponse>(
       return res.status(400).json({ errors: errors.array() });
     }
 
-    const { email } = req.body;
+    const { email, password } = req.body;
     const existingUser = await ProfileUserModel.findOne({ email });
 
     if (existingUser) {
@@ -96,7 +97,12 @@ app.post<{}, MessageResponse>(
         .json({ errorMessage: 'User already exists', errorCode: 400 });
     }
 
-    const createUserProfile = await ProfileUserModel.create(req.body);
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    const createUserProfile = await ProfileUserModel.create({
+      ...req.body,
+      password: hashedPassword,
+    });
     res.json({
       message: createUserProfile._id,
     });
