@@ -8,6 +8,7 @@ import {
   FeedBackUrl,
   AdminPageUrl,
   RegistrationUrl,
+  LoginUrl,
 } from '../../UrlsConfig';
 
 const Header = () => {
@@ -37,6 +38,9 @@ const Header = () => {
             </li>
             <li>
               <Link to={RegistrationUrl}>Реєстрація</Link>
+            </li>
+            <li>
+              <Link to={LoginUrl}>Логін</Link>
             </li>
           </ul>
         </div>

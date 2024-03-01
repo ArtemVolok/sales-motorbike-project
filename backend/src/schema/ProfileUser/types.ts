@@ -6,3 +6,8 @@ export interface IRegistrationForm {
   password: string;
   confPassword: string;
 }
+
+export interface ILoginForm {
+  email: string;
+  password: string;
+}

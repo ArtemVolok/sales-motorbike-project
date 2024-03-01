@@ -8,3 +8,8 @@ export const profileUserValidation = [
   body('email', 'Field mail cannot be empty').not().isEmpty(),
   body('password', 'Field password cannot be empty').not().isEmpty(),
 ];
+
+export const loginValidation = [
+  body('email', 'Field name cannot be empty').not().isEmpty(),
+  body('password', 'Field password cannot be empty').not().isEmpty(),
+];

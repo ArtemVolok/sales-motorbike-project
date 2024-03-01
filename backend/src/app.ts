@@ -20,8 +20,11 @@ import upload from './middleware/multerMiddleware';
 import MessageResponse from './interfaces/MessageResponse';
 import api from './api';
 import { MotorcycleCardModel } from './schema/MotorcycleCard';
-import { profileUserValidation } from './schema/ProfileUser/utils';
-import { IRegistrationForm } from './schema/ProfileUser/types';
+import {
+  loginValidation,
+  profileUserValidation,
+} from './schema/ProfileUser/utils';
+import { ILoginForm, IRegistrationForm } from './schema/ProfileUser/types';
 
 const mongodbConnectUrl: string | undefined = process.env.MONGODB_CONNECT_URL;
 
@@ -78,6 +81,36 @@ async function main() {
 }
 main();
 
+app.post(
+  '/login',
+  loginValidation,
+  async (req: Request<any, any, ILoginForm>, res: Response) => {
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+
+    const { email, password } = req.body;
+    const user = await ProfileUserModel.findOne({ email });
+
+    if (!user) {
+      return res
+        .status(401)
+        .json({ errorMessage: 'Invalid email or password', errorCode: 401 });
+    }
+
+    const isPasswordMatch = await bcrypt.compare(password, user.password);
+    if (!isPasswordMatch) {
+      return res
+        .status(401)
+        .json({ errorMessage: 'Invalid email or password', errorCode: 401 });
+    }
+
+    res.json({ message: 'Login successful' });
+  },
+);
+
 app.post<{}, MessageResponse>(
   '/profileUser',
   profileUserValidation,
@@ -93,8 +126,8 @@ app.post<{}, MessageResponse>(
 
     if (existingUser) {
       return res
-        .status(400)
-        .json({ errorMessage: 'User already exists', errorCode: 400 });
+        .status(409)
+        .json({ errorMessage: 'User already exists', errorCode: 409 });
     }
 
     const hashedPassword = await bcrypt.hash(password, 10);

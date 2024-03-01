@@ -1,23 +1,25 @@
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
-
-import './style.scss';
-import { registrationFormInputs, registrationSchema } from './utils';
+import { useMutation } from 'react-query';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { AxiosError, AxiosResponse } from 'axios';
+
+import { registrationFormInputs, registrationSchema } from './utils';
 
 import Eye from '../../assets/eye-solid.svg?react';
 import EyeSlash from '../../assets/eye-slash-solid.svg?react';
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
+
 import { LoginUrl } from '../../UrlsConfig';
 import {
   ICreateUserProfileData,
   IRegistrationForm,
   ISuccessCreateUserProfile,
 } from './types';
-import { useMutation } from 'react-query';
 import { createUserProfile } from '../../Requests';
-import { AxiosError, AxiosResponse } from 'axios';
 import { IError } from '../CatalogMotorcycles/types';
+
+import './style.scss';
 
 const Registration = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false);

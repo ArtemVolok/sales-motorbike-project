@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { API_V1_URL } from '../constants';
 import { ICreateUserProfileData } from '../pages/Registration/types';
+import { ILoginForm } from '../pages/Login/types';
 
 export const getAllMotorcycle = async () => {
   const response = await axios.get(`${API_V1_URL}/motorcycleCards`);
@@ -37,6 +38,12 @@ export const uploadMotorcycleCardData = async (data: FormData) => {
 
 export const createUserProfile = async (data: ICreateUserProfileData) => {
   const response = await axios.post(`${API_V1_URL}/profileUser`, data);
+
+  return response;
+};
+
+export const loginRequest = async (data: ILoginForm) => {
+  const response = await axios.post(`${API_V1_URL}/login`, data);
 
   return response;
 };
