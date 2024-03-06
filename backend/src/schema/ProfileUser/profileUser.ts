@@ -7,6 +7,8 @@ const ProfileUserItem = new mongoose.Schema({
   phoneNumber: { type: String, required: true },
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
+  isActivated: { type: Boolean, default: false },
+  activationLink: { type: String },
 });
 
 export const ProfileUserModel = mongoose.model('profileUser', ProfileUserItem);
