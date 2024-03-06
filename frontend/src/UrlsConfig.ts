@@ -9,3 +9,5 @@ export const MotorcycleInfoUrl = 'motorcycle';
 export const MotorcycleInfoIdUrl = 'motorcycle/:id';
 export const RegistrationUrl = '/registration';
 export const LoginUrl = '/login';
+export const ActivationUrl = 'activation';
+export const ActivationIdUrl = 'activation/:activationLink';

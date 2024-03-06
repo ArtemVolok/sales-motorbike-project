@@ -3,8 +3,9 @@ import { useMutation, useQuery } from 'react-query';
 
 import MotorcycleCardItemAdminPage from '../../components/MotorcycleCardItemAdminPage';
 import { ISuccessDeleteMotorcycleResponse } from '../../components/MotorcycleCardItemAdminPage/types';
-import { IError, IMotorcycleCard } from '../CatalogMotorcycles/types';
+import { IMotorcycleCard } from '../CatalogMotorcycles/types';
 import { getAllMotorcycle, removeMotorcycleCard } from '../../Requests';
+import { IServerError } from '../../Requests/types';
 
 import './style.scss';
 
@@ -15,7 +16,7 @@ const AdminPage = () => {
     error: removeError,
   } = useMutation<
     AxiosResponse<ISuccessDeleteMotorcycleResponse>,
-    AxiosError<IError> | null,
+    AxiosError<IServerError>,
     string
   >({
     mutationFn: removeMotorcycleCard,
@@ -24,34 +25,35 @@ const AdminPage = () => {
   const { data, isLoading, error, isError } = useQuery<
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     any,
-    AxiosError<IError> | null
+    AxiosError<IServerError>
   >(['allMotorcycle', removeData], {
     queryFn: getAllMotorcycle,
 
     refetchOnWindowFocus: false,
   });
 
+  if (isLoading) {
+    return (
+      <div>
+        <p>Loading...</p>
+      </div>
+    );
+  }
+
+  if (!data) {
+    return <div>Немає інформації про карточки мотоциклів</div>;
+  }
+
   const handleDeleteMotorcycleCard = (_id: string) => {
     mutate(_id);
   };
 
-  // useEffect(() => {
-  //   console.log('data from useQuery', !!data && data.response);
-  //   console.log('isLoading from useQuery', isLoading);
-  //   console.log('error from useQuery', error?.response?.data);
-  //   console.log('isError from useQuery', isError);
-  //   console.log('deleteMotorcycleResponse', deleteMotorcycleResponse);
-  // }, [data, isLoading, isError, error, deleteMotorcycleResponse]);
-
-  console.log('removeData', removeData);
-  console.log('removeError', removeError);
-
   return (
     <div className="wrapper">
-      {isError && error?.response?.data.errorCode}
+      {isError && error?.response?.data.message}
       {!!removeError && removeError.response?.data && (
         <div className="adminPage__table-errorRemove">
-          <p>{removeError.response.data.errorMessage}</p>
+          <p>{removeError.response.data.message}</p>
         </div>
       )}
       {!!removeData && (
@@ -60,47 +62,35 @@ const AdminPage = () => {
         </div>
       )}
 
-      {isLoading ? (
-        <p>Loading...</p>
-      ) : (
-        <table className="adminPage__table">
-          {/* {!!deleteMotorcycleResponse &&
-          'errorCode' in deleteMotorcycleResponse && (
-            <p>{deleteMotorcycleResponse.errorMessage}</p>
-          )}
-        {!!deleteMotorcycleResponse &&
-          'message' in deleteMotorcycleResponse && (
-            <p>{deleteMotorcycleResponse.message}</p>
-          )} */}
-          <thead>
-            <tr className="adminPage__table-header">
-              <th className="headerParagraph__id">ID</th>
-              <th className="headerParagraph">Name</th>
-              <th className="headerParagraph">VendorCode</th>
-              <th className="headerParagraph">Price</th>
-              <th className="headerParagraph">Options</th>
-            </tr>
-          </thead>
-          <tbody>
-            {!!data &&
-              data.response &&
-              data.response.map((el: IMotorcycleCard) => {
-                const { _id, price, name, vendorCode } = el;
-                const preparedData = {
-                  _id,
-                  price: price!,
-                  name,
-                  vendorCode,
-                  handleDeleteMotorcycleCard,
-                };
+      <table className="adminPage__table">
+        <thead>
+          <tr className="adminPage__table-header">
+            <th className="headerParagraph__id">ID</th>
+            <th className="headerParagraph">Name</th>
+            <th className="headerParagraph">VendorCode</th>
+            <th className="headerParagraph">Price</th>
+            <th className="headerParagraph">Options</th>
+          </tr>
+        </thead>
+        <tbody>
+          {!!data &&
+            data.response &&
+            data.response.map((el: IMotorcycleCard) => {
+              const { _id, price, name, vendorCode } = el;
+              const preparedData = {
+                _id,
+                price: price!,
+                name,
+                vendorCode,
+                handleDeleteMotorcycleCard,
+              };
 
-                return (
-                  <MotorcycleCardItemAdminPage {...preparedData} key={_id} />
-                );
-              })}
-          </tbody>
-        </table>
-      )}
+              return (
+                <MotorcycleCardItemAdminPage {...preparedData} key={_id} />
+              );
+            })}
+        </tbody>
+      </table>
     </div>
   );
 };

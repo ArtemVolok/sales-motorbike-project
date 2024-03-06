@@ -17,5 +17,11 @@ export interface IRegistrationFormInputs {
 }
 
 export interface ISuccessCreateUserProfile {
-  message: string;
+  accessToken: string;
+  refreshToken: string;
+  payload: {
+    id: string;
+    userEmail: string;
+    isActivated: boolean;
+  };
 }

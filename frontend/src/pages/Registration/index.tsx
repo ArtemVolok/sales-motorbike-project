@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { useMutation } from 'react-query';
@@ -17,7 +17,7 @@ import {
   ISuccessCreateUserProfile,
 } from './types';
 import { createUserProfile } from '../../Requests';
-import { IError } from '../CatalogMotorcycles/types';
+import { IServerError } from '../../Requests/types';
 
 import './style.scss';
 
@@ -26,7 +26,7 @@ const Registration = () => {
 
   const { mutate, data, isLoading, error } = useMutation<
     AxiosResponse<ISuccessCreateUserProfile>,
-    AxiosError<IError> | null,
+    AxiosError<IServerError>,
     ICreateUserProfileData
   >({
     mutationFn: createUserProfile,
@@ -47,6 +47,12 @@ const Registration = () => {
     const preparedData = { email, name, password, phoneNumber, surname };
     mutate(preparedData);
   };
+
+  useEffect(() => {
+    if (data?.data.accessToken) {
+      localStorage.setItem('token', data?.data.accessToken);
+    }
+  }, [data]);
 
   return (
     <div className="registrationWrapper">
@@ -127,12 +133,10 @@ const Registration = () => {
           </button>
 
           {!!error && !!error.response?.data && (
-            <p className="errorRegistration">
-              {error.response.data.errorMessage}
-            </p>
+            <p className="errorRegistration">{error.response.data.message}</p>
           )}
 
-          {!!data && !!data.data.message && (
+          {!!data && !!data.data.accessToken && (
             <p className="successRegistration">Ви успішно зареєструвалися!</p>
           )}
         </form>
