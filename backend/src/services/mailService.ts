@@ -12,7 +12,7 @@ interface IActivated {
   activationLink: string;
 }
 
-export const mailService = async ({ to, link }: IMailService) => {
+export const sendActivationEmail = async ({ to, link }: IMailService) => {
   if (!host || !port || !mailUser || !mailPassword) {
     throw new Error('Error in mail data');
   }
@@ -44,7 +44,7 @@ export const mailService = async ({ to, link }: IMailService) => {
   }
 };
 
-export const activate = async ({ activationLink }: IActivated) => {
+export const activateUserAccount = async ({ activationLink }: IActivated) => {
   const user = await ProfileUserModel.findOne({ activationLink });
 
   if (!user) {

@@ -2,7 +2,12 @@
 import jwt from 'jsonwebtoken';
 import 'dotenv/config';
 import { TokenModel } from '../schema/Token';
-import { jwtAccessTokenKey, jwtRefreshTokenKey } from '../constants';
+import {
+  jwtAccessTokenKey,
+  jwtRefreshTokenKey,
+  lifeTimeAccessToken,
+  lifeTimeRefreshToken,
+} from '../constants';
 
 interface IGenerateTokens {
   id: string;
@@ -20,14 +25,14 @@ export const generateTokens = (payload: IGenerateTokens) => {
     throw new Error('JWT access secret is undefined');
   }
   const accessToken = jwt.sign(payload, jwtAccessTokenKey, {
-    expiresIn: '30m',
+    expiresIn: lifeTimeAccessToken,
   });
 
   if (!jwtRefreshTokenKey) {
     throw new Error('JWT refresh secret is undefined');
   }
   const refreshToken = jwt.sign(payload, jwtRefreshTokenKey, {
-    expiresIn: '30d',
+    expiresIn: lifeTimeRefreshToken,
   });
 
   return {
@@ -64,12 +69,6 @@ export const findToken = async (refreshToken: string) => {
   return tokenData;
 };
 
-export const refresh = async (refreshToken: string) => {
-  if (!refreshToken) {
-    return null;
-  }
-};
-
 export const verifyRefreshToken = (refreshToken: string) => {
   try {
     if (!jwtRefreshTokenKey) {
@@ -77,7 +76,6 @@ export const verifyRefreshToken = (refreshToken: string) => {
     }
     //TODO: add check to refreshToken (it is probably null)
     const userData = jwt.verify(refreshToken, jwtRefreshTokenKey);
-
     return userData;
   } catch (error) {
     return null;

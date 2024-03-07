@@ -15,8 +15,9 @@ import {
   removeToken,
   saveToken,
 } from '../../services/tokenService';
-import { mailService } from '../../services/mailService';
+import { sendActivationEmail } from '../../services/mailService';
 import MessageResponse from '../../interfaces/MessageResponse';
+import { lifeTimeCookie } from '../../constants';
 
 const frontendUrl: string | undefined = process.env.FRONTEND_URL;
 
@@ -63,7 +64,7 @@ profileRouters.post(
       });
 
       res.cookie('refreshToken', tokens.refreshToken, {
-        maxAge: 2592000000,
+        maxAge: lifeTimeCookie,
         httpOnly: true,
       });
       res.status(200).json({
@@ -109,7 +110,7 @@ profileRouters.post<{}, MessageResponse>(
         activationLink,
       });
 
-      await mailService({
+      await sendActivationEmail({
         to: email,
         link: `${frontendUrl}/activation/${activationLink}`,
       });

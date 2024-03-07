@@ -7,3 +7,6 @@ export const jwtAccessTokenKey: string | undefined =
   process.env.JWT_ACCESS_SECRET;
 export const jwtRefreshTokenKey: string | undefined =
   process.env.JWT_REFRESH_SECRET;
+export const lifeTimeAccessToken: string = '30m';
+export const lifeTimeRefreshToken: string = '30d';
+export const lifeTimeCookie: number = 30 * 24 * 60 * 60 * 1000;

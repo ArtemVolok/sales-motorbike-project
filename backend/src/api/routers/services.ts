@@ -6,7 +6,7 @@ import {
   saveToken,
   verifyRefreshToken,
 } from '../../services/tokenService';
-import { activate } from '../../services/mailService';
+import { activateUserAccount } from '../../services/mailService';
 import { ProfileUserModel } from '../../schema/ProfileUser/profileUser';
 import ApiError from '../../exceptions/api-error';
 
@@ -26,7 +26,7 @@ servicesRouters.get(
         throw ApiError.BadRequest('Activation link not found');
       }
 
-      const activation = await activate({ activationLink });
+      const activation = await activateUserAccount({ activationLink });
 
       if (!activation) {
         throw ApiError.BadRequest('Користувача з таким посиланням не знайдено');
