@@ -15,6 +15,7 @@ motorcycleRouters.post(
   '/motorcycleCards',
   upload.single('uploadImage'),
   motorcycleCardValidation,
+  authHandler,
   async (
     req: Request<any, any, IMotorcycleCard>,
     res: Response,
@@ -83,6 +84,7 @@ motorcycleRouters.get<any>(
 
 motorcycleRouters.delete(
   '/motorcycleCards/:id',
+  authHandler,
   async (
     req: Request<any, any, { id: string }>,
     res: Response,
