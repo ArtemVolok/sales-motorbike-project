@@ -1,6 +1,5 @@
 /* eslint-disable import/no-extraneous-dependencies */
-import express, { Request, Response } from 'express';
-import { validationResult } from 'express-validator';
+import express from 'express';
 import multer from 'multer';
 import morgan from 'morgan';
 import helmet from 'helmet';
@@ -8,23 +7,16 @@ import cors from 'cors';
 import mongoose from 'mongoose';
 import 'dotenv/config';
 import path from 'path';
-import bcrypt from 'bcrypt';
+import cookieParser from 'cookie-parser';
 
 console.log('multer', multer);
 
 import * as middlewares from './middleware/middlewares';
-import { ProfileUserModel } from './schema/ProfileUser/profileUser';
-import { motorcycleCardValidation } from './schema/MotorcycleCard/utils';
-import { IMotorcycleCard } from './schema/MotorcycleCard/types';
-import upload from './middleware/multerMiddleware';
-import MessageResponse from './interfaces/MessageResponse';
-import api from './api';
-import { MotorcycleCardModel } from './schema/MotorcycleCard';
-import {
-  loginValidation,
-  profileUserValidation,
-} from './schema/ProfileUser/utils';
-import { ILoginForm, IRegistrationForm } from './schema/ProfileUser/types';
+import { errorHandler } from './middleware/error-middleware';
+import motorcycleRouters from './api/routers/motorcycle';
+import profileRouters from './api/routers/profile';
+import servicesRouters from './api/routers/services';
+import './middleware/error-middleware';
 
 const mongodbConnectUrl: string | undefined = process.env.MONGODB_CONNECT_URL;
 
@@ -32,7 +24,7 @@ require('dotenv').config();
 
 const app = express();
 
-app.use('/images', express.static(path.join(__dirname, '/images')));
+app.use('/api/images', express.static(path.join(__dirname, '/images')));
 app.use(morgan('dev'));
 app.use(helmet());
 
@@ -61,6 +53,7 @@ const corsOptions = {
 };
 app.use(cors(corsOptions));
 app.use(express.json());
+app.use(cookieParser());
 
 async function main() {
   if (!mongodbConnectUrl) {
@@ -81,144 +74,11 @@ async function main() {
 }
 main();
 
-app.post(
-  '/login',
-  loginValidation,
-  async (req: Request<any, any, ILoginForm>, res: Response) => {
-    const errors = validationResult(req);
-
-    if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
-    }
-
-    const { email, password } = req.body;
-    const user = await ProfileUserModel.findOne({ email });
-
-    if (!user) {
-      return res
-        .status(401)
-        .json({ errorMessage: 'Invalid email or password', errorCode: 401 });
-    }
-
-    const isPasswordMatch = await bcrypt.compare(password, user.password);
-    if (!isPasswordMatch) {
-      return res
-        .status(401)
-        .json({ errorMessage: 'Invalid email or password', errorCode: 401 });
-    }
-
-    res.json({ message: 'Login successful' });
-  },
-);
-
-app.post<{}, MessageResponse>(
-  '/profileUser',
-  profileUserValidation,
-  async (req: Request<any, any, IRegistrationForm>, res: Response) => {
-    const errors = validationResult(req);
-
-    if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
-    }
-
-    const { email, password } = req.body;
-    const existingUser = await ProfileUserModel.findOne({ email });
-
-    if (existingUser) {
-      return res
-        .status(409)
-        .json({ errorMessage: 'User already exists', errorCode: 409 });
-    }
-
-    const hashedPassword = await bcrypt.hash(password, 10);
-
-    const createUserProfile = await ProfileUserModel.create({
-      ...req.body,
-      password: hashedPassword,
-    });
-    res.json({
-      message: createUserProfile._id,
-    });
-  },
-);
-
-app.get<any>('/profileUser/allUsers', async (_, res) => {
-  console.log('inside allUsers');
-  const getAllItems = await ProfileUserModel.find({});
-  console.log('allUsers', getAllItems);
-  res.json({
-    message: getAllItems,
-  });
-});
-
-app.get<{}, MessageResponse>('/', (req, res) => {
-  res.json({
-    message: '🦄🌈✨👋🌎🌍🌏✨🌈🦄',
-  });
-});
-
-////////****MOTORCYCLE*****////////
-
-app.post(
-  '/motorcycleCards',
-  upload.single('uploadImage'),
-  motorcycleCardValidation,
-  async (req: Request<any, any, IMotorcycleCard>, res: Response) => {
-    if (!req.file)
-      return res.status(400).json({
-        errorCode: 400,
-        errorMessage: 'FormData is empty!',
-      });
-
-    const errors = validationResult(req);
-
-    if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
-    }
-
-    const { filename, size, path: filePath, originalname } = req.file;
-
-    const preparedData = {
-      ...req.body,
-      uploadImage: { filename, size, path: filePath, originalname },
-    };
-
-    const createMotorcycle = await MotorcycleCardModel.create(preparedData);
-    return res.status(201).json(createMotorcycle);
-  },
-);
-
-app.get<any>('/motorcycleCards', async (_, res: Response) => {
-  const allMotorcycle = await MotorcycleCardModel.find({});
-
-  res.status(200).json({
-    response: allMotorcycle,
-  });
-});
-
-app.delete(
-  '/motorcycleCards/:id',
-  async (req: Request<any, any, { id: string }>, res: Response) => {
-    const idMotorcycleCard = req.params.id;
-
-    await MotorcycleCardModel.findByIdAndDelete(idMotorcycleCard);
-    res.status(200).json({ message: 'Motorcycle card successful deleted!' });
-  },
-);
-
-app.get(
-  '/motorcycleCard/:id',
-  async (req: Request<any, any, { id: string }>, res: Response) => {
-    const idMotorcycleCard = req.params.id;
-
-    const motorcycleCard = await MotorcycleCardModel.findById(idMotorcycleCard);
-    res.status(200).json({ response: motorcycleCard });
-  },
-);
-
-app.use('/api/v1', api);
+app.use('/api/', motorcycleRouters);
+app.use('/api/', servicesRouters);
+app.use('/api/', profileRouters);
 
 app.use(middlewares.notFound);
-app.use(middlewares.errorHandler);
+app.use(errorHandler);
 
 export default app;

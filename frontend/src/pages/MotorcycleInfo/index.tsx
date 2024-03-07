@@ -3,7 +3,7 @@ import { useQuery } from 'react-query';
 import { AxiosError, AxiosResponse } from 'axios';
 import Zoom from 'react-img-zoom';
 
-import { IError, IMotorcycleCard } from '../CatalogMotorcycles/types';
+import { IMotorcycleCard } from '../CatalogMotorcycles/types';
 import { API_V1_URL } from '../../constants';
 
 import Tabs from '../../components/Tabs';
@@ -13,6 +13,7 @@ import Guarantee from './components/Guarantee';
 import Description from './components/Description';
 import Characteristics from './components/Characteristics';
 import { getMotorcycleCard } from '../../Requests';
+import { IServerError } from '../../Requests/types';
 
 import './style.scss';
 
@@ -28,7 +29,7 @@ const MotorcycleInfo = () => {
   const { id } = useParams();
   const { data, isLoading } = useQuery<
     AxiosResponse<{ response: IMotorcycleCard }> | undefined,
-    AxiosError<IError>
+    AxiosError<IServerError>
   >(['motorcycleCard', id], {
     queryFn: () => getMotorcycleCard(id!),
   });
