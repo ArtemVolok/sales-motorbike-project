@@ -38,7 +38,7 @@ $api.interceptors.response.use(
 
         return $api.request(originalRequest);
       } catch (error) {
-        console.log('USER DON`T AUTHORIZATION!');
+        console.log('USER ISN`T AUTHORIZED!');
       }
     }
 

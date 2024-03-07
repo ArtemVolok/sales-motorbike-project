@@ -35,7 +35,7 @@ const Login = () => {
     isLoading: isLoadingMoto,
     error: errorMoto,
     refetch,
-  } = useQuery<AxiosResponse<IMotorcycleCard[]>>('getAllUsers', {
+  } = useQuery<AxiosResponse<IMotorcycleCard[]>>('getAllMotorcycle', {
     queryFn: getAllMotorcycle,
     refetchOnWindowFocus: false,
   });
