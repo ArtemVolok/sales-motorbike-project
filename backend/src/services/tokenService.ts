@@ -74,7 +74,7 @@ export const verifyRefreshToken = (refreshToken: string) => {
     if (!jwtRefreshTokenKey) {
       return null;
     }
-    //TODO: add check to refreshToken (it is probably null)
+
     const userData = jwt.verify(refreshToken, jwtRefreshTokenKey);
     return userData;
   } catch (error) {

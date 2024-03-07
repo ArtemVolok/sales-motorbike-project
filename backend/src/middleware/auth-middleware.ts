@@ -23,7 +23,7 @@ export const authHandler = (
       return next(ApiError.UnauthorizedError());
     }
 
-    //TODO: for what line bellow
+    //TODO: for next generation
     // req.user = userData;
     next();
   } catch (e) {

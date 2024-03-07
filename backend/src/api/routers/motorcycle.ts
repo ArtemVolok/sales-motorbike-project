@@ -53,8 +53,6 @@ motorcycleRouters.get<any>(
     try {
       const allMotorcycle = await MotorcycleCardModel.find({});
 
-      //TODO: should add check and send error, or send empty array?
-
       res.status(200).json({
         response: allMotorcycle,
       });
@@ -70,8 +68,6 @@ motorcycleRouters.get<any>(
   async (_, res: Response, next: NextFunction) => {
     try {
       const allMotorcycle = await MotorcycleCardModel.find({});
-
-      //TODO: should add check and send error, or send empty array?
 
       res.status(200).json({
         response: allMotorcycle,

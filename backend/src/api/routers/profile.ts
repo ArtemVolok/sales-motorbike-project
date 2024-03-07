@@ -96,7 +96,6 @@ profileRouters.post<{}, MessageResponse>(
       const existingUser = await ProfileUserModel.findOne({ email });
 
       if (existingUser) {
-        //TODO: which status should use for this error?
         throw ApiError.BadRequest('Користувач з такою поштою вже існує');
       }
 
@@ -126,12 +125,6 @@ profileRouters.post<{}, MessageResponse>(
         userId: payload.id,
         refreshToken: tokens.refreshToken,
       });
-
-      //TODO: should need add cookie when we registration user?
-      // res.cookie('refreshToken', tokens.refreshToken, {
-      //   maxAge: 2592000000,
-      //   httpOnly: true,
-      // });
 
       res.status(200).json({
         ...tokens,
@@ -181,10 +174,6 @@ profileRouters.get(
     try {
       const getAllItems = await ProfileUserModel.find({});
 
-      //TODO: should add this check, or send empty array?
-      if (!getAllItems) {
-        throw ApiError.BadRequest('Користувачів не знайдено');
-      }
       res.json({
         message: getAllItems,
       });
