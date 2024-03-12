@@ -1,0 +1,49 @@
+@import '../../assets/scss/base/variables';
+
+.activation {
+  margin: 14px 18px;
+  height: calc(100vh - 100px);
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: center;
+  align-items: center;
+  background: url('../../assets/img/pattern.png');
+
+  &__response {
+    width: 500px;
+    min-height: 200px;
+    background-color: $white;
+    border: 2px solid $grey-300;
+    border-radius: 14px;
+    // display: flex;
+    // flex-wrap: nowrap;
+    // justify-content: center;
+
+    .svgBlock {
+      display: flex;
+      justify-content: center;
+      margin: 20px 0;
+      .responseSvg {
+        margin: 0 auto;
+        width: 120px;
+        height: 120px;
+      }
+
+      .successSvg {
+        fill: $green-200;
+      }
+
+      .errorSvg {
+        fill: $red-extra;
+      }
+    }
+
+    &-title,
+    &-paragraph {
+      display: block;
+      width: 100%;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+  }
+}

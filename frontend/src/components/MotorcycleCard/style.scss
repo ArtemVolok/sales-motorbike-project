@@ -46,6 +46,28 @@
     display: flex;
     justify-content: center;
     margin: 0 auto;
+
+    .buyBlock__button {
+      min-width: 200px;
+      transform: skew(-10deg);
+      text-transform: uppercase;
+      font-family: 'Ubuntu', cursive;
+      background-color: rgb(173, 3, 3);
+      color: white;
+      font-weight: 700;
+      font-size: 20px;
+      letter-spacing: 3px;
+      height: 40px;
+      width: 150px;
+      margin: 10px auto;
+      padding: 4px 6px;
+      cursor: pointer;
+      border: none;
+    }
+
+    .buyBlock__button:hover {
+      background-color: rgb(141, 4, 4);
+    }
   }
 }
 

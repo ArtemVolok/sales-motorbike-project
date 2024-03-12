@@ -1,0 +1,62 @@
+@import '../../../../assets/scss/base/variables';
+
+.description {
+  &__engine {
+    border-top: 2px $grey-300 solid;
+    border-bottom: 2px $grey-300 solid;
+    padding: 14px 0;
+
+    &-title {
+      font-size: 24px;
+      margin-bottom: 14px;
+    }
+
+    &-paragraph {
+      font-size: 19px;
+      margin-bottom: 14px;
+    }
+  }
+}
+
+.tableTab {
+  margin-top: 14px;
+  width: 100%;
+  font-size: 18px;
+  border: 1px $grey-300 solid;
+
+  &-row,
+  &-rowColor {
+    box-sizing: border-box;
+    border-bottom: 2px solid $orange;
+  }
+
+  &-row:hover,
+  &-rowColor:hover {
+    border: 4px red solid;
+  }
+
+  &-rowColor {
+    background-color: $grey-300;
+  }
+
+  .tableTab-cellTitle {
+    color: $black;
+    display: flex;
+    justify-content: last baseline;
+    align-items: center;
+    padding: 10px 0;
+
+    .titleSvg {
+      width: 36px;
+      height: 36px;
+      fill: $deep-orange;
+      padding: 4px;
+      margin: 0 14px;
+    }
+  }
+
+  .tableTab-cellValue {
+    padding-left: 14px;
+    width: 60%;
+  }
+}

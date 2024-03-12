@@ -1,0 +1,54 @@
+@import '../../../../assets/scss/base/variables';
+
+.advantages {
+  width: 450px;
+
+  .delivery {
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    border-bottom: 3px $grey-300 solid;
+
+    &__block {
+      display: flex;
+      flex-wrap: nowrap;
+      justify-content: baseline;
+      margin: 10px 0;
+
+      &-logo {
+        width: 50px;
+        height: 50px;
+        margin-right: 10px;
+
+        .mailHouseSvg {
+          fill: $orange-400;
+        }
+
+        .truckFastSvg {
+          fill: $grey-400;
+        }
+      }
+
+      &-info {
+        .info__h {
+          font-size: 22px;
+        }
+        .info__paragraph {
+          color: $orange-700;
+        }
+      }
+    }
+  }
+
+  .reasonBuy {
+    &__title {
+      font-size: 22px;
+      margin-bottom: 9px;
+    }
+
+    &__list {
+      &-li {
+        margin: 8px 0;
+      }
+    }
+  }
+}

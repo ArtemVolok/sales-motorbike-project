@@ -12,7 +12,7 @@ export interface IMotorcycleCard
   _id: string;
 }
 
-export interface IError {
-  errorCode: number;
-  errorMessage: string;
-}
+// export interface IError {
+//   errorCode: number;
+//   errorMessage: string;
+// }

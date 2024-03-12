@@ -8,3 +8,9 @@ export const AdminPageUrl = 'admin-page';
 // TODO: understand line bellow, why we don't us /:id
 export const UpdateMotorcycleCardUrl = '/update-motorcycle';
 export const UpdateMotorcycleCardIdUrl = '/update-motorcycle/:id';
+export const MotorcycleInfoUrl = 'motorcycle';
+export const MotorcycleInfoIdUrl = 'motorcycle/:id';
+export const RegistrationUrl = '/registration';
+export const LoginUrl = '/login';
+export const ActivationUrl = 'activation';
+export const ActivationIdUrl = 'activation/:activationLink';

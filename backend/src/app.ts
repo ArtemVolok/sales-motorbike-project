@@ -1,6 +1,5 @@
 /* eslint-disable import/no-extraneous-dependencies */
-import express, { Request, Response } from 'express';
-import { validationResult } from 'express-validator';
+import express from 'express';
 import multer from 'multer';
 import morgan from 'morgan';
 import helmet from 'helmet';
@@ -8,25 +7,23 @@ import cors from 'cors';
 import mongoose from 'mongoose';
 import 'dotenv/config';
 import path from 'path';
+import cookieParser from 'cookie-parser';
 
 console.log('multer', multer);
 
 import * as middlewares from './middleware/middlewares';
-import { ProfileUserModel } from './schema/profileUser';
-import { motorcycleCardValidation } from './schema/MotorcycleCard/utils';
-import { IMotorcycleCard } from './schema/MotorcycleCard/types';
-import upload from './middleware/multerMiddleware';
-import MessageResponse from './interfaces/MessageResponse';
-import api from './api';
-import { MotorcycleCardModel } from './schema/MotorcycleCard';
-
-const mongodbConnectUrl: string | undefined = process.env.MONGODB_CONNECT_URL;
+import { errorHandler } from './middleware/error-middleware';
+import motorcycleRouters from './api/routers/motorcycle';
+import profileRouters from './api/routers/profile';
+import servicesRouters from './api/routers/services';
+import './middleware/error-middleware';
+import { mongoDBConnectUrl } from './constants';
 
 require('dotenv').config();
 
 const app = express();
 
-app.use('/images', express.static(path.join(__dirname, '/images')));
+app.use('/api/images', express.static(path.join(__dirname, '/images')));
 app.use(morgan('dev'));
 app.use(helmet());
 
@@ -55,15 +52,16 @@ const corsOptions = {
 };
 app.use(cors(corsOptions));
 app.use(express.json());
+app.use(cookieParser());
 
 async function main() {
-  if (!mongodbConnectUrl) {
+  if (!mongoDBConnectUrl) {
     console.log('wrong database url!');
     return;
   }
 
   await mongoose
-    .connect(mongodbConnectUrl)
+    .connect(mongoDBConnectUrl)
     .then(() => {
       console.log('connection to database success!');
       const port = process.env.PORT || 5000;
@@ -75,102 +73,11 @@ async function main() {
 }
 main();
 
-app.post<{}, MessageResponse>('/profileUser/create', async (req, res) => {
-  console.log('data from front: ', req.body);
-  if (req.body) {
-    const addUser = await ProfileUserModel.create(req.body);
-    console.log('addUSer', addUser);
-    res.json({
-      message: req.body,
-    });
-  }
-});
-
-app.get<any>('/profileUser/allUsers', async (_, res) => {
-  console.log('inside allUsers');
-  const getAllItems = await ProfileUserModel.find({});
-  console.log('allUsers', getAllItems);
-  res.json({
-    message: getAllItems,
-  });
-});
-
-app.get<{}, MessageResponse>('/', (req, res) => {
-  res.json({
-    message: '🦄🌈✨👋🌎🌍🌏✨🌈🦄',
-  });
-});
-
-////////****MOTORCYCLE*****////////
-
-app.post(
-  '/motorcycleCards',
-  upload.single('uploadImage'),
-  motorcycleCardValidation,
-  async (req: Request<any, any, IMotorcycleCard>, res: Response) => {
-    if (!req.file)
-      return res.status(400).json({
-        errorCode: 400,
-        errorMessage: 'FormData is empty!',
-      });
-
-    const errors = validationResult(req);
-
-    if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
-    }
-
-    const { filename, size, path: filePath, originalname } = req.file;
-
-    const preparedData = {
-      ...req.body,
-      uploadImage: { filename, size, path: filePath, originalname },
-    };
-
-    const createMotorcycle = await MotorcycleCardModel.create(preparedData);
-    return res.status(201).json(createMotorcycle);
-  },
-);
-
-app.get<any>('/motorcycleCards', async (_, res: Response) => {
-  const allMotorcycle = await MotorcycleCardModel.find({});
-
-  res.status(200).json({
-    response: allMotorcycle,
-  });
-});
-
-interface IIdParams {
-  id: string;
-}
-
-app.delete(
-  '/motorcycleCards/:id',
-  async (req: Request<any, any, IIdParams>, res: Response) => {
-    console.log('inside delete /motorcycleCards');
-
-    const idMotorcycleCard = req.params.id;
-
-    await MotorcycleCardModel.findByIdAndDelete(idMotorcycleCard);
-    res.status(200).json({ message: 'Motorcycle card successful deleted!' });
-  },
-);
-
-app.get(
-  '/motorcycleCard/:id',
-  async (req: Request<any, any, IIdParams>, res: Response) => {
-    console.log('inside /motorcycleCard/:id');
-
-    const idMotorcycleCard = req.params.id;
-
-    const selectedCard = await MotorcycleCardModel.findById(idMotorcycleCard);
-    res.status(200).json({ response: selectedCard });
-  },
-);
-
-app.use('/api/v1', api);
+app.use('/api/', motorcycleRouters);
+app.use('/api/', servicesRouters);
+app.use('/api/', profileRouters);
 
 app.use(middlewares.notFound);
-app.use(middlewares.errorHandler);
+app.use(errorHandler);
 
 export default app;

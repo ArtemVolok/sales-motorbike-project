@@ -1,7 +1,9 @@
+import { useNavigate } from 'react-router-dom';
 import classNames from 'classnames';
+
 import { IMotorcycleCard } from '../../pages/CatalogMotorcycles/types';
-import BuyButton from '../BuyButton';
 import { API_V1_URL } from '../../constants';
+import { MotorcycleInfoUrl } from '../../UrlsConfig';
 
 import './style.scss';
 
@@ -10,6 +12,8 @@ const MotorcycleCard = ({
 }: {
   motorcycleData: IMotorcycleCard;
 }) => {
+  const navigate = useNavigate();
+
   const {
     name,
     vendorCode,
@@ -23,6 +27,7 @@ const MotorcycleCard = ({
     typeCooling,
     typeMotorcycle,
     uploadImage,
+    _id,
   } = motorcycleData;
 
   return (
@@ -46,7 +51,12 @@ const MotorcycleCard = ({
         <h2 className="cardItem__price">{price} грн</h2>
         {/* TODO: fix onClick in button */}
         <div className="cardItem__buyBlock">
-          <BuyButton title="Купити" />
+          <button
+            onClick={() => navigate(`/${MotorcycleInfoUrl}/${_id}`)}
+            className="buyBlock__button"
+          >
+            Купити
+          </button>
         </div>
         <div className="cardItemHover">
           <div className="cardItemHover__colorBlock">
