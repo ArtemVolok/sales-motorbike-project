@@ -83,10 +83,12 @@ servicesRouters.get(
         refreshToken: tokens.refreshToken,
       });
 
-      res.cookie('refreshToken', tokens.refreshToken, {
+      const testValueCookie = res.cookie('refreshToken', tokens.refreshToken, {
         maxAge: 30 * 24 * 60 * 60 * 1000,
         httpOnly: true,
       });
+      console.log('testValueCookie', testValueCookie);
+
       res.status(200).json({
         ...tokens,
         payload,

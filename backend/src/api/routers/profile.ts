@@ -17,9 +17,7 @@ import {
 } from '../../services/tokenService';
 import { sendActivationEmail } from '../../services/mailService';
 import MessageResponse from '../../interfaces/MessageResponse';
-import { lifeTimeCookie } from '../../constants';
-
-const frontendUrl: string | undefined = process.env.FRONTEND_URL;
+import { frontendUrl, lifeTimeCookie } from '../../constants';
 
 const profileRouters = express.Router();
 
@@ -63,10 +61,13 @@ profileRouters.post(
         refreshToken: tokens.refreshToken,
       });
 
-      res.cookie('refreshToken', tokens.refreshToken, {
+      const loginCookie = res.cookie('refreshToken', tokens.refreshToken, {
         maxAge: lifeTimeCookie,
         httpOnly: true,
       });
+
+      console.log('loginCookie', loginCookie);
+      console.log('after send cookie');
       res.status(200).json({
         ...tokens,
         payload,
