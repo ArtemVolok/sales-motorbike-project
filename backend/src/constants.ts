@@ -10,3 +10,5 @@ export const jwtRefreshTokenKey: string | undefined =
 export const lifeTimeAccessToken: string = '30m';
 export const lifeTimeRefreshToken: string = '30d';
 export const lifeTimeCookie: number = 30 * 24 * 60 * 60 * 1000;
+export const mongoDBConnectUrl: string | undefined =
+  process.env.MONGODB_CONNECT_URL;
