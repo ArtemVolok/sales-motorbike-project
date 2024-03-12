@@ -17,8 +17,7 @@ import motorcycleRouters from './api/routers/motorcycle';
 import profileRouters from './api/routers/profile';
 import servicesRouters from './api/routers/services';
 import './middleware/error-middleware';
-
-const mongodbConnectUrl: string | undefined = process.env.MONGODB_CONNECT_URL;
+import { mongoDBConnectUrl } from './constants';
 
 require('dotenv').config();
 
@@ -56,13 +55,13 @@ app.use(express.json());
 app.use(cookieParser());
 
 async function main() {
-  if (!mongodbConnectUrl) {
+  if (!mongoDBConnectUrl) {
     console.log('wrong database url!');
     return;
   }
 
   await mongoose
-    .connect(mongodbConnectUrl)
+    .connect(mongoDBConnectUrl)
     .then(() => {
       console.log('connection to database success!');
       const port = process.env.PORT || 5000;

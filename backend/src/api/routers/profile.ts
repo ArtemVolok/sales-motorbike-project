@@ -61,13 +61,12 @@ profileRouters.post(
         refreshToken: tokens.refreshToken,
       });
 
-      const loginCookie = res.cookie('refreshToken', tokens.refreshToken, {
+      res.cookie('refreshToken', tokens.refreshToken, {
         maxAge: lifeTimeCookie,
         httpOnly: true,
+        sameSite: 'none',
       });
 
-      console.log('loginCookie', loginCookie);
-      console.log('after send cookie');
       res.status(200).json({
         ...tokens,
         payload,
