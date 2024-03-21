@@ -28,6 +28,9 @@ const CatalogMotorcycles = React.lazy(
 const CreateMotorcycleCartPage = React.lazy(
   () => import('./pages/CreateMotorcycleCard'),
 );
+const UpdateMotorcycleCartPage = React.lazy(
+  () => import('./pages/UpdateMotorcycleCard'),
+);
 const AdminPage = React.lazy(() => import('./pages/AdminPage'));
 const MotorcyclePage = React.lazy(() => import('./pages/MotorcycleInfo'));
 const RegistrationPage = React.lazy(() => import('./pages/Registration'));
@@ -91,18 +94,18 @@ function App() {
             }
           />
           <Route
-            path={AdminPageUrl}
+            path={UpdateMotorcycleCardIdUrl}
             element={
               <React.Suspense fallback={null}>
-                <AdminPage />
+                <UpdateMotorcycleCartPage />
               </React.Suspense>
             }
           />
           <Route
-            path={UpdateMotorcycleCardIdUrl}
+            path={AdminPageUrl}
             element={
               <React.Suspense fallback={null}>
-                <CreateMotorcycleCartPage />
+                <AdminPage />
               </React.Suspense>
             }
           />

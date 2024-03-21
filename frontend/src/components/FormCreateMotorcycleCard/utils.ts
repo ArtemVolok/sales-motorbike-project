@@ -1,49 +1,28 @@
 import * as yup from 'yup';
+
+import {
+  funcNumericValidator,
+  numericValidator,
+} from '../../pages/CreateMotorcycleCard/utils';
+
 import {
   EFuelInjection,
   ETypeBrakes,
   ETypeCooling,
   ETypeMotorcycle,
-} from '../../components/FormCreateMotorcycleCard/types';
+} from './types';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const transformNumeric = (value: any, originalValue: any) => {
-  return !isNaN(originalValue) && originalValue !== null && originalValue !== ''
-    ? value
-    : undefined;
-};
-
-export const funcNumericValidator = (message: string) => {
-  return yup
-    .number()
-    .required(message)
-    .typeError('This field should be a number!')
-    .nullable()
-    .positive('Only positive number!')
-    .transform(transformNumeric);
-};
-
-export const numericValidator = yup
-  .number()
-  .required('This field is required!')
-  .typeError('This field should be a number!')
-  .nullable()
-  .positive('Only positive number!')
-  .transform(transformNumeric);
-
-export const createMotorcycleCartSchema = yup
+export const updateMotorcycleSchema = yup
   .object()
   .shape({
-    uploadImage: yup
-      .mixed<File>()
-      .required('File required')
-      .nullable()
-      .test(
-        'required',
-        'You need to provide a file!',
-        (value) => value !== null,
-      ),
-
+    uploadImage: yup.object().shape({
+      path: yup.string().required(),
+      filename: yup.string().required(),
+      originalname: yup.string().required(),
+      size: yup.number().required(),
+    }),
+    _id: yup.string().required('This field is required!').max(255),
+    _v: numericValidator,
     name: yup.string().required('This field is required!').max(255),
     price: funcNumericValidator('This field is required!'),
     vendorCode: yup.string().required('This field is required!').max(255),
@@ -75,6 +54,5 @@ export const createMotorcycleCartSchema = yup
       .of(yup.string().required('This field is required!'))
       .min(1, 'Select min 1 color')
       .required('This field is required!'),
-    // password: yup.string().required('This field is required!'),
   })
   .required();

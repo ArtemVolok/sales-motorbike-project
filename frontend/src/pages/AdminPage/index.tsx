@@ -4,15 +4,15 @@ import { useMutation, useQuery } from 'react-query';
 import MotorcycleCardItemAdminPage from '../../components/MotorcycleCardItemAdminPage';
 import { ISuccessDeleteMotorcycleResponse } from '../../components/MotorcycleCardItemAdminPage/types';
 import { IMotorcycleCard } from '../CatalogMotorcycles/types';
-import { getAllMotorcycle, removeMotorcycleCard } from '../../Requests';
-import { IServerError } from '../../Requests/types';
+import { getAllMotorcycle, removeMotorcycleCard } from '../../requests';
+import { IServerError } from '../../requests/types';
 
 import './style.scss';
 
 const AdminPage = () => {
   const {
     mutate,
-    data: removeData,
+    data: removedData,
     error: removeError,
   } = useMutation<
     AxiosResponse<ISuccessDeleteMotorcycleResponse>,
@@ -26,7 +26,7 @@ const AdminPage = () => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     any,
     AxiosError<IServerError>
-  >(['allMotorcycle', removeData], {
+  >(['allMotorcycle', removedData], {
     queryFn: getAllMotorcycle,
     refetchOnWindowFocus: false,
   });
@@ -55,9 +55,9 @@ const AdminPage = () => {
           <p>{removeError.response.data.message}</p>
         </div>
       )}
-      {!!removeData && (
+      {!!removedData && (
         <div className="adminPage__table-successRemove">
-          <p>{removeData.data.message}</p>
+          <p>{removedData.data.message}</p>
         </div>
       )}
 
