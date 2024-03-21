@@ -82,6 +82,7 @@ export const activationRequest = async (activationLink: string) => {
 export const logoutRequest = async () => {
   //TODO: do need add $api?
   // const response = await $api.post('/logout');
+
   const response = await axios.post(
     `${API_V1_URL}/logout`,
     {},
@@ -90,3 +91,5 @@ export const logoutRequest = async () => {
 
   return response;
 };
+
+console.log('test console.log');
