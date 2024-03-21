@@ -13,8 +13,8 @@ import { IMotorcycleCard } from '../CatalogMotorcycles/types';
 import { loginSchema } from './utils';
 import { ILoginForm } from './types';
 import { ISuccessCreateUserProfile } from '../Registration/types';
-import { getAllMotorcycle, loginRequest } from '../../requestTest';
-import { IServerError } from '../../requestTest/types';
+import { getAllMotorcycle, loginRequest } from '../../request';
+import { IServerError } from '../../request/types';
 
 import '../Registration/style.scss';
 import './style.scss';

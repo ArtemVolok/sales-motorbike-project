@@ -2,7 +2,7 @@ import { useQuery } from 'react-query';
 
 import { IMotorcycleCard } from './types';
 import MotorcycleCard from '../../components/MotorcycleCard';
-import { getCatalogMotorcycle } from '../../requestTest';
+import { getCatalogMotorcycle } from '../../request';
 
 import './style.scss';
 

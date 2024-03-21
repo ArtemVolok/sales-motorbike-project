@@ -5,12 +5,12 @@ import { AxiosError, AxiosResponse } from 'axios';
 
 import { IMotorcycleCard } from '../CatalogMotorcycles/types';
 import { ISuccessCreateMotorcycleCard } from '../CreateMotorcycleCard/types';
-import { IServerError } from '../../requestTest/types';
+import { IServerError } from '../../request/types';
 
 import XMark from '../../assets/xmark-solid.svg?react';
 
 import FormCreateMotorcycleCard from '../../components/FormCreateMotorcycleCard';
-import { getMotorcycleCardById, updateMotorcycleCard } from '../../requestTest';
+import { getMotorcycleCardById, updateMotorcycleCard } from '../../request';
 import { AdminPageUrl } from '../../UrlsConfig';
 
 import '../CreateMotorcycleCard/style.scss';
