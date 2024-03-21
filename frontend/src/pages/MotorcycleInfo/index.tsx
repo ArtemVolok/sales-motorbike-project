@@ -12,8 +12,8 @@ import Advantages from './components/Advantages';
 import Guarantee from './components/Guarantee';
 import Description from './components/Description';
 import Characteristics from './components/Characteristics';
-import { getMotorcycleCard } from '../../requests';
-import { IServerError } from '../../requests/types';
+import { getMotorcycleCard } from '../../requestTest';
+import { IServerError } from '../../requestTest/types';
 
 import './style.scss';
 
