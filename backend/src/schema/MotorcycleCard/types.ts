@@ -72,3 +72,6 @@ export interface IMotorcycleCard {
   horsePower: number;
   password: string;
 }
+
+export interface IUpdateMotorcycleCard
+  extends Omit<IMotorcycleCard, 'uploadImage'> {}

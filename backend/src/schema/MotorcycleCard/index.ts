@@ -18,7 +18,7 @@ const MotorcycleCardItem = new mongoose.Schema({
   fuelTank: { type: Number, required: true },
   weight: { type: Number, required: true },
   horsePower: { type: Number, required: true },
-  password: { type: String, required: true },
+  // password: { type: String, required: true },
   typeMotorcycle: {
     type: String,
     enum: Object.values(ETypeMotorcycle),
