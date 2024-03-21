@@ -8,9 +8,9 @@ import { AdminPageUrl, DashboardUrl } from '../../UrlsConfig';
 import FormCreateMotorcycleCard from '../../components/FormCreateMotorcycleCard';
 
 import './style.scss';
-import { uploadMotorcycleCardData } from '../../requests';
+import { uploadMotorcycleCardData } from '../../Requests';
 import { IUpdateMotorcycleCard } from '../UpdateMotorcycleCard/types';
-import { IServerError } from '../../requests/types';
+import { IServerError } from '../../Requests/types';
 import { ISuccessCreateMotorcycleCard } from './types';
 
 const CreateMotorcycleCardPage = () => {
