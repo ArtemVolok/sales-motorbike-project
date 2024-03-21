@@ -2,8 +2,8 @@ import { useQuery } from 'react-query';
 import { Link, useParams } from 'react-router-dom';
 import { AxiosError, AxiosResponse } from 'axios';
 
-import { activationRequest } from '../../Requests';
-import { IServerError } from '../../Requests/types';
+import { activationRequest } from '../../requests';
+import { IServerError } from '../../requests/types';
 import { LoginUrl } from '../../UrlsConfig';
 
 import CheckMarkCircle from '../../assets/check-circle.svg?react';

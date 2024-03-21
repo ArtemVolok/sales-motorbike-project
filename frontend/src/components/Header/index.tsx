@@ -12,8 +12,8 @@ import {
   RegistrationUrl,
   LoginUrl,
 } from '../../UrlsConfig';
-import { logoutRequest } from '../../Requests';
-import { IServerError } from '../../Requests/types';
+import { logoutRequest } from '../../requests';
+import { IServerError } from '../../requests/types';
 
 import './style.scss';
 
