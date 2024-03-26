@@ -1,17 +1,14 @@
 /* eslint-disable @typescript-eslint/indent */
-import fs from 'fs';
 import express, { Request, Response, NextFunction } from 'express';
 import { validationResult } from 'express-validator';
 
 import upload from '../../middleware/multerMiddleware';
 import { MotorcycleCardModel } from '../../schema/MotorcycleCard';
 import { motorcycleCardValidation } from '../../schema/MotorcycleCard/utils';
-import {
-  IMotorcycleCard,
-  // IUpdateMotorcycleCard,
-} from '../../schema/MotorcycleCard/types';
+import { IMotorcycleCard } from '../../schema/MotorcycleCard/types';
 import ApiError from '../../exceptions/api-error';
 import { authHandler } from '../../middleware/auth-middleware';
+import findAndDeleteFile from '../../services/deleteFile';
 
 const motorcycleRouters = express.Router();
 
@@ -95,32 +92,17 @@ motorcycleRouters.delete(
     next: NextFunction,
   ) => {
     try {
-      const idMotorcycleCard = req.params.id;
+      const cardId = req.params.id;
 
-      const motorcycleData = await MotorcycleCardModel.findById(
-        idMotorcycleCard,
-      );
+      const motorcycleData = await MotorcycleCardModel.findById(cardId);
 
-      if (motorcycleData?.id) {
+      if (motorcycleData?.uploadImage?.filename) {
         const pathToImage = `src/images/${motorcycleData?.uploadImage?.filename}`;
 
-        fs.access(pathToImage, fs.constants.F_OK, (err) => {
-          if (err) {
-            console.error('File does not exist:', err);
-            return;
-          }
-
-          fs.unlink(pathToImage, (unlinkErr) => {
-            if (unlinkErr) {
-              console.error('Error removing file:', unlinkErr);
-              return;
-            }
-            console.log('File removed successfully');
-          });
-        });
+        await findAndDeleteFile(pathToImage);
       }
 
-      await MotorcycleCardModel.findByIdAndDelete(idMotorcycleCard);
+      await MotorcycleCardModel.findByIdAndDelete(cardId);
       res.status(200).json({ message: 'Motorcycle card successful deleted!' });
     } catch (e) {
       next(e);
@@ -136,14 +118,12 @@ motorcycleRouters.get(
     next: NextFunction,
   ) => {
     try {
-      const idMotorcycleCard = req.params.id;
+      const cardId = req.params.id;
 
-      const motorcycleCard = await MotorcycleCardModel.findById(
-        idMotorcycleCard,
-      );
+      const motorcycleCard = await MotorcycleCardModel.findById(cardId);
 
       if (!motorcycleCard) {
-        throw ApiError.BadRequest('ID картки мотоцикла не знайдено');
+        throw ApiError.BadRequest('Картки мотоцикла не знайдено');
       }
 
       res.status(200).json({ response: motorcycleCard });
@@ -160,11 +140,7 @@ motorcycleRouters.put(
   motorcycleCardValidation,
   async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const idMotorcycleCard = req.params.id;
-
-      if (!idMotorcycleCard) {
-        throw ApiError.BadRequest('ID картки мотоцикла не знайдено');
-      }
+      const cardId = req.params.id;
 
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
@@ -176,25 +152,12 @@ motorcycleRouters.put(
 
       if (fileMotorcycle) {
         const motorcycleFromDatabase = await MotorcycleCardModel.findById(
-          idMotorcycleCard,
+          cardId,
         );
 
         const pathToImage = `src/images/${motorcycleFromDatabase?.uploadImage?.filename}`;
 
-        fs.access(pathToImage, fs.constants.F_OK, (err) => {
-          if (err) {
-            console.error('File does not exist:', err);
-            return;
-          }
-
-          fs.unlink(pathToImage, (unlinkErr) => {
-            if (unlinkErr) {
-              console.error('Error removing file:', unlinkErr);
-              return;
-            }
-            console.log('File removed successfully');
-          });
-        });
+        await findAndDeleteFile(pathToImage);
       }
 
       const preparedData = fileMotorcycle
@@ -210,10 +173,12 @@ motorcycleRouters.put(
         : motorcycleCardData;
 
       const updateMotorcycleInfo = await MotorcycleCardModel.findByIdAndUpdate(
-        idMotorcycleCard,
+        cardId,
         preparedData,
         { new: true },
       );
+
+      console.log('updateMotorcycleInfo', updateMotorcycleInfo);
 
       if (!updateMotorcycleInfo) {
         throw ApiError.BadRequest('Помилка при оновленні даних в базі даних');
