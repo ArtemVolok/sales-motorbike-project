@@ -91,5 +91,3 @@ export const logoutRequest = async () => {
 
   return response;
 };
-
-console.log('test console.log');

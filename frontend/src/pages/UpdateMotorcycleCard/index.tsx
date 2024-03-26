@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useMutation, useQuery } from 'react-query';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { AxiosError, AxiosResponse } from 'axios';
 
 import { IMotorcycleCard } from '../CatalogMotorcycles/types';
@@ -9,7 +9,7 @@ import { IServerError } from '../../request/types';
 
 import XMark from '../../assets/xmark-solid.svg?react';
 
-import FormCreateMotorcycleCard from '../../components/FormCreateMotorcycleCard';
+import FormMotorcycleCard from '../../components/FormMotorcycleCard';
 import { getMotorcycleCardById, updateMotorcycleCard } from '../../request';
 import { AdminPageUrl } from '../../UrlsConfig';
 
@@ -17,7 +17,8 @@ import '../CreateMotorcycleCard/style.scss';
 
 const UpdateMotorcycleCard = () => {
   const navigate = useNavigate();
-  const { id: idFromUrl } = useParams();
+  const { id } = useParams();
+  const queryClient = useQueryClient();
 
   const {
     data: motorcycleCardData,
@@ -26,11 +27,8 @@ const UpdateMotorcycleCard = () => {
   } = useQuery<
     AxiosResponse<{ response: IMotorcycleCard }>,
     AxiosError<IServerError>
-  >(['motorcycleCard', idFromUrl], {
-    queryFn: () => getMotorcycleCardById(idFromUrl!),
-    refetchOnWindowFocus: false,
-    refetchOnMount: 'always',
-    cacheTime: 0,
+  >(['motorcycleCard', id], {
+    queryFn: () => getMotorcycleCardById(id!),
   });
 
   const { data: dataFromUpdate, mutate } = useMutation<
@@ -39,10 +37,13 @@ const UpdateMotorcycleCard = () => {
     { data: FormData; id: string }
   >('updateMotorcycleCard', {
     mutationFn: updateMotorcycleCard,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['motorcycleCard'] });
+    },
   });
 
   const requestFunction = (data: FormData) => {
-    mutate({ data, id: idFromUrl! });
+    mutate({ data, id: id! });
   };
 
   useEffect(() => {
@@ -56,9 +57,9 @@ const UpdateMotorcycleCard = () => {
       <div className="createCard">
         <div className="createCard__titlePage">
           <div className="createCard__title">
-            <h2>
-              Редагування карточки мотоциклу -{' '}
-              {motorcycleCardData?.data.response.name}{' '}
+            <h2 className="createCard__title-heading">
+              Редагування карточки мотоциклу -
+              {motorcycleCardData?.data.response.name}
             </h2>
             <div className="barsSolidSvg">
               {/* //TODO: create modal for confirm */}
@@ -74,7 +75,7 @@ const UpdateMotorcycleCard = () => {
         ) : (
           <>
             {!!motorcycleCardData?.data.response && (
-              <FormCreateMotorcycleCard
+              <FormMotorcycleCard
                 motorcycleInfo={motorcycleCardData?.data.response}
                 requestFunction={requestFunction}
               />

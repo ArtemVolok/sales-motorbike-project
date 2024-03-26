@@ -70,5 +70,11 @@ $pc-screen: 720px;
 }
 
 .requestError {
+  margin-top: 10px;
   color: $red-extra;
+}
+
+.disabled {
+  background-color: rgba(0, 0, 0, 0.5);
+  cursor: default;
 }

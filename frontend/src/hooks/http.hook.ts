@@ -56,5 +56,3 @@ export const useHttp = () => {
 
   return { request };
 };
-
-console.log('test console.log');

@@ -1,9 +1,12 @@
+import { useNavigate } from 'react-router-dom';
+
 import { IMotorcycleCardAdmin } from './types';
+import { UpdateMotorcycleCardUrl } from '../../UrlsConfig';
+
 import TrashBox from '../../assets/trash-solid.svg?react';
 import Pencil from '../../assets/pencil-solid.svg?react';
+
 import './style.scss';
-import { useNavigate } from 'react-router-dom';
-import { UpdateMotorcycleCardUrl } from '../../UrlsConfig';
 
 const MotorcycleCardItemAdminPage = ({
   _id,

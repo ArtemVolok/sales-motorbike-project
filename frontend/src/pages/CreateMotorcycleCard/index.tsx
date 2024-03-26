@@ -4,19 +4,20 @@ import { useMutation } from 'react-query';
 import { AxiosError, AxiosResponse } from 'axios';
 
 import XMark from '../../assets/xmark-solid.svg?react';
-import { AdminPageUrl, DashboardUrl } from '../../UrlsConfig';
-import FormCreateMotorcycleCard from '../../components/FormCreateMotorcycleCard';
+import { AdminPageUrl } from '../../UrlsConfig';
+import FormMotorcycleCard from '../../components/FormMotorcycleCard';
 
-import './style.scss';
 import { uploadMotorcycleCardData } from '../../request';
 import { IUpdateMotorcycleCard } from '../UpdateMotorcycleCard/types';
 import { IServerError } from '../../request/types';
 import { ISuccessCreateMotorcycleCard } from './types';
 
+import './style.scss';
+
 const CreateMotorcycleCardPage = () => {
   const navigate = useNavigate();
 
-  const { mutate, data } = useMutation<
+  const { mutate, data, error } = useMutation<
     AxiosResponse<ISuccessCreateMotorcycleCard>,
     AxiosError<IServerError>,
     FormData
@@ -42,14 +43,17 @@ const CreateMotorcycleCardPage = () => {
             <h2>Створення нової карточки мотоциклу</h2>
             <div className="barsSolidSvg">
               {/* //TODO: create modal for confirm */}
-              <XMark onClick={() => navigate(DashboardUrl)} />
+              <XMark onClick={() => navigate(AdminPageUrl)} />
             </div>
           </div>
           <p className="createCard__paragraph">
             Заповінть поля нижче для створення нової карточки мотоциклу
           </p>
         </div>
-        <FormCreateMotorcycleCard requestFunction={requestFunction} />
+        <FormMotorcycleCard requestFunction={requestFunction} />
+        {error?.code && (
+          <h3 className="requestError">{error.response?.data.message}</h3>
+        )}
       </div>
     </div>
   );

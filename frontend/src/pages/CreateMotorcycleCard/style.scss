@@ -16,8 +16,16 @@
 
   &__title {
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
     margin-bottom: 12px;
+
+    &-heading {
+      display: block;
+      width: calc(100% - 30px);
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+    }
 
     .barsSolidSvg {
       padding-top: 6px;

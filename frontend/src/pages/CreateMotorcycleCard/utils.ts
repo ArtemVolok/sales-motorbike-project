@@ -4,7 +4,7 @@ import {
   ETypeBrakes,
   ETypeCooling,
   ETypeMotorcycle,
-} from '../../components/FormCreateMotorcycleCard/types';
+} from '../../components/FormMotorcycleCard/types';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const transformNumeric = (value: any, originalValue: any) => {

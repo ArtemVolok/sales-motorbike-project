@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 import { yupResolver } from '@hookform/resolvers/yup';
 import classNames from 'classnames';
 
@@ -14,60 +15,41 @@ import { createMotorcycleCartSchema } from '../../pages/CreateMotorcycleCard/uti
 import { IMotorcycleCard } from '../../pages/CatalogMotorcycles/types';
 import { IUpdateMotorcycleCard } from '../../pages/UpdateMotorcycleCard/types';
 
-import DownloadFile from '../../assets/download-solid.svg?react';
 import { API_V1_URL } from '../../constants';
+import { AdminPageUrl } from '../../UrlsConfig';
+
 import './style.scss';
+import DNDBlock from '../DNDBlock';
+import { createFormData } from '../../utils/createFormData';
 
 interface IFormCreateMotorcycleCard {
-  motorcycleInfo?: IMotorcycleCard | undefined;
+  motorcycleInfo?: IMotorcycleCard;
   requestFunction: (data: FormData) => void;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const FormCreateMotorcycleCard: React.FC<IFormCreateMotorcycleCard> = ({
-  motorcycleInfo,
+const FormMotorcycleCard: React.FC<IFormCreateMotorcycleCard> = ({
+  motorcycleInfo, //
   requestFunction,
 }) => {
-  const {
-    availableColors,
-    cubicCapacity,
-    fuelConsumption,
-    fuelInjection,
-    fuelTank,
-    horsePower,
-    maxSpeed,
-    name,
-    numberOfGears,
-    price,
-    typeBrakes,
-    typeCooling,
-    typeMotorcycle,
-    vendorCode,
-    weight,
-    uploadImage: updatedUploadedImage,
-  } = { ...motorcycleInfo };
+  const navigate = useNavigate();
+  const updatedUploadedImage = motorcycleInfo?.uploadImage;
 
-  const preparedValues = {
-    availableColors: availableColors
-      ? availableColors[0].split(',')
-      : availableColors,
-    cubicCapacity,
-    fuelConsumption,
-    fuelInjection,
-    fuelTank,
-    horsePower,
-    maxSpeed,
-    name,
-    numberOfGears,
-    price,
-    typeBrakes,
-    typeCooling,
-    typeMotorcycle,
-    vendorCode,
-    weight,
+  const getDefaultValues = () => {
+    if (!motorcycleInfo) {
+      return defaultValueMotorcycleCard;
+    }
+
+    const { uploadImage: _, availableColors, ...rest } = motorcycleInfo;
+
+    return {
+      ...rest,
+      availableColors: availableColors
+        ? availableColors[0].split(',')
+        : availableColors,
+    };
   };
 
-  const [useDrag, setUseDrag] = useState<boolean>(false);
   const [uploadPhoto, setUploadPhoto] = useState<File | null>(null);
   const [preview, setPreview] = useState<string>('');
   const [displayUpdatedImage, setDisplayUpdatedImage] = useState<boolean>(
@@ -83,7 +65,7 @@ const FormCreateMotorcycleCard: React.FC<IFormCreateMotorcycleCard> = ({
     clearErrors,
   } = useForm<INewMotorcycleCard>({
     mode: 'onChange',
-    defaultValues: motorcycleInfo ? preparedValues : defaultValueMotorcycleCard,
+    defaultValues: getDefaultValues(),
     resolver: yupResolver(createMotorcycleCartSchema),
   });
 
@@ -91,67 +73,13 @@ const FormCreateMotorcycleCard: React.FC<IFormCreateMotorcycleCard> = ({
     data: INewMotorcycleCard,
   ) => {
     if (motorcycleInfo && displayUpdatedImage) {
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
-      const { ['uploadImage']: _, ...preparedData } = data;
+      const { uploadImage: _, ...preparedData } = data;
 
-      const formData = new FormData();
-
-      Object.entries(preparedData as IUpdateMotorcycleCard).forEach(
-        ([key, value]) => {
-          formData.append(key, value as string | Blob);
-        },
-      );
-
-      requestFunction(formData);
+      requestFunction(createFormData<IUpdateMotorcycleCard>(preparedData));
       return;
     }
 
-    const formData = new FormData();
-
-    Object.entries(data).forEach(([key, value]) => {
-      formData.append(key, value as string | Blob);
-    });
-    requestFunction(formData);
-  };
-
-  const dragStartHandler = (e: React.DragEvent<HTMLLabelElement>) => {
-    e.preventDefault();
-    e.stopPropagation();
-
-    setUseDrag(true);
-  };
-
-  const dragLeaveHandler = (e: React.DragEvent<HTMLLabelElement>) => {
-    e.preventDefault();
-    e.stopPropagation();
-
-    setUseDrag(false);
-  };
-
-  const onDropHandler = (e: React.DragEvent<HTMLLabelElement>) => {
-    e.preventDefault();
-    e.stopPropagation();
-
-    const photo = [...e.dataTransfer.files];
-    handleFiles(photo[0]);
-
-    setUseDrag(false);
-  };
-
-  const handleFiles = (file: File | null) => {
-    if (file?.type !== 'image/png') {
-      return setError('uploadImage', {
-        message: 'File should be a photo png type!',
-      });
-    }
-    setUploadPhoto(file);
-    setValue('uploadImage', file);
-  };
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files;
-
-    handleFiles(file ? file[0] : null);
+    requestFunction(createFormData<INewMotorcycleCard>(data));
   };
 
   const removeUploadPhoto = () => {
@@ -159,6 +87,17 @@ const FormCreateMotorcycleCard: React.FC<IFormCreateMotorcycleCard> = ({
     setUploadPhoto(null);
     setValue('uploadImage', null);
     setDisplayUpdatedImage(false);
+  };
+
+  const handleFiles = (file: File | null) => {
+    if (file?.type !== 'image/png') {
+      return setError('uploadImage', {
+        type: 'manual',
+        message: 'File should be a photo png type!',
+      });
+    }
+    setUploadPhoto(file);
+    setValue('uploadImage', file);
   };
 
   useEffect(() => {
@@ -175,8 +114,8 @@ const FormCreateMotorcycleCard: React.FC<IFormCreateMotorcycleCard> = ({
 
   useEffect(() => {
     if (updatedUploadedImage?.filename && displayUpdatedImage) {
-      const fakeFile = new File(['content'], 'example.jpg', {
-        type: 'image/jpeg',
+      const fakeFile = new File(['content'], updatedUploadedImage.filename, {
+        type: 'image/png',
       });
       setValue('uploadImage', fakeFile);
     }
@@ -283,53 +222,7 @@ const FormCreateMotorcycleCard: React.FC<IFormCreateMotorcycleCard> = ({
         <div className="dndBlock">
           <h2 className="dndBlock-title">Загрузка фото</h2>
           {!preview && !displayUpdatedImage && (
-            <>
-              <p className="dndBlock-paragraph">
-                Прикріпіть фото мотоциклу нижче
-              </p>
-              <label
-                className={classNames(
-                  `dndBlock-inputDnd ${useDrag ? 'release' : 'attach'}`,
-                )}
-                onDragStart={(e) => {
-                  dragStartHandler(e);
-                }}
-                onDragLeave={(e) => {
-                  dragLeaveHandler(e);
-                }}
-                onDragOver={(e) => {
-                  dragStartHandler(e);
-                }}
-                onDrop={(e) => onDropHandler(e)}
-              >
-                <div className="dnd-inner">
-                  {useDrag ? (
-                    <p className="paragraph-release">
-                      Відпустіть зображення для загрузки
-                    </p>
-                  ) : (
-                    <div>
-                      <div className="dnd-uploadSvg">
-                        <DownloadFile />
-                      </div>
-                      <h3 className="inner-title">
-                        Перетащіть зображення для загрузки
-                      </h3>
-                      <p className="inner-paragraph">
-                        або просто натисніть на це поле
-                      </p>
-                    </div>
-                  )}
-                  <input
-                    type="file"
-                    className="dnd-input"
-                    accept="image/*"
-                    onChange={handleInputChange}
-                    id="uploadFile"
-                  />
-                </div>
-              </label>
-            </>
+            <DNDBlock handleFiles={handleFiles} />
           )}
 
           {(preview || displayUpdatedImage) && (
@@ -381,7 +274,11 @@ const FormCreateMotorcycleCard: React.FC<IFormCreateMotorcycleCard> = ({
         )}
 
         <div className="buttonBlock">
-          <button type="button" className="buttonBlock-cancel">
+          <button
+            type="button"
+            className="buttonBlock-cancel"
+            onClick={() => navigate(AdminPageUrl)}
+          >
             Вийти
           </button>
           <button type="submit" className="buttonBlock-submit">
@@ -393,4 +290,4 @@ const FormCreateMotorcycleCard: React.FC<IFormCreateMotorcycleCard> = ({
   );
 };
 
-export default FormCreateMotorcycleCard;
+export default FormMotorcycleCard;
