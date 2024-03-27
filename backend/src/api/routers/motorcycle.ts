@@ -178,8 +178,6 @@ motorcycleRouters.put(
         { new: true },
       );
 
-      console.log('updateMotorcycleInfo', updateMotorcycleInfo);
-
       if (!updateMotorcycleInfo) {
         throw ApiError.BadRequest('Помилка при оновленні даних в базі даних');
       }
