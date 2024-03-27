@@ -29,7 +29,6 @@ export enum EFuelInjection {
   CARBURETOR = 'carburetor',
 }
 
-//TODO:
 export const listColors = [
   'red',
   'blue',
@@ -77,7 +76,7 @@ export interface INewMotorcycleCard {
   fuelTank: number | null;
   weight: number | null;
   horsePower: number | null;
-  password: string;
+  // password: string;
 }
 
 export interface IListItem {
@@ -102,22 +101,21 @@ export interface IListCheckbox extends IListItem {
 export const defaultValueMotorcycleCard: INewMotorcycleCard = {
   uploadImage: null,
 
-  name: 'qwerty',
-  price: 1,
-  vendorCode: '111qwerty',
-  cubicCapacity: 1,
-  maxSpeed: 1,
-  numberOfGears: 1,
-  fuelConsumption: 1,
-  fuelTank: 1,
-  weight: 1,
-  horsePower: 1,
+  name: '',
+  price: null,
+  vendorCode: '',
+  cubicCapacity: null,
+  maxSpeed: null,
+  numberOfGears: null,
+  fuelConsumption: null,
+  fuelTank: null,
+  weight: null,
+  horsePower: null,
   typeMotorcycle: ETypeMotorcycle.MOTORCYCLE,
   typeBrakes: ETypeBrakes.DISC,
   fuelInjection: EFuelInjection.CARBURETOR,
   typeCooling: ETypeCooling.AIR,
-  availableColors: ['red'],
-  password: 'qwerty111',
+  availableColors: [],
 };
 
 export const typeMotorcycle: ITypeMotorcycle[] = [
@@ -147,11 +145,6 @@ export const typeCooling: ITypeCooling[] = [
 ];
 
 export const listInputs: (IListInput | IListSelect | IListCheckbox)[] = [
-  {
-    registerName: 'password',
-    label: 'Пароль:',
-    type: ETypeInput.PASSWORD,
-  },
   {
     registerName: 'name',
     label: 'Назва мотоциклу:',

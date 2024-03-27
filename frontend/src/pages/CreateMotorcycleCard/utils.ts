@@ -4,7 +4,7 @@ import {
   ETypeBrakes,
   ETypeCooling,
   ETypeMotorcycle,
-} from './types';
+} from '../../components/FormMotorcycleCard/types';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const transformNumeric = (value: any, originalValue: any) => {
@@ -13,7 +13,7 @@ const transformNumeric = (value: any, originalValue: any) => {
     : undefined;
 };
 
-const funcNumericValidator = (message: string) => {
+export const funcNumericValidator = (message: string) => {
   return yup
     .number()
     .required(message)
@@ -23,7 +23,7 @@ const funcNumericValidator = (message: string) => {
     .transform(transformNumeric);
 };
 
-const numericValidator = yup
+export const numericValidator = yup
   .number()
   .required('This field is required!')
   .typeError('This field should be a number!')
@@ -75,6 +75,6 @@ export const createMotorcycleCartSchema = yup
       .of(yup.string().required('This field is required!'))
       .min(1, 'Select min 1 color')
       .required('This field is required!'),
-    password: yup.string().required('This field is required!'),
+    // password: yup.string().required('This field is required!'),
   })
   .required();

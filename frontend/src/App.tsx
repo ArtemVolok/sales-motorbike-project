@@ -8,6 +8,7 @@ import {
   CatalogMotorcyclesUrl,
   CreateMotorcycleCartUrl,
   AdminPageUrl,
+  UpdateMotorcycleCardIdUrl,
   MotorcycleInfoIdUrl,
   RegistrationUrl,
   LoginUrl,
@@ -25,7 +26,10 @@ const CatalogMotorcycles = React.lazy(
   () => import('./pages/CatalogMotorcycles'),
 );
 const CreateMotorcycleCartPage = React.lazy(
-  () => import('./pages/CreateMotorcycleCart'),
+  () => import('./pages/CreateMotorcycleCard'),
+);
+const UpdateMotorcycleCartPage = React.lazy(
+  () => import('./pages/UpdateMotorcycleCard'),
 );
 const AdminPage = React.lazy(() => import('./pages/AdminPage'));
 const MotorcyclePage = React.lazy(() => import('./pages/MotorcycleInfo'));
@@ -86,6 +90,14 @@ function App() {
             element={
               <React.Suspense fallback={null}>
                 <CreateMotorcycleCartPage />
+              </React.Suspense>
+            }
+          />
+          <Route
+            path={UpdateMotorcycleCardIdUrl}
+            element={
+              <React.Suspense fallback={null}>
+                <UpdateMotorcycleCartPage />
               </React.Suspense>
             }
           />

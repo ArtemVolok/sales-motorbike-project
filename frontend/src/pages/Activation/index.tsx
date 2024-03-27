@@ -2,12 +2,12 @@ import { useQuery } from 'react-query';
 import { Link, useParams } from 'react-router-dom';
 import { AxiosError, AxiosResponse } from 'axios';
 
-import { activationRequest } from '../../Requests';
+import { activationRequest } from '../../request';
+import { IServerError } from '../../request/types';
 import { LoginUrl } from '../../UrlsConfig';
 
 import CheckMarkCircle from '../../assets/check-circle.svg?react';
 import ErrorActivationMark from '../../assets/x-mark-circle.svg?react';
-import { IServerError } from '../../Requests/types';
 
 import './style.scss';
 

@@ -2,6 +2,7 @@
 import nodemailer from 'nodemailer';
 import { ProfileUserModel } from '../schema/ProfileUser/profileUser';
 import { host, port, frontendUrl, mailPassword, mailUser } from '../constants';
+import ApiError from '../exceptions/api-error';
 
 interface IMailService {
   to: string;
@@ -14,7 +15,7 @@ interface IActivated {
 
 export const sendActivationEmail = async ({ to, link }: IMailService) => {
   if (!host || !port || !mailUser || !mailPassword) {
-    throw new Error('Error in mail data');
+    throw ApiError.BadRequest('Error in mail data');
   }
 
   const transporter = nodemailer.createTransport({
@@ -40,7 +41,7 @@ export const sendActivationEmail = async ({ to, link }: IMailService) => {
       `,
     });
   } catch (error) {
-    console.log(`Nodemailer error sending email to ${mailUser}`, error);
+    throw ApiError.BadRequest(`Nodemailer error sending email to ${mailUser}`);
   }
 };
 

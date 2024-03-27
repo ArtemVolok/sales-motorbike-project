@@ -11,10 +11,21 @@ module.exports = {
   plugins: ['react-refresh'],
   rules: {
     "no-unused-vars": "off",
-    "@typescript-eslint/no-unused-vars": "error",
-    'react-refresh/only-export-components': [
-      'warn',
-      { allowConstantExport: true },
-    ],
-  },
+    "@typescript-eslint/no-unused-vars": [
+      "warn",
+      {
+        "argsIgnorePattern": "^_",
+        "varsIgnorePattern": "^_",
+        "caughtErrorsIgnorePattern": "^_"
+      }
+    ]
+  }
+  // rules: {
+  //   "no-unused-vars": "off",
+  //   "@typescript-eslint/no-unused-vars": "error",
+  //   'react-refresh/only-export-components': [
+  //     'warn',
+  //     { allowConstantExport: true },
+  //   ],
+  // },
 }

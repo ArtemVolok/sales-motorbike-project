@@ -16,8 +16,8 @@ import {
   IRegistrationForm,
   ISuccessCreateUserProfile,
 } from './types';
-import { createUserProfile } from '../../Requests';
-import { IServerError } from '../../Requests/types';
+import { createUserProfile } from '../../request';
+import { IServerError } from '../../request/types';
 
 import './style.scss';
 

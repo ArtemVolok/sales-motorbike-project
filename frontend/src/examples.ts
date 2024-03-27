@@ -79,3 +79,19 @@
 //   .typeError('This field should be a number!')
 //   .nullable()
 //   .transform(transformNumeric);
+
+// method of call object value
+// const preparedData = {
+//   name: 'art',
+//   age: 22,
+// };
+
+// const ageExe = 'age';
+
+// console.log('preparedData', preparedData.name);
+// console.log('preparedData', preparedData['age']);
+// console.log('preparedData', preparedData[ageExe]);
+
+//example dynamically call element of object
+// const uploadImag = 'uploadImage';
+// const { [uploadImag]: _, ...preparedData } = data;

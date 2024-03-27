@@ -14,11 +14,16 @@ export const motorcycleCardValidation = [
   body('fuelTank', 'Field fuelTank cannot be empty').not().isEmpty(),
   body('weight', 'Field weight cannot be empty').not().isEmpty(),
   body('horsePower', 'Field horsePower cannot be empty').not().isEmpty(),
-  body('password', 'Field password cannot be empty').not().isEmpty(),
+  // body('password', 'Field password cannot be empty').not().isEmpty(),
   body('typeMotorcycle', 'Field typeMotorcycle cannot be empty')
     .not()
     .isEmpty(),
   body('typeBrakes', 'Field typeBrakes cannot be empty').not().isEmpty(),
   body('fuelInjection', 'Field fuelInjection cannot be empty').not().isEmpty(),
   body('typeCooling', 'Field typeCooling cannot be empty').not().isEmpty(),
+
+  //TODO: should use this validation?
+  // body('data.previousPhoto', 'Field previousPhoto cannot be empty')
+  //   .not()
+  //   .isEmpty(),
 ];

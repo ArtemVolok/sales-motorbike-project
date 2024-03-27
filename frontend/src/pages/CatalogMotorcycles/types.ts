@@ -1,4 +1,4 @@
-import { INewMotorcycleCard } from '../CreateMotorcycleCart/types';
+import { INewMotorcycleCard } from '../../components/FormMotorcycleCard/types';
 
 export interface IMotorcycleCard
   extends Omit<INewMotorcycleCard, 'uploadImage'> {

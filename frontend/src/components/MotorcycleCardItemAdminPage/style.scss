@@ -6,10 +6,15 @@
   margin: 20px auto;
 
   &__th {
+    overflow: hidden;
     display: block;
     width: 180px;
     font-size: 18px;
     font-weight: 400;
+
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
 
     &-id {
       width: 250px;

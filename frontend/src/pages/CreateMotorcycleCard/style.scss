@@ -1,0 +1,44 @@
+@import '../../assets/scss/base/variables';
+
+.wrapperCreateCard {
+  background-color: #f3f0e7;
+  padding: 20px 0;
+  min-height: calc(100vh - 60px);
+}
+
+.createCard {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px 30px;
+  border-radius: 10px;
+  background-color: $white;
+  box-shadow: 0px 0px 22px 0px rgba(0, 0, 0, 0.5);
+
+  &__title {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-bottom: 12px;
+
+    &-heading {
+      display: block;
+      width: calc(100% - 30px);
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+    }
+
+    .barsSolidSvg {
+      padding-top: 6px;
+      width: 20px;
+      height: 20px;
+      margin-right: 10px;
+      cursor: pointer;
+    }
+  }
+
+  &__paragraph {
+    display: block;
+    color: $grey-600;
+    padding-bottom: 12px;
+  }
+}

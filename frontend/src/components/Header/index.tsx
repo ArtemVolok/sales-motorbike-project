@@ -12,20 +12,19 @@ import {
   RegistrationUrl,
   LoginUrl,
 } from '../../UrlsConfig';
-import { logoutRequest } from '../../Requests';
-import { IServerError } from '../../Requests/types';
+import { logoutRequest } from '../../request';
+import { IServerError } from '../../request/types';
 
 import './style.scss';
 
 const Header = () => {
-  const { data, mutate } = useMutation<
+  const { mutate } = useMutation<
     AxiosResponse<{ message: string }>,
     AxiosError<IServerError>
   >('logout', {
     mutationFn: logoutRequest,
   });
 
-  console.log('data', data);
   return (
     <div className="headerWrapper">
       <div className=" header">
